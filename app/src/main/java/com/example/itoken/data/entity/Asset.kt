@@ -1,0 +1,32 @@
+package com.example.itoken.data.entity
+
+data class Asset(
+    val animation_original_url: String?,
+    val animation_url: String?,
+    val asset_contract: AssetContract?,
+    val background_color: Any?,
+    val collection: Collection?,
+    val creator: Creator?,
+    val decimals: Int?,
+    val description: Any?,
+    val external_link: Any?,
+    val id: Int?,
+    val image_original_url: String?,
+    val image_preview_url: String?,
+    val image_thumbnail_url: String?,
+    val image_url: String?,
+    val is_presale: Boolean?,
+    val last_sale: LastSale?,
+    val listing_date: Any,
+    val name: String?,
+    val num_sales: Int?,
+    val owner: Owner?,
+    val permalink: String?,
+    val sell_orders: List<SellOrder>?,
+    val token_id: String?,
+    val token_metadata: String?,
+    val top_bid: Any?,
+    val traits: List<Trait>?,
+    val transfer_fee: Any,
+    val transfer_fee_payment_token: Any
+)

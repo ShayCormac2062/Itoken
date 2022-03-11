@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.fragment.ClickerFragment">
+
+    <Button
+        android:id="@+id/btn_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/AllAppButtonStyle"
+        app:cornerRadius="30dp"
+        android:layout_marginStart="12dp"
+        android:text="Назад"
+        android:textSize="9sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_activity_name"
+        style="@style/AllTokensFragmentTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EasyCrystal"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_end" />
+
+    <TextView
+        android:id="@+id/tv_user_crystals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="У вас:"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/btn_end"
+        style="@style/AllTokensFragmentTextStyle"/>
+
+    <ImageView
+        android:id="@+id/iv_crystal"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias=".34"
+        android:src="@drawable/icrystal"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_crystals" />
+
+    <ImageView
+        android:id="@+id/iv_crystal_anim"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:src="@drawable/icrystal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias=".34"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_crystals" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

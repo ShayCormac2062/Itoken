@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/collection_cardview"
+        style="@style/TokenCardsStyle"
+        android:layout_width="230dp"
+        android:layout_height="210dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null">
+
+            <ImageView
+                android:id="@+id/iv_collection"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:alpha=".8"
+                android:fadingEdge="horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ai"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_creator"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ai"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                app:layout_constraintVertical_bias=".65"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_collection_name"
+                style="@style/TokenCardsTextStyle.CollectionTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Favourite Collection"
+                android:textColor="@color/red"
+                app:layout_constraintTop_toBottomOf="@+id/iv_creator"/>
+
+            <TextView
+                android:id="@+id/tv_creator_name"
+                style="@style/TokenCardsTextStyle.CollectionTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="ShayCormac2062"
+                app:layout_constraintTop_toBottomOf="@+id/tv_collection_name" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

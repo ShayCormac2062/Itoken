@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.fragment.AllTokensFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_fragment_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Главная"
+                    android:textColor="@color/red"
+                    android:gravity="center"
+                    android:textSize="40sp"
+                    app:layout_constraintBottom_toTopOf="@+id/rv_genres"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_genres"
+                    style="@style/TokenCardsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name" />
+
+                <TextView
+                    android:id="@+id/tv_token_menu"
+                    style="@style/AllTokensFragmentTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Библиотека токенов:"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_genres" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_tokens"
+                    style="@style/TokenCardsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_token_menu" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sl_tokens"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_token_menu">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/shimmer_token"/>
+                        <include layout="@layout/shimmer_token"/>
+                        <include layout="@layout/shimmer_token"/>
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_cheap_tokens"
+                    style="@style/AllTokensFragmentTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Успей купить по дешёвке:"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_tokens" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cheap_tokens"
+                    style="@style/TokenCardsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sl_cheap_tokens"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/shimmer_token"/>
+                        <include layout="@layout/shimmer_token"/>
+                        <include layout="@layout/shimmer_token"/>
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_collections"
+                    style="@style/AllTokensFragmentTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Трендовые коллекции:"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_cheap_tokens" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_collections"
+                    style="@style/TokenCardsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_collections" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

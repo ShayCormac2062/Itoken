@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/token_info_container"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.fragment.TokenInfoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="355dp"
+            android:alpha=".4"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gradient_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            style="@style/TokenCardsStyle"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_token"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ai" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_creator_name"
+            style="@style/AllTokensFragmentTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ТвойДорогойПупсик228"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"/>
+
+        <TextView
+            android:id="@+id/tv_token_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tampliers"
+            android:textColor="@color/black"
+            android:layout_marginTop="4dp"
+            style="@style/AllTokensFragmentTextStyle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_creator_name" />
+
+        <ImageView
+            android:id="@+id/iv_collected"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/collection"
+            app:layout_constraintEnd_toStartOf="@+id/iv_owners"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_token_name" />
+
+        <ImageView
+            android:id="@+id/iv_owners"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/people"
+            app:layout_constraintEnd_toStartOf="@+id/iv_favourite"
+            app:layout_constraintStart_toEndOf="@+id/iv_collected"
+            app:layout_constraintTop_toBottomOf="@+id/tv_token_name" />
+
+        <ImageView
+            android:id="@+id/iv_favourite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/like_filled"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_owners"
+            app:layout_constraintTop_toBottomOf="@+id/tv_token_name" />
+
+        <TextView
+            android:id="@+id/tv_collected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Собрано: 12"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/iv_collected"
+            app:layout_constraintStart_toStartOf="@+id/iv_collected"
+            app:layout_constraintTop_toBottomOf="@+id/iv_collected" />
+
+        <TextView
+            android:id="@+id/tv_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Создано: 7"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/iv_owners"
+            app:layout_constraintStart_toStartOf="@+id/iv_owners"
+            app:layout_constraintTop_toBottomOf="@+id/iv_owners" />
+
+        <TextView
+            android:id="@+id/tv_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Лайки: 5"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/iv_favourite"
+            app:layout_constraintStart_toStartOf="@+id/iv_favourite"
+            app:layout_constraintTop_toBottomOf="@+id/iv_favourite" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Этот токен я создавал в ванной, слушая Бузову и выпивая странную жидкость из маминой косметички. А ещё хот-доги делаются не из догов, а из других пород собак. А узкие джинсы - это клёво"
+            android:textColor="@color/gray_dark"
+            android:gravity="start"
+            app:layout_constraintTop_toBottomOf="@+id/iv_crystal" />
+
+        <ImageView
+            android:id="@+id/iv_crystal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/itoken_icon"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_created"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цена:"
+            android:textColor="@color/red"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_crystal"
+            app:layout_constraintStart_toEndOf="@+id/iv_crystal"
+            app:layout_constraintTop_toTopOf="@+id/iv_crystal" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_show_details"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_collected_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Детали"
+                    android:textColor="@color/red_dark"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_collected_card"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/arrow_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_show_details">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_contract_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Адрес контракта"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_token_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="ID Токена"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_contract_address"/>
+
+                <TextView
+                    android:id="@+id/tv_token_standards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Стандарт Токена"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_token_id"/>
+
+                <TextView
+                    android:id="@+id/tv_blockchain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Блокчейн"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_token_standards"/>
+
+                <TextView
+                    android:id="@+id/tv_metadata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Метадата"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_blockchain"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
