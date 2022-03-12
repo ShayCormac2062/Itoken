@@ -34,7 +34,7 @@ class TradingFragment : Fragment() {
             }
             btnEnd.setOnClickListener {
                 activity?.findNavController(R.id.fragmentContainerView)
-                    ?.navigate(R.id.allTokensFragment)
+                    ?.navigate(R.id.tradeFragment)
             }
         }
     }

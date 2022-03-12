@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.R
 import com.example.itoken.data.entity.Asset
 import com.example.itoken.databinding.FragmentAllTokensBinding
-import com.example.itoken.domain.AssetRepositoryImpl
+import com.example.itoken.data.AssetRepositoryImpl
 import com.example.itoken.presentation.adapter.CollectionAdapter
 import com.example.itoken.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.presentation.adapter.TokenAdapter

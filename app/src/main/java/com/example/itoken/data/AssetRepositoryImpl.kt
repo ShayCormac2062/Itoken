@@ -1,4 +1,4 @@
-package com.example.itoken.domain
+package com.example.itoken.data
 
 import com.example.itoken.data.entity.Asset
 import com.example.itoken.data.retrofit.di.DIContainer
@@ -8,11 +8,11 @@ class AssetRepositoryImpl : AssetRepository {
 
     override suspend fun getAssetsBrief(): List<Asset> {
         val result = arrayListOf<Asset>()
-        val rand = (0..60).random()
+        val rand = (1..20).random()
         try {
             val assets = DIContainer.api.getAssets().assets
             for (asset in assets) {
-                if (assets.indexOf(asset) % rand == 0) result.add(asset)
+                if (assets.indexOf(asset) % rand == 0 && asset.name != null) result.add(asset)
                 if (result.size == 10) return result
             }
         } catch (e: Exception) {

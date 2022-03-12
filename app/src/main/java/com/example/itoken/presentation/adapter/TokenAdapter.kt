@@ -22,33 +22,19 @@ class TokenAdapter(private var tokenList: List<Asset>?, private val context: Con
         fun bind(item: Asset?, isTheLast: Boolean) {
             with(binding) {
                 if (!isTheLast) {
-                    tvCreatorName.text = item?.last_sale?.transaction?.from_account?.user?.username
-                        ?: item?.last_sale?.transaction?.to_account?.user?.username
-                                ?: "Автор неизвестен"
+                    tvCreatorName.text = item?.creator?.user?.username ?: "Автор неизвестен"
                     tvTokenName.text = item?.name.toString()
-                    val url = item?.image_url
-                    if (url != null) {
-                        if (url[url.length - 1] != '4') ivTokenImage.load(Uri.parse(url))
-                        else {
-                            with(vvTokenImage) {
-                                setVideoURI(Uri.parse(url))
-                                start()
-                            }
-                        }
-                    } else {
-                        vvTokenImage.visibility = View.GONE
-                        ivTokenImage.setImageResource(R.drawable.ai)
-                    }
-                    tvTokenPrice.text = item?.last_sale?.payment_token?.usd_price?.toFloat()?.toInt()?.toString() ?: 0.toString()
+                    ivTokenImage.load(Uri.parse(item?.image_url))
+                    tvTokenPrice.text = item?.transfer_fee?.toString() ?: 0.toString()
                     tvLikesAmount.text = item?.decimals?.toString()
                     collectionCardview.setOnClickListener {
                         onClick?.invoke(item)
                     }
                 } else {
-                    with(collectionLayout) {
+                    with(collectionCardview) {
                         ivCrystal.visibility = View.INVISIBLE
                         ivLike.visibility = View.INVISIBLE
-                        setBackgroundResource(R.drawable.gradient_login)
+                        collectionLayout.setBackgroundResource(R.drawable.gradient_login)
                         tvTokenName.setTextColor(resources.getColor(R.color.white))
                         tvTokenName.textSize = 16.0f
                         setOnClickListener {

@@ -54,6 +54,7 @@
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/sl_tokens"
+                    style="@style/TokenCardsStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/tv_token_menu">
@@ -63,7 +64,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <include layout="@layout/shimmer_token"/>
                         <include layout="@layout/shimmer_token"/>
                         <include layout="@layout/shimmer_token"/>
 
@@ -91,6 +91,7 @@
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/sl_cheap_tokens"
+                    style="@style/TokenCardsStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens">
@@ -100,7 +101,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <include layout="@layout/shimmer_token"/>
                         <include layout="@layout/shimmer_token"/>
                         <include layout="@layout/shimmer_token"/>
 
