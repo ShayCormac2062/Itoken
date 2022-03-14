@@ -11,6 +11,16 @@
     <color name="gray_dark">#B3B1B1</color>
     <color name="red">#FF4A3C</color>
     <color name="red_dark">#A5241A</color>
+    <color name="orange">#EA961B</color>
+    <color name="orange_dark">#8D5A10</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="yellow_dark">#736A1D</color>
+    <color name="green">#30DF37</color>
+    <color name="green_dark">#136016</color>
     <color name="blue">#1A7AC6</color>
-    <color name="blue_dark">#0F4067</color>
+    <color name="blue_dark">#08365A</color>
+    <color name="purple">#C12FDA</color>
+    <color name="purple_dark">#5A1267</color>
+    <color name="pinky">#FF3177</color>
+    <color name="pinky_dark">#60112C</color>
 </resources>

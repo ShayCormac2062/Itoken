@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/collection_cardview"
-        style="@style/TokenCardsStyle"
-        android:layout_marginEnd="4dp"
-        android:layout_width="150dp"
-        android:layout_height="245dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    android:id="@+id/collection_cardview"
+    style="@style/TokenCardsStyle"
+    android:layout_marginEnd="4dp"
+    android:layout_width="150dp"
+    android:layout_height="245dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/collection_layout"
@@ -21,7 +13,7 @@
             android:layout_height="match_parent"
             android:background="@color/gray">
 
-            <ImageView
+            <View
                 android:id="@+id/iv_token_image"
                 style="@style/TokenCardsStyle"
                 android:layout_width="match_parent"
@@ -31,29 +23,30 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
+
+            <View
                 android:id="@+id/tv_creator_name"
                 style="@style/TokenCardsTextStyle"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:background="@color/gray_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias=".65" />
 
-            <TextView
+            <View
                 android:id="@+id/tv_token_name"
                 style="@style/TokenCardsTextStyle"
                 android:layout_width="130dp"
                 android:layout_marginTop="4dp"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:background="@color/gray_dark"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textColor="@color/red_dark"
                 app:layout_constraintTop_toBottomOf="@+id/tv_creator_name" />
 
-            <ImageView
+            <View
                 android:id="@+id/iv_crystal"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -63,7 +56,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
+            <View
                 android:id="@+id/tv_token_price"
                 style="@style/TokenCardsTextStyle"
                 android:layout_width="50dp"
@@ -74,11 +67,11 @@
                 app:layout_constraintStart_toEndOf="@+id/iv_crystal"
                 app:layout_constraintTop_toTopOf="@+id/iv_crystal" />
 
-            <TextView
+            <View
                 android:id="@+id/tv_likes_amount"
                 style="@style/TokenCardsTextStyle"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:background="@color/gray_dark"
                 android:layout_marginEnd="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_crystal"
@@ -87,6 +80,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

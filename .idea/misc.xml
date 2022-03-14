@@ -3,8 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_art.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_collectibles.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_domain_names.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_music.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_sports.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_trading_cards.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_utility.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_virtual_worlds.xml" value="0.102" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_all_tokens.xml" value="0.14629629629629629" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_token.xml" value="0.14629629629629629" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_token_info.xml" value="0.18" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_token.xml" value="0.25" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_genre_cardview.xml" value="0.14629629629629629" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_cardview.xml" value="0.25" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_trending_collection_cardview.xml" value="0.14629629629629629" />
       </map>

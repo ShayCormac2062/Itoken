@@ -21,7 +21,7 @@
 
     <style name="TokenCardsTextStyle">
         <item name="android:textColor">@color/gray_dark</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:layout_marginStart">12dp</item>
     </style>
 
@@ -34,9 +34,11 @@
 
     <style name="TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginStart">28dp</item>
+        <item name="android:layout_marginEnd">28dp</item>
+        <item name="layout_constraintHorizontal_chainStyle">spread_inside</item>
     </style>
 
     <style name="AllTokensFragmentTextStyle">

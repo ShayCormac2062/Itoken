@@ -13,7 +13,7 @@ import com.example.itoken.data.entity.Asset
 
 class TokenAdapter(private var tokenList: List<Asset>?, private val context: Context) : RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
-    var onClick: ((Asset?) -> (Unit))? = null
+    var onClick: ((Asset?, Int?) -> (Unit))? = null
     var onLastCardClick: (() -> (Unit))? = null
 
     inner class TokenCollectionViewHolder(
@@ -25,10 +25,10 @@ class TokenAdapter(private var tokenList: List<Asset>?, private val context: Con
                     tvCreatorName.text = item?.creator?.user?.username ?: "Автор неизвестен"
                     tvTokenName.text = item?.name.toString()
                     ivTokenImage.load(Uri.parse(item?.image_url))
-                    tvTokenPrice.text = item?.transfer_fee?.toString() ?: 0.toString()
-                    tvLikesAmount.text = item?.decimals?.toString()
+                    tvTokenPrice.text = item?.asset_contract?.seller_fee_basis_points?.toString() ?: 0.toString()
+                    tvLikesAmount.text = (0..599).random().toString()
                     collectionCardview.setOnClickListener {
-                        onClick?.invoke(item)
+                        onClick?.invoke(item, (tvLikesAmount.text as String).toInt())
                     }
                 } else {
                     with(collectionCardview) {
@@ -36,7 +36,7 @@ class TokenAdapter(private var tokenList: List<Asset>?, private val context: Con
                         ivLike.visibility = View.INVISIBLE
                         collectionLayout.setBackgroundResource(R.drawable.gradient_login)
                         tvTokenName.setTextColor(resources.getColor(R.color.white))
-                        tvTokenName.textSize = 16.0f
+                        tvTokenName.textSize = 17.0f
                         setOnClickListener {
                             onLastCardClick?.invoke()
                         }

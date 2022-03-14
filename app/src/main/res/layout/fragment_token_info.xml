@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Собрано: 12"
+            android:text="Собрано: 0"
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="@+id/iv_collected"
             app:layout_constraintStart_toStartOf="@+id/iv_collected"
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Создано: 7"
+            android:text="Создано: 0"
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="@+id/iv_owners"
             app:layout_constraintStart_toStartOf="@+id/iv_owners"
@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Лайки: 5"
+            android:text="Лайки: "
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="@+id/iv_favourite"
             app:layout_constraintStart_toStartOf="@+id/iv_favourite"
@@ -211,6 +211,7 @@
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
                     android:text="Адрес контракта"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_contract_address_value"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
@@ -219,6 +220,7 @@
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
                     android:text="ID Токена"
+                    app:layout_constraintEnd_toStartOf="@id/tv_token_id_value"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_contract_address"/>
 
@@ -227,7 +229,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
-                    android:text="Стандарт Токена"
+                    android:text="Стандарт Токена:"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_token_standards_value"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_token_id"/>
 
@@ -236,7 +239,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
-                    android:text="Блокчейн"
+                    android:text="Имя второго владельца:"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_blockchain_value"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_token_standards"/>
 
@@ -246,7 +250,58 @@
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
                     android:text="Метадата"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_metadata_value"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_blockchain"/>
+
+                <TextView
+                    android:id="@+id/tv_contract_address_value"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Адрес контракта"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_contract_address"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_token_id_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="ID Токена"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_token_id"
+                    app:layout_constraintTop_toBottomOf="@id/tv_contract_address"/>
+
+                <TextView
+                    android:id="@+id/tv_token_standards_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Стандарт Токена:"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_token_standards"
+                    app:layout_constraintTop_toBottomOf="@id/tv_token_id"/>
+
+                <TextView
+                    android:id="@+id/tv_blockchain_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Блокчейн:"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_blockchain"
+                    app:layout_constraintTop_toBottomOf="@id/tv_token_standards"/>
+
+                <TextView
+                    android:id="@+id/tv_metadata_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+                    android:text="Метадата"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_metadata"
                     app:layout_constraintTop_toBottomOf="@id/tv_blockchain"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.itoken.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import coil.load
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.R
 import com.example.itoken.databinding.ViewGenreCardviewBinding
@@ -10,14 +11,14 @@ class GenreCollectionAdapter : RecyclerView.Adapter<GenreCollectionAdapter.Genre
 
     var onClick: ((String) -> (Unit))? = null
     private val genreNameList: List<Pair<String, Int>> = listOf(
-        Pair("Art", R.drawable.ai),
-        Pair("Music", R.drawable.ai),
-        Pair("Domain names", R.drawable.ai),
-        Pair("Utility", R.drawable.ai),
-        Pair("Virtual Worlds", R.drawable.ai),
-        Pair("Trading Cards", R.drawable.ai),
-        Pair("Collectibles", R.drawable.ai),
-        Pair("Sports", R.drawable.ai),
+        Pair("Art", R.drawable.gradient_login),
+        Pair("Music", R.drawable.gradient_music),
+        Pair("Domain names", R.drawable.gradient_domain_names),
+        Pair("Utility", R.drawable.gradient_utility),
+        Pair("Virtual Worlds", R.drawable.gradient_virtual_worlds),
+        Pair("Trading Cards", R.drawable.gradient_trading_cards),
+        Pair("Collectibles", R.drawable.gradient_collectibles),
+        Pair("Sports", R.drawable.gradient_sports),
     )
 
     inner class GenreCollectionViewHolder(
@@ -25,7 +26,7 @@ class GenreCollectionAdapter : RecyclerView.Adapter<GenreCollectionAdapter.Genre
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Pair<String, Int>) = with(binding) {
             tvCollectionName.text = item.first
-            ivGenre.setImageResource(item.second)
+            ivGenre.load(item.second)
             collectionCardview.setOnClickListener {
                 it.alpha = 0.5f
                 onClick?.invoke(item.first)
