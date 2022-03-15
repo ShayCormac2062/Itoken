@@ -7,7 +7,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.itoken.R
+import com.example.itoken.data.retrofit.di.DIContainer
 import com.example.itoken.databinding.ActivityMainBinding
+import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,4 +31,5 @@ class MainActivity : AppCompatActivity() {
         controller = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
         binding?.bottomMain?.setupWithNavController(controller)
     }
+
 }

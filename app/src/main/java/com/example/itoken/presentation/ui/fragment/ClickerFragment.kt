@@ -28,8 +28,8 @@ class ClickerFragment : Fragment() {
                 activity?.findNavController(R.id.fragmentContainerView)
                     ?.navigate(R.id.profileFragment)
             }
-            ivCrystal.setOnClickListener {
-                TODO("Прикрутить анимацию")
+            ivCrystalAnim.setOnClickListener {
+                //
             }
         }
     }

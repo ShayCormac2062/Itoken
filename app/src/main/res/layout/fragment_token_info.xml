@@ -17,7 +17,6 @@
             android:layout_height="355dp"
             android:alpha=".4"
             android:scaleType="centerCrop"
-            android:src="@drawable/gradient_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,8 +35,7 @@
                 android:id="@+id/iv_token"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ai" />
+                android:scaleType="centerCrop" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -46,7 +44,6 @@
             style="@style/AllTokensFragmentTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ТвойДорогойПупсик228"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"/>
 
@@ -54,7 +51,6 @@
             android:id="@+id/tv_token_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tampliers"
             android:textColor="@color/black"
             android:layout_marginTop="4dp"
             style="@style/AllTokensFragmentTextStyle"
@@ -85,7 +81,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="48dp"
-            android:src="@drawable/like_filled"
+            android:src="@drawable/like_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_owners"
             app:layout_constraintTop_toBottomOf="@+id/tv_token_name" />
@@ -117,7 +113,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Лайки: "
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="@+id/iv_favourite"
             app:layout_constraintStart_toStartOf="@+id/iv_favourite"
@@ -131,7 +126,6 @@
             android:layout_marginTop="20dp"
             android:text="Этот токен я создавал в ванной, слушая Бузову и выпивая странную жидкость из маминой косметички. А ещё хот-доги делаются не из догов, а из других пород собак. А узкие джинсы - это клёво"
             android:textColor="@color/gray_dark"
-            android:gravity="start"
             app:layout_constraintTop_toBottomOf="@+id/iv_crystal" />
 
         <ImageView
@@ -148,7 +142,6 @@
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Цена:"
             android:textColor="@color/red"
             android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_crystal"
@@ -259,7 +252,6 @@
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Адрес контракта"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_contract_address"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -269,7 +261,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
-                    android:text="ID Токена"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_token_id"
                     app:layout_constraintTop_toBottomOf="@id/tv_contract_address"/>
@@ -279,7 +270,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
-                    android:text="Стандарт Токена:"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_token_standards"
                     app:layout_constraintTop_toBottomOf="@id/tv_token_id"/>
@@ -289,7 +279,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
-                    android:text="Блокчейн:"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_blockchain"
                     app:layout_constraintTop_toBottomOf="@id/tv_token_standards"/>
@@ -299,7 +288,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
-                    android:text="Метадата"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_metadata"
                     app:layout_constraintTop_toBottomOf="@id/tv_blockchain"/>
