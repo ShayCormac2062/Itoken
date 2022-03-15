@@ -1,6 +1,5 @@
 package com.example.itoken.presentation.ui.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.itoken.R
 import com.example.itoken.data.AssetRepositoryImpl
 import com.example.itoken.data.entity.Asset
+import com.example.itoken.data.retrofit.di.DIContainer
 import com.example.itoken.databinding.FragmentAllTokensBinding
-import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.example.itoken.domain.repository.AssetRepository
 import com.example.itoken.presentation.adapter.CollectionAdapter
 import com.example.itoken.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.presentation.adapter.TokenAdapter
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AllTokensFragment : Fragment() {
@@ -45,9 +40,6 @@ class AllTokensFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.run {
-            slGenres.startShimmer()
-            slTokens.startShimmer()
-            slCheapTokens.startShimmer()
             rvGenres.apply {
                 layoutManager = LinearLayoutManager(context).apply {
                     orientation = RecyclerView.HORIZONTAL
@@ -57,13 +49,7 @@ class AllTokensFragment : Fragment() {
                     }
                 }
             }
-            lifecycleScope.launch {
-                tokens = repository?.getAssetsBrief()
-                cheapTokens = repository?.getAssetsBrief()
-                initTokensRecyclerView(rvTokens, slTokens, tokens)
-                initTokensRecyclerView(rvCheapTokens, slCheapTokens, cheapTokens)
-                initRecycler(slGenres, rvGenres)
-            }
+            setupScreen()
             rvCollections.apply {
                 layoutManager = LinearLayoutManager(context).apply {
                     orientation = RecyclerView.HORIZONTAL
@@ -82,6 +68,21 @@ class AllTokensFragment : Fragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun setupScreen() {
+        lifecycleScope.launch {
+            binding?.run {
+                slGenres.startShimmer()
+                slTokens.startShimmer()
+                slCheapTokens.startShimmer()
+                tokens = repository?.getAssetsBrief()
+                cheapTokens = repository?.getAssetsBrief()
+                initTokensRecyclerView(rvTokens, slTokens, tokens)
+                initTokensRecyclerView(rvCheapTokens, slCheapTokens, cheapTokens)
+                initRecycler(slGenres, rvGenres)
             }
         }
     }
@@ -123,7 +124,6 @@ class AllTokensFragment : Fragment() {
     private fun swapTokenInfoBottomSheet(asset: Asset?, likes: Int?) {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment(asset, likes), "FUCK")
-            .addToBackStack(null)
             .commit()
     }
 

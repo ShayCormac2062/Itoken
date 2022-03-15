@@ -28,7 +28,7 @@ class TokenInfoFragment(private val asset: Asset?, private val likes: Int?) : Bo
         super.onViewCreated(view, savedInstanceState)
         binding?.run {
             if (asset?.image_preview_url != null) imageView.load(Uri.parse(asset.image_preview_url))
-            else imageView.setImageResource(R.drawable.gradient_login)
+            else imageView.load(R.drawable.gradient_login)
             ivToken.load(Uri.parse(asset?.image_url))
             tvCreatorName.text = asset?.creator?.user?.username ?: "Автор неизвестен"
             tvTokenName.text = asset?.name ?: "Название не указано"
@@ -43,8 +43,14 @@ class TokenInfoFragment(private val asset: Asset?, private val likes: Int?) : Bo
                 else it
             }
             tvTokenStandardsValue.text = "001"
-            tvBlockchainValue.text = asset?.owner?.user?.username
-            tvMetadataValue.text = asset?.token_metadata?.toString() ?: "По умолчанию"
+            tvBlockchainValue.text = asset?.owner?.user?.username?.let {
+                if (it.length > 30) "Имя не указано"
+                else it
+            } ?: "Имя не указано"
+            tvMetadataValue.text = asset?.token_metadata?.let {
+                if (it.toString().length > 20) "Не указано"
+                else it.toString()
+            } ?: "По умолчанию"
         }
     }
 }

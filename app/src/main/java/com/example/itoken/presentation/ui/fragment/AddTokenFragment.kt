@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentAddTokenBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class AddTokenFragment : Fragment() {
+class AddTokenFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentAddTokenBinding? = null
 
@@ -21,6 +22,7 @@ class AddTokenFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        binding?.run {
+        }
     }
 }

@@ -47,6 +47,6 @@ class CollectionAdapter(private val context: Context, private var collectionList
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) =
         holder.bind(collectionList?.get(position), position == 8)
 
-    override fun getItemCount(): Int = 4//if (collectionList.size > 9) 9 else collectionList.size
+    override fun getItemCount(): Int = 0//if (collectionList.size > 9) 9 else collectionList.size
 
 }

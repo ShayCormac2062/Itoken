@@ -1,12 +1,10 @@
 package com.example.itoken.data.retrofit.di
 
-import android.util.JsonReader
 import com.example.itoken.data.retrofit.APIService
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object DIContainer {
 
@@ -14,6 +12,9 @@ object DIContainer {
 
     private val okhttp by lazy {
         OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .cache(null)
             .build()
     }
 
