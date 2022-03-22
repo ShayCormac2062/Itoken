@@ -53,4 +53,9 @@ class TokenInfoFragment(private val asset: Asset?, private val likes: Int?) : Bo
             } ?: "По умолчанию"
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 }

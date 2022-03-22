@@ -25,4 +25,9 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         binding?.run {
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 }

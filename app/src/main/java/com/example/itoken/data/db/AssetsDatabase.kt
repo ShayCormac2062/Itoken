@@ -3,7 +3,7 @@ package com.example.itoken.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.itoken.data.db.dao.AssetsDao
-import com.example.itoken.domain.enitty.ShowableAsset
+import com.example.itoken.domain.entity.ShowableAsset
 
 @Database(
     entities = [ShowableAsset::class],

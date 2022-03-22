@@ -18,4 +18,9 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding?.root
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 }

@@ -10,7 +10,7 @@ object DIContainer {
 
     private const val PARSE_ROOT = "https://raw.githubusercontent.com/ShayCormac2062/MyNFTApi/"
 
-    private val okhttp by lazy {
+    val okhttp by lazy {
         OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)

@@ -1,9 +1,8 @@
-package com.example.itoken.domain.enitty
+package com.example.itoken.domain.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "showable_assets")
 data class ShowableAsset(

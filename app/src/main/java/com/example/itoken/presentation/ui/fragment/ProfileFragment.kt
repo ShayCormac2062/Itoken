@@ -30,4 +30,9 @@ class ProfileFragment: Fragment() {
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 }

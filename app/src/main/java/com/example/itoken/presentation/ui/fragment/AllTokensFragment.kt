@@ -127,6 +127,11 @@ class AllTokensFragment : Fragment() {
             .commit()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        DIContainer.okhttp.cache?.close()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         binding = null
