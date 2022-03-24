@@ -29,15 +29,23 @@ class AllTokensFragment : Fragment() {
 
     private var binding: FragmentAllTokensBinding? = null
     private var collections: List<Asset>? = null //TODO(сделай api для коллекций, даун!!!)
-    private lateinit var viewModel: MainViewModel
 
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+    private val viewModel: MainViewModel by viewModels {
+        factory
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        App.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAllTokensBinding.inflate(layoutInflater)
-        viewModel = (requireActivity() as MainActivity).viewModel
         initObservers()
         return binding?.root
     }

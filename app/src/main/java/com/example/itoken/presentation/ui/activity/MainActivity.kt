@@ -25,16 +25,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var controller: NavController
     var database: AssetsDao? = null
 
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    val viewModel: MainViewModel by viewModels {
-        factory
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_IToken)
-        (application as App).appComponent.inject(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         database = Room.databaseBuilder(

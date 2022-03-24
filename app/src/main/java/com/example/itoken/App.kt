@@ -8,13 +8,15 @@ import com.example.itoken.data.retrofit.di.module.NetModule
 
 class App : Application() {
 
-    lateinit var appComponent: AppComponent
-
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule())
             .netModule(NetModule())
             .build()
+    }
+
+    companion object {
+        lateinit var appComponent: AppComponent
     }
 }
