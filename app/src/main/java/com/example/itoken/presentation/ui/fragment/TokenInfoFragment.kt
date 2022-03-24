@@ -2,13 +2,12 @@ package com.example.itoken.presentation.ui.fragment
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import coil.load
 import com.example.itoken.R
-import com.example.itoken.data.entity.Asset
+import com.example.itoken.data.response.Asset
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

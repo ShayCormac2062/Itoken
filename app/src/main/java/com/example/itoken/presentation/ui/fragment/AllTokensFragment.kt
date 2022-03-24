@@ -1,32 +1,35 @@
 package com.example.itoken.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.itoken.data.AssetRepositoryImpl
-import com.example.itoken.data.entity.Asset
-import com.example.itoken.data.retrofit.di.DIContainer
+import com.example.itoken.App
+import com.example.itoken.data.response.Asset
 import com.example.itoken.databinding.FragmentAllTokensBinding
-import com.example.itoken.domain.repository.AssetRepository
 import com.example.itoken.presentation.adapter.CollectionAdapter
 import com.example.itoken.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.presentation.adapter.TokenAdapter
+import com.example.itoken.presentation.ui.activity.MainActivity
+import com.example.itoken.presentation.viewmodel.MainViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class AllTokensFragment : Fragment() {
 
     private var binding: FragmentAllTokensBinding? = null
-    private var repository: AssetRepository? = AssetRepositoryImpl()
-    private var tokens: List<Asset>? = null
-    private var cheapTokens: List<Asset>? = null
-    private var collections: List<Asset>? = null
+    private var collections: List<Asset>? = null //TODO(сделай api для коллекций, даун!!!)
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +37,10 @@ class AllTokensFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAllTokensBinding.inflate(layoutInflater)
+        viewModel = (requireActivity() as MainActivity).viewModel
+        initObservers()
         return binding?.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.run {
@@ -49,7 +53,11 @@ class AllTokensFragment : Fragment() {
                     }
                 }
             }
-            setupScreen()
+            try {
+                (rvCheapTokens.adapter as TokenAdapter).tokenList
+            } catch (ex: Exception) {
+                setupScreen()
+            }
             rvCollections.apply {
                 layoutManager = LinearLayoutManager(context).apply {
                     orientation = RecyclerView.HORIZONTAL
@@ -72,16 +80,35 @@ class AllTokensFragment : Fragment() {
         }
     }
 
+    private fun initObservers() {
+        binding?.run {
+            with(viewModel) {
+                assetListCheap.observe(viewLifecycleOwner) {
+                    it?.fold(onSuccess = { t ->
+                        initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
+                    }, onFailure = { error ->
+                        Log.e("FUCK", error.message.toString())
+                    })
+                }
+                assetList.observe(viewLifecycleOwner) {
+                    it?.fold(onSuccess = { t ->
+                        initTokensRecyclerView(rvTokens, slTokens, t)
+                    }, onFailure = { error ->
+                        Log.e("FUCK", error.message.toString())
+                    })
+                }
+            }
+        }
+    }
+
     private fun setupScreen() {
         lifecycleScope.launch {
             binding?.run {
                 slGenres.startShimmer()
                 slTokens.startShimmer()
                 slCheapTokens.startShimmer()
-                tokens = repository?.getAssetsBrief()
-                cheapTokens = repository?.getAssetsBrief()
-                initTokensRecyclerView(rvTokens, slTokens, tokens)
-                initTokensRecyclerView(rvCheapTokens, slCheapTokens, cheapTokens)
+                viewModel.getAssets()
+                viewModel.getAssetsBrief()
                 initRecycler(slGenres, rvGenres)
             }
         }
@@ -97,10 +124,10 @@ class AllTokensFragment : Fragment() {
                 orientation = RecyclerView.HORIZONTAL
             }
             adapter = TokenAdapter(list, context).apply {
-                setItemViewCacheSize(20)
                 onClick = { asset, likes ->
                     swapTokenInfoBottomSheet(asset, likes)
                 }
+                setItemViewCacheSize(20)
                 onLastCardClick = {
                     Toast.makeText(
                         context,
@@ -123,21 +150,8 @@ class AllTokensFragment : Fragment() {
 
     private fun swapTokenInfoBottomSheet(asset: Asset?, likes: Int?) {
         parentFragmentManager.beginTransaction()
-            .add(TokenInfoFragment(asset, likes), "FUCK")
+            .add(TokenInfoFragment(asset, likes), "SHIT")
             .commit()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        DIContainer.okhttp.cache?.close()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-        repository = null
-        tokens = null
-        cheapTokens = null
-        collections = null
-    }
 }

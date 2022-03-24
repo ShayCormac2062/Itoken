@@ -1,14 +1,11 @@
 package com.example.itoken.presentation.adapter
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import coil.load
 import androidx.recyclerview.widget.RecyclerView
-import com.example.itoken.R
 import com.example.itoken.databinding.ViewTrendingCollectionCardviewBinding
-import com.example.itoken.data.entity.Asset
+import com.example.itoken.data.response.Asset
 
 class CollectionAdapter(private val context: Context, private var collectionList: List<Asset>?) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 

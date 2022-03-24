@@ -1,4 +1,4 @@
-package com.example.itoken.domain.entity
+package com.example.itoken.domain.model
 
 data class AssetBrief(
     var tokenId: Int,

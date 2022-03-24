@@ -1,4 +1,4 @@
-package com.example.itoken.data.entity
+package com.example.itoken.data.response
 
 data class Owner(
     val address: String,

@@ -1,8 +1,7 @@
 package com.example.itoken.data.retrofit
 
-import com.example.itoken.data.entity.TokenAsset
+import com.example.itoken.data.response.TokenAsset
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface APIService {
 

@@ -1,6 +1,6 @@
 package com.example.itoken.domain.repository
 
-import com.example.itoken.data.entity.Asset
+import com.example.itoken.data.response.Asset
 
 interface AssetRepository {
 

@@ -1,12 +1,10 @@
 package com.example.itoken.presentation.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.itoken.databinding.ViewTradeCardviewBinding
-import com.example.itoken.data.entity.Trade
+import com.example.itoken.data.response.Trade
 
 class TradeAdapter(private val tradeList: List<Trade>?) : RecyclerView.Adapter<TradeAdapter.TradeViewHolder>() {
 

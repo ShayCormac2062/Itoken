@@ -43,11 +43,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+
+    def livedata = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${livedata}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${livedata}"
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+
+    def dagger = "2.41"
+    implementation "com.google.dagger:dagger:${dagger}"
+    kapt "com.google.dagger:dagger-compiler:${dagger}"
 
     def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"

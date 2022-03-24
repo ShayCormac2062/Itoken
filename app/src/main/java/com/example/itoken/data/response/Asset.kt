@@ -1,4 +1,4 @@
-package com.example.itoken.data.entity
+package com.example.itoken.data.response
 
 data class Asset(
     val animation_original_url: String?,

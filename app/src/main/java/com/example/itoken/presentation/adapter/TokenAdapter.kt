@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.itoken.R
 import com.example.itoken.databinding.ViewTokenCardviewBinding
-import com.example.itoken.data.entity.Asset
+import com.example.itoken.data.response.Asset
 
-class TokenAdapter(private var tokenList: List<Asset>?, private val context: Context) : RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
+class TokenAdapter(val tokenList: List<Asset>?, private val context: Context) : RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
     var onClick: ((Asset?, Int?) -> (Unit))? = null
     var onLastCardClick: (() -> (Unit))? = null

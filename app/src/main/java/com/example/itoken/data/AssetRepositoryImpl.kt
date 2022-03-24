@@ -1,16 +1,17 @@
 package com.example.itoken.data
 
-import com.example.itoken.data.entity.Asset
-import com.example.itoken.data.retrofit.di.DIContainer
+import com.example.itoken.data.response.Asset
+import com.example.itoken.data.retrofit.APIService
 import com.example.itoken.domain.repository.AssetRepository
+import javax.inject.Inject
 
-class AssetRepositoryImpl : AssetRepository {
+class AssetRepositoryImpl @Inject constructor(private val api: APIService) : AssetRepository {
 
     override suspend fun getAssetsBrief(): List<Asset> {
         val result = arrayListOf<Asset>()
-        val rand = (1..20).random()
+        val rand = (1..35).random()
         try {
-            val assets = DIContainer.api.getAssets().assets
+            val assets = api.getAssets().assets
             for (asset in assets) {
                 if (assets.indexOf(asset) % rand == 0 && asset.name != null) result.add(asset)
                 if (result.size == 10) return result
@@ -23,7 +24,7 @@ class AssetRepositoryImpl : AssetRepository {
 
     override suspend fun getAssets(): List<Asset> {
         val result = arrayListOf<Asset>()
-        for (asset in DIContainer.api.getAssets().assets) {
+        for (asset in api.getAssets().assets) {
             result.add(asset)
         }
         return result

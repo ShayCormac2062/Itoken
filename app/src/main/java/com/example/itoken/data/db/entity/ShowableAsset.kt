@@ -1,4 +1,4 @@
-package com.example.itoken.domain.entity
+package com.example.itoken.data.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

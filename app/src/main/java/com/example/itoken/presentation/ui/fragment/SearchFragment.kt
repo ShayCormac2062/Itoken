@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.itoken.R
-import com.example.itoken.data.entity.Asset
+import com.example.itoken.data.response.Asset
 import com.example.itoken.databinding.FragmentSearchBinding
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.example.itoken.presentation.adapter.GenreCollectionAdapter

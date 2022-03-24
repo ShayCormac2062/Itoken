@@ -1,7 +1,7 @@
 package com.example.itoken.data.db.dao
 
 import androidx.room.*
-import com.example.itoken.domain.entity.ShowableAsset
+import com.example.itoken.data.db.entity.ShowableAsset
 
 @Dao
 interface AssetsDao {
