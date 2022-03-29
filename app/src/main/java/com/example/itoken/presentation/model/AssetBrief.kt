@@ -1,7 +1,7 @@
-package com.example.itoken.domain.model
+package com.example.itoken.presentation.model
 
 data class AssetBrief(
-    var tokenId: Int,
+    var tokenId: String?,
     var imageUrl: String?,
     var creatorName: String?,
     var tokenName: String?,

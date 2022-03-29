@@ -1,4 +1,4 @@
-package com.example.itoken.data.retrofit.di
+package com.example.itoken.di
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

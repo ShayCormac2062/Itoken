@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.itoken.data.response.Asset
 import com.example.itoken.domain.usecase.GetAssetsBriefUseCase
 import com.example.itoken.domain.usecase.GetAssetsUseCase
+import com.example.itoken.domain.model.InfoAsset
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,16 +16,16 @@ class MainViewModel @Inject constructor(
     ): ViewModel() {
 
 
-    private var _assetList: MutableLiveData<Result<List<Asset>>?> = MutableLiveData()
-    val assetList: LiveData<Result<List<Asset>>?> = _assetList
+    private var _assetList: MutableLiveData<Result<List<InfoAsset>>?> = MutableLiveData()
+    val assetList: LiveData<Result<List<InfoAsset>>?> = _assetList
 
     // TODO(
     //  Сюда надо будет добавить LiveData с коллекциями. ХВАТИТ ЛЕНИТЬСЯ, ТЫ, ВОНЮЧАЯ ЗАДНИЦА!
     //  Начни писать api для коллекций
     //  )
 
-    private var _assetListCheap: MutableLiveData<Result<List<Asset>>?> = MutableLiveData()
-    val assetListCheap: LiveData<Result<List<Asset>>?> = _assetListCheap
+    private var _assetListCheap: MutableLiveData<Result<List<InfoAsset>>?> = MutableLiveData()
+    val assetListCheap: LiveData<Result<List<InfoAsset>>?> = _assetListCheap
 
     private var _error: MutableLiveData<Exception> = MutableLiveData()
     val error: LiveData<Exception> = _error
@@ -33,7 +33,10 @@ class MainViewModel @Inject constructor(
     suspend fun getAssetsBrief() {
         viewModelScope.launch {
             try {
-                val assetList = getAssetsBriefUseCase()
+                val assetList = arrayListOf<InfoAsset>()
+                getAssetsBriefUseCase().forEach(action = {
+                    assetList.add(it)
+                })
                 _assetListCheap.value = Result.success(assetList)
                 _assetListCheap.postValue(null)
             } catch (ex: Exception) {
@@ -46,7 +49,10 @@ class MainViewModel @Inject constructor(
     suspend fun getAssets() {
         viewModelScope.launch {
             try {
-                val assetList = getAssetsBriefUseCase() //TODO(потом переделай)
+                val assetList = arrayListOf<InfoAsset>()
+                getAssetsBriefUseCase().forEach(action = {
+                    assetList.add(it)
+                })
                 _assetList.value = Result.success(assetList)
                 _assetList.postValue(null)
             } catch (ex: Exception) {

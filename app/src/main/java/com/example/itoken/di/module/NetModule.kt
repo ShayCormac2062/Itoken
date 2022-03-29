@@ -1,4 +1,4 @@
-package com.example.itoken.data.retrofit.di.module
+package com.example.itoken.di.module
 
 import com.example.itoken.data.retrofit.APIService
 import dagger.Module
@@ -14,7 +14,7 @@ class NetModule {
     private val PARSE_ROOT = "https://raw.githubusercontent.com/ShayCormac2062/MyNFTApi/"
 
     @Provides
-    fun okHttp(): OkHttpClient =
+    fun provideOkHttp(): OkHttpClient =
         OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -22,10 +22,10 @@ class NetModule {
             .build()
 
     @Provides
-    fun gsonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
+    fun provideGsonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     @Provides
-    fun retrofit(
+    fun provideRetrofit(
         okHttp: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit =
@@ -36,7 +36,7 @@ class NetModule {
             .build()
 
     @Provides
-    fun api(
+    fun provideApi(
         retrofit: Retrofit
     ): APIService =
         retrofit.create(APIService::class.java)

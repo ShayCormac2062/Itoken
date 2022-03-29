@@ -3,12 +3,13 @@ package com.example.itoken.data.db.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.itoken.domain.model.InfoAsset
 
-@Entity(tableName = "showable_assets")
-data class ShowableAsset(
+@Entity(tableName = "database_assets")
+data class DatabaseAsset(
     @PrimaryKey
     @ColumnInfo(name = "token_id")
-    var tokenId: Int,
+    var tokenId: String,
     @ColumnInfo(name = "image_preview_url") var imagePreviewUrl: String?,
     @ColumnInfo(name = "image_url") var imageUrl: String?,
     @ColumnInfo(name = "creator_name") var creatorName: String?,
@@ -18,4 +19,17 @@ data class ShowableAsset(
     @ColumnInfo(name = "likes") var likes: Int?,
     @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "address") var address: String?,
-)
+) {
+    fun toInfoAsset() = InfoAsset(
+        tokenId,
+        imagePreviewUrl,
+        imageUrl,
+        creatorName,
+        ownerName,
+        tokenName,
+        price,
+        likes,
+        description,
+        address
+    )
+}

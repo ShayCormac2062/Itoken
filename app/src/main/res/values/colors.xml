@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#ECECEC</color>
     <color name="gray_dark">#B3B1B1</color>
-    <color name="red">#FF4A3C</color>
-    <color name="red_dark">#671610</color>
+    <color name="red">#E61100</color>
+    <color name="red_dark">#8C1A1A</color>
     <color name="orange">#EA961B</color>
     <color name="orange_dark">#8D5A10</color>
     <color name="yellow">#FFEB3B</color>

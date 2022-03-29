@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +18,8 @@ import com.example.itoken.databinding.FragmentAllTokensBinding
 import com.example.itoken.presentation.adapter.CollectionAdapter
 import com.example.itoken.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.presentation.adapter.TokenAdapter
-import com.example.itoken.presentation.ui.activity.MainActivity
+import com.example.itoken.presentation.model.AssetBrief
+import com.example.itoken.domain.model.InfoAsset
 import com.example.itoken.presentation.viewmodel.MainViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.launch
@@ -40,6 +40,7 @@ class AllTokensFragment : Fragment() {
         App.appComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,15 +126,24 @@ class AllTokensFragment : Fragment() {
     private fun initTokensRecyclerView(
         rv: RecyclerView,
         shimmer: ShimmerFrameLayout,
-        list: List<Asset>?
+        list: List<InfoAsset>?
     ) {
         rv.apply {
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = RecyclerView.HORIZONTAL
             }
-            adapter = TokenAdapter(list, context).apply {
+            val briefList = arrayListOf<AssetBrief>()
+            list?.forEach(action = {
+                briefList.add(it.toAssetBrief())
+            })
+            adapter = TokenAdapter(briefList, context).apply {
                 onClick = { asset, likes ->
-                    swapTokenInfoBottomSheet(asset, likes)
+                    swapTokenInfoBottomSheet(
+                        list?.first(
+                            predicate = {
+                                it.imageUrl == asset?.imageUrl
+                            }
+                        ), likes)
                 }
                 setItemViewCacheSize(20)
                 onLastCardClick = {
@@ -156,7 +166,7 @@ class AllTokensFragment : Fragment() {
         rv.visibility = View.VISIBLE
     }
 
-    private fun swapTokenInfoBottomSheet(asset: Asset?, likes: Int?) {
+    private fun swapTokenInfoBottomSheet(asset: InfoAsset?, likes: Int?) {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment(asset, likes), "SHIT")
             .commit()

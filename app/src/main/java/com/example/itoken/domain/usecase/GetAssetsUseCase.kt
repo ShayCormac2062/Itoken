@@ -1,6 +1,5 @@
 package com.example.itoken.domain.usecase
 
-import com.example.itoken.data.response.Asset
 import com.example.itoken.domain.repository.AssetRepository
 import com.example.itoken.utils.DispatcherProvider
 import kotlinx.coroutines.withContext
@@ -11,8 +10,8 @@ class GetAssetsUseCase @Inject constructor(
     private val scope: DispatcherProvider
 ) {
 
-    suspend operator fun invoke(): List<Asset> =
-        withContext(scope.Main) {
+    suspend operator fun invoke() =
+        withContext(scope.IO) {
             repository.getAssets()
-        }
+        } // TODO Переделать на showableAsset
 }

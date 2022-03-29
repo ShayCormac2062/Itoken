@@ -1,5 +1,7 @@
-package com.example.itoken.data.retrofit.di.module
+package com.example.itoken.di.module
 
+import android.content.Context
+import com.example.itoken.App
 import com.example.itoken.data.AssetRepositoryImpl
 import com.example.itoken.data.retrofit.APIService
 import com.example.itoken.domain.repository.AssetRepository
@@ -11,6 +13,9 @@ import dagger.Provides
 
 @Module
 class AppModule {
+
+    @Provides
+    fun provideContext(app: App): Context = app.applicationContext
 
     @Provides
     fun getAssetsBriefUseCase(

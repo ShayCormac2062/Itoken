@@ -22,20 +22,13 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
-    lateinit var controller: NavController
-    var database: AssetsDao? = null
+    private lateinit var controller: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_IToken)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        database = Room.databaseBuilder(
-            applicationContext,
-            AssetsDatabase::class.java,
-            "dao"
-        ).build()
-            .assetsDao()
         initNavController()
     }
 
@@ -45,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             bottomMain.setupWithNavController(controller)
             btnAddToken.setOnClickListener {
                 supportFragmentManager.beginTransaction()
-                    .add(AddTokenFragment(), "FUCK")
+                    .add(AddTokenFragment(null), "FUCK")
                     .commit()
             }
         }

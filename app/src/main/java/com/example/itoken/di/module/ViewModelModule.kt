@@ -1,8 +1,8 @@
-package com.example.itoken.data.retrofit.di.module
+package com.example.itoken.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.itoken.data.retrofit.di.ViewModelKey
+import com.example.itoken.di.ViewModelKey
 import com.example.itoken.presentation.viewmodel.MainViewModel
 import com.example.itoken.utils.MainViewModelFactory
 import dagger.Binds

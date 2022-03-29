@@ -1,5 +1,7 @@
 package com.example.itoken.data.response
 
+import com.example.itoken.domain.model.InfoAsset
+
 data class Asset(
     val animation_original_url: String?,
     val animation_url: String?,
@@ -30,4 +32,17 @@ data class Asset(
     val traits: List<Trait>?,
     val transfer_fee: Any?,
     val transfer_fee_payment_token: Any?
-)
+) {
+    fun toInfoAsset() = InfoAsset(
+            token_id ?: "0",
+            image_preview_url,
+            image_url,
+            creator?.user?.username,
+            owner?.user?.username,
+            name,
+            asset_contract?.seller_fee_basis_points ?: 0,
+            (0..599).random(),
+            description ?: collection?.description,
+            asset_contract?.address
+        )
+}

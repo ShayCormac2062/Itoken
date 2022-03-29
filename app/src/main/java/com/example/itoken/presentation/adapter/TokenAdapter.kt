@@ -9,24 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.itoken.R
 import com.example.itoken.databinding.ViewTokenCardviewBinding
-import com.example.itoken.data.response.Asset
+import com.example.itoken.presentation.model.AssetBrief
 
-class TokenAdapter(val tokenList: List<Asset>?, private val context: Context) : RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
+class TokenAdapter(val tokenList: List<AssetBrief>?, private val context: Context) : RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
-    var onClick: ((Asset?, Int?) -> (Unit))? = null
+    var onClick: ((AssetBrief?, Int?) -> (Unit))? = null
     var onLastCardClick: (() -> (Unit))? = null
 
     inner class TokenCollectionViewHolder(
         private val binding: ViewTokenCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Asset?, isTheLast: Boolean) {
+        fun bind(item: AssetBrief?, isTheLast: Boolean) {
             with(binding) {
                 if (!isTheLast) {
-                    tvCreatorName.text = item?.creator?.user?.username ?: "Автор неизвестен"
-                    tvTokenName.text = item?.name.toString()
-                    ivTokenImage.load(Uri.parse(item?.image_url))
-                    tvTokenPrice.text = item?.asset_contract?.seller_fee_basis_points?.toString() ?: 0.toString()
-                    tvLikesAmount.text = (0..599).random().toString()
+                    tvCreatorName.text = item?.creatorName ?: "Автор неизвестен"
+                    tvTokenName.text = item?.tokenName.toString()
+                    ivTokenImage.load(Uri.parse(item?.imageUrl))
+                    tvTokenPrice.text = item?.price.toString()
+                    tvLikesAmount.text = item?.likes?.toString()
                     collectionCardview.setOnClickListener {
                         onClick?.invoke(item, (tvLikesAmount.text as String).toInt())
                     }

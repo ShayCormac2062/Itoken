@@ -1,10 +1,10 @@
 package com.example.itoken.domain.repository
 
-import com.example.itoken.data.response.Asset
+import com.example.itoken.domain.model.InfoAsset
 
 interface AssetRepository {
 
-    suspend fun getAssetsBrief(): List<Asset>
-    suspend fun getAssets(): List<Asset>
+    suspend fun getAssetsBrief(): List<InfoAsset>
+    suspend fun getAssets(): List<InfoAsset>
 
 }
