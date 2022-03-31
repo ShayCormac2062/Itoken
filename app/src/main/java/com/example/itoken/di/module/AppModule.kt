@@ -2,11 +2,11 @@ package com.example.itoken.di.module
 
 import android.content.Context
 import com.example.itoken.App
-import com.example.itoken.data.AssetRepositoryImpl
-import com.example.itoken.data.retrofit.APIService
-import com.example.itoken.domain.repository.AssetRepository
-import com.example.itoken.domain.usecase.GetAssetsBriefUseCase
-import com.example.itoken.domain.usecase.GetAssetsUseCase
+import com.example.itoken.features.assetlibrary.data.AssetRepositoryImpl
+import com.example.itoken.features.assetlibrary.data.retrofit.APIService
+import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
+import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBriefUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsUseCase
 import com.example.itoken.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides

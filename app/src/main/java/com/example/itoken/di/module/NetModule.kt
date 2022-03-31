@@ -1,6 +1,6 @@
 package com.example.itoken.di.module
 
-import com.example.itoken.data.retrofit.APIService
+import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

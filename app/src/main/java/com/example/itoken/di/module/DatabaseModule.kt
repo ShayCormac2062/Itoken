@@ -2,8 +2,8 @@ package com.example.itoken.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.itoken.data.db.AssetsDatabase
-import com.example.itoken.data.db.dao.AssetsDao
+import com.example.itoken.features.addtoken.data.db.AssetsDatabase
+import com.example.itoken.features.addtoken.data.db.dao.AssetsDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

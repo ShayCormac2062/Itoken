@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.fragment.AllTokensFragment">
+    tools:context=".features.assetlibrary.presentation.fragment.AllTokensFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -15,9 +15,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Главная"
-                    android:textColor="@color/red"
                     android:gravity="center"
-                    android:textSize="40sp"
+                    android:textSize="34sp"
                     app:layout_constraintBottom_toTopOf="@+id/rv_genres"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +45,7 @@
                     android:id="@+id/rv_genres"
                     style="@style/TokenCardsStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
@@ -57,14 +56,14 @@
                     style="@style/AllTokensFragmentTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Библиотека токенов:"
+                    android:text="Библиотека токенов"
                     app:layout_constraintTop_toBottomOf="@+id/rv_genres" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_tokens"
                     style="@style/TokenCardsStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
+                    android:layout_height="300dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
@@ -94,14 +93,14 @@
                     style="@style/AllTokensFragmentTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Успей купить по дешёвке:"
+                    android:text="Выгодные предложения"
                     app:layout_constraintTop_toBottomOf="@+id/rv_tokens" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cheap_tokens"
                     style="@style/TokenCardsStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
+                    android:layout_height="300dp"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +130,7 @@
                     style="@style/AllTokensFragmentTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Трендовые коллекции:"
+                    android:text="Трендовые коллекции"
                     app:layout_constraintTop_toBottomOf="@+id/rv_cheap_tokens" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -141,7 +140,28 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="invisible"
                     app:layout_constraintTop_toBottomOf="@+id/tv_collections" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sl_collections"
+                    style="@style/TokenCardsStyle"
+                    android:layout_marginStart="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_collections">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/shimmer_collection"/>
+                        <include layout="@layout/shimmer_collection"/>
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

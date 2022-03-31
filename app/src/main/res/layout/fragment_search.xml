@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.ui.fragment.SearchFragment">
+    tools:context=".features.assetlibrary.presentation.fragment.SearchFragment">
 
     <TextView
         android:id="@+id/tv_search"
         android:text="Поиск"
         android:gravity="center"
-        android:textColor="@color/red"
-        android:textSize="40sp"
+        android:textSize="34sp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
