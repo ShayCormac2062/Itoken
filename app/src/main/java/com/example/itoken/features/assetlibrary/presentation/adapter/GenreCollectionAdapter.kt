@@ -11,14 +11,14 @@ class GenreCollectionAdapter : RecyclerView.Adapter<GenreCollectionAdapter.Genre
 
     var onClick: ((String) -> (Unit))? = null
     private val genreNameList: List<Pair<String, Int>> = listOf(
-        Pair("Art", R.drawable.art),
-        Pair("Music", R.drawable.music),
-        Pair("Domain names", R.drawable.domain_names),
-        Pair("Utility", R.drawable.utility),
-        Pair("Virtual Worlds", R.drawable.virtual_worlds),
-        Pair("Trading Cards", R.drawable.trading_cards),
-        Pair("Collectibles", R.drawable.collectibies),
-        Pair("Sports", R.drawable.sports),
+        Pair("Art", R.drawable.gradient_login),
+        Pair("Music", R.drawable.gradient_music),
+        Pair("Domain names", R.drawable.gradient_domain_names),
+        Pair("Utility", R.drawable.gradient_utility),
+        Pair("Virtual Worlds", R.drawable.gradient_virtual_worlds),
+        Pair("Trading Cards", R.drawable.gradient_trading_cards),
+        Pair("Collectibles", R.drawable.gradient_collectibles),
+        Pair("Sports", R.drawable.gradient_sports),
     )
 
     inner class GenreCollectionViewHolder(

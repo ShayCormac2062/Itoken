@@ -34,7 +34,7 @@ data class Asset(
     val transfer_fee_payment_token: Any?
 ) {
     fun toInfoAsset() = InfoAsset(
-            token_id ?: "0",
+            token_id,
             image_preview_url,
             image_url,
             creator?.user?.username,

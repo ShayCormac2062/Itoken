@@ -107,6 +107,9 @@ class AllTokensFragment : Fragment() {
                         Log.e("FUCK", error.message.toString())
                     })
                 }
+                error.observe(viewLifecycleOwner) {
+                    it.printStackTrace()
+                }
             }
         }
     }

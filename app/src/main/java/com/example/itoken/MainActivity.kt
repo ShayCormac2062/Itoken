@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.itoken.databinding.ActivityMainBinding
-import com.example.itoken.features.addtoken.presentation.AddTokenFragment
+import com.example.itoken.features.addtoken.presentation.fragment.AddTokenFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             btnAddToken.setOnClickListener {
                 supportFragmentManager.beginTransaction()
                     .add(AddTokenFragment(), "FUCK")
-                    .addToBackStack(null)
+//                    .addToBackStack(null)
                     .commit()
             }
         }

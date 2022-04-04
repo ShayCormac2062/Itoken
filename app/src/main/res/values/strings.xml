@@ -9,4 +9,7 @@
     <string name="no_price_notif">Сколько стоит ваш токен?</string>
     <string name="no_name_notif">Вы не добавили имя ._.</string>
     <string name="no_photo_notif">Вы не вставили фото ._.</string>
+    <string name="notif_ending_create_token">Вы уверены в своих данных? Удалить токен уже не получится. Продолжить?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
 </resources>

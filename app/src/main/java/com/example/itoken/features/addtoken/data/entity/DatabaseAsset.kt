@@ -1,15 +1,15 @@
-package com.example.itoken.features.addtoken.data.db.entity
+package com.example.itoken.features.addtoken.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
+import com.example.itoken.features.addtoken.domain.model.AssetModel
 
 @Entity(tableName = "database_assets")
 data class DatabaseAsset(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "token_id")
-    var tokenId: String,
+    var tokenId: Long,
     @ColumnInfo(name = "image_preview_url") var imagePreviewUrl: String?,
     @ColumnInfo(name = "image_url") var imageUrl: String?,
     @ColumnInfo(name = "creator_name") var creatorName: String?,
@@ -20,7 +20,7 @@ data class DatabaseAsset(
     @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "address") var address: String?,
 ) {
-    fun toInfoAsset() = InfoAsset(
+    fun toAssetDto() = AssetModel(
         tokenId,
         imagePreviewUrl,
         imageUrl,

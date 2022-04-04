@@ -31,20 +31,15 @@ class TokenInfoFragment(private val asset: InfoAsset?, private val likes: Int?) 
             else imageView.load(R.drawable.gradient_login)
             ivToken.load(Uri.parse(asset?.imageUrl))
             tvCreatorName.text = asset?.creatorName ?: "Автор неизвестен"
-            tvTokenName.text = asset?.tokenName?.let {
-                (if (it.length > 32) {
-                    StringBuilder().append(it.substring(0, 29))
-                        .append("...")
-                } else it)
-            } ?: "Название не указано"
+            tvTokenName.text = asset?.tokenName ?: "Название не указано"
             tvPrice.text = "Цена: ${asset?.price} ICrystal"
             tvFavourite.text = likes.toString()
             tvDescription.text = asset?.description ?: asset?.description
             tvContractAddressValue.text = StringBuilder()
-                .append(asset?.address?.substring(0, 14))
+                .append(asset?.address?.substring(14, 28))
                 .append("...")
             tvTokenIdValue.text = asset?.tokenId?.let {
-                if (it.toString().length > 10) it.toString().substring(0, 9)
+                if (it.length > 10) it.substring(0, 9)
                 else it
             }.toString()
             tvTokenStandardsValue.text = (100..365).random().toString()

@@ -11,5 +11,5 @@ class GetAssetsBriefUseCase @Inject constructor(private val repository: AssetRep
     suspend operator fun invoke() =
         withContext(scope.IO) {
             repository.getAssetsBrief()
-        }// TODO Переделать на showableAsset
+        }
 }
