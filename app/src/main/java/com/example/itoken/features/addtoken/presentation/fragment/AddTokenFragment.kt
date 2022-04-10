@@ -1,15 +1,15 @@
 package com.example.itoken.features.addtoken.presentation.fragment
 
-import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,9 +29,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 class AddTokenFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentAddTokenBinding? = null
+    private lateinit var url: String
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -43,7 +45,6 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         App.appComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,65 +58,60 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         binding?.run {
             btnGoToGallery.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (context?.let { it1 ->
-                            checkSelfPermission(
-                                it1,
-                                READ_EXTERNAL_STORAGE
-                            )
-                        } == PackageManager.PERMISSION_DENIED) {
-                        val permissions = arrayOf(READ_EXTERNAL_STORAGE)
-                        requestPermissions(permissions, 100)
-                    } else {
+                    if (checkPermission(READ_EXTERNAL_STORAGE)) {
                         selectImageFromGallery()
                     }
                 }
             }
-            btnGoToCamera.setOnClickListener {
-                if (context?.let { it1 ->
-                        checkSelfPermission(
-                            it1,
-                            CAMERA
-                        )
-                    } == PackageManager.PERMISSION_DENIED
-                ) {
-                    val permissions = arrayOf(CAMERA)
-                    requestPermissions(permissions, 100)
-                } else {
-                    makePhoto()
+            btnGoToCanvas.setOnClickListener {
+                if (checkPermission(WRITE_EXTERNAL_STORAGE)) {
+                    paintToken()
                 }
             }
             //TODO(потом добавить проверку на категорию)
             btnCreateToken.setOnClickListener {
-                if (btnGoToCamera.isActivated || btnGoToGallery.isActivated) {
+                if (btnGoToCanvas.isActivated || btnGoToGallery.isActivated) {
                     if (tietName.text.toString() != "") {
                         if (tietPrise.text.toString() != "") {
                             showNotification()
-                        } else Toast.makeText(
-                            context,
-                            getString(R.string.no_price_notif),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else Toast.makeText(
-                        context,
-                        getString(R.string.no_name_notif),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else Toast.makeText(
-                    context,
-                    getString(R.string.no_photo_notif),
-                    Toast.LENGTH_SHORT
-                ).show()
+                        } else makeToast(getString(R.string.no_price_notif))
+                    } else makeToast(getString(R.string.no_name_notif))
+                } else makeToast(getString(R.string.no_photo_notif))
             }
         }
     }
 
+    private fun paintToken() {
+        CanvasFragment().show(childFragmentManager, "DAMN")
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return if (context?.let { it1 ->
+                checkSelfPermission(
+                    it1,
+                    permission
+                )
+            } == PackageManager.PERMISSION_DENIED
+        ) {
+            val permissions = arrayOf(permission)
+            requestPermissions(permissions, 100)
+            false
+        } else true
+    }
+
+    private fun makeToast(text: String) = Toast.makeText(
+        context,
+        text,
+        Toast.LENGTH_SHORT
+    ).show()
+
     private fun showNotification() {
         val bindingOfDialog: ViewNotificationBinding
-        val alerts =  AlertDialog.Builder(context).apply {
+        val alerts = AlertDialog.Builder(context).apply {
             bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
             setView(bindingOfDialog.root)
         }.show()
-        with (bindingOfDialog) {
+        with(bindingOfDialog) {
             btnNo.setOnClickListener {
                 alerts.dismiss()
             }
@@ -134,8 +130,8 @@ class AddTokenFragment : BottomSheetDialogFragment() {
     ) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             when (permissions[0]) {
-                CAMERA -> makePhoto()
-                else -> selectImageFromGallery()
+                READ_EXTERNAL_STORAGE -> selectImageFromGallery()
+                else -> paintToken()
             }
         } else {
             Toast.makeText(
@@ -152,17 +148,10 @@ class AddTokenFragment : BottomSheetDialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 100) {
-                val thumbNail = data?.extras?.get("data") as Bitmap
-                binding?.run {
-                    ivForPicture.load(thumbNail)
-                    btnGoToGallery.isActivated = true
-                    btnGoToCamera.isActivated = false
-                }
-            } else {
                 binding?.run {
                     ivForPicture.load(data?.data)
+                    url = data?.data.toString()
                     btnGoToGallery.isActivated = true
-                    btnGoToCamera.isActivated = false
                 }
             }
         }
@@ -177,33 +166,29 @@ class AddTokenFragment : BottomSheetDialogFragment() {
     private fun createToken() {
         binding?.run {
             val newToken = AssetModel(
-                0,
-                ivForPicture.drawable.toString(),
-                ivForPicture.drawable.toString(),
+                "0",
+                url,
+                url,
                 "FUCKYou228",
                 "FUCKYou228",
                 tietName.text.toString(),
-                tietPrise.text.toString().toInt(), 0,
+                tietPrise.text.toString().toInt(),
+                0,
                 tietDescription.text.toString(),
                 "0x${(10000000..99999999).random()}"
             )
             lifecycleScope.launch {
                 viewModel.add(newToken)
-                Toast.makeText(context, getString(R.string.add_token_susccessful), Toast.LENGTH_LONG)
-                    .show()
+                makeToast(getString(R.string.add_token_susccessful))
                 onDestroyView()
             }
         }
     }
 
-    private fun makePhoto() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, 100)
-    }
-
     private fun selectImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 200)
+        val i = Intent(Intent.ACTION_PICK)
+        i.type = "image/*"
+        startActivityForResult(i, 100)
     }
 }
+

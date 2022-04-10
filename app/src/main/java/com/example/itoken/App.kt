@@ -1,10 +1,8 @@
 package com.example.itoken
 
 import android.app.Application
-import com.example.itoken.di.AppComponent
-import com.example.itoken.di.module.AppModule
-import com.example.itoken.di.DaggerAppComponent
-import com.example.itoken.di.module.NetModule
+import com.example.itoken.common.di.AppComponent
+import com.example.itoken.common.di.DaggerAppComponent
 
 class App : Application() {
 

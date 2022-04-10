@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="false"
+    android:clickable="false"
+    tools:context=".features.addtoken.presentation.fragment.CanvasFragment">
+
+    <TextView
+        android:id="@+id/tv_notif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="Выберите цвет и толщину кисти"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_medium"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_colors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        style="@style/AllAppButtonStyle"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:text="Готово"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
+        style="@style/TokenCardsStyle"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_notif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_save"
+        app:layout_constraintVertical_bias=".4">
+
+        <com.example.itoken.features.addtoken.presentation.canvas.PaintView
+            android:id="@+id/painting_zone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_little"
+        style="@style/AllAppButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Маленький"
+        app:layout_constraintBottom_toTopOf="@+id/rv_colors"
+        app:layout_constraintEnd_toStartOf="@id/btn_medium"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_medium"
+        style="@style/AllAppButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Средний"
+        app:layout_constraintBottom_toTopOf="@+id/rv_colors"
+        app:layout_constraintEnd_toStartOf="@id/btn_big"
+        app:layout_constraintStart_toEndOf="@id/btn_little" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_big"
+        style="@style/AllAppButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Большой"
+        app:layout_constraintBottom_toTopOf="@+id/rv_colors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_medium" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

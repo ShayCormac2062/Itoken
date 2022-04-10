@@ -1,9 +1,9 @@
 package com.example.itoken.features.addtoken.domain.model
 
-import com.example.itoken.features.addtoken.data.entity.DatabaseAsset
+import com.example.itoken.common.db.model.DatabaseAsset
 
 data class AssetModel(
-    var tokenId: Long,
+    var tokenId: String?,
     var imagePreviewUrl: String?,
     var imageUrl: String?,
     var creatorName: String?,

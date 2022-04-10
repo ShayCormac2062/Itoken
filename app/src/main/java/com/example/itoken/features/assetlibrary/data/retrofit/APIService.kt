@@ -7,5 +7,4 @@ interface APIService {
 
     @GET("master/assets.json")
     suspend fun getAssets(): TokenAsset
-
 }

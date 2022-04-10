@@ -10,6 +10,7 @@ import coil.load
 import com.example.itoken.R
 import com.example.itoken.databinding.ViewTokenCardviewBinding
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
+import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 
 class TokenAdapter(val tokenList: List<AssetBrief>?, private val context: Context) : RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 

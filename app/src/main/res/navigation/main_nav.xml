@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.itoken.features.profile.presentation.fragment.ProfileFragment"
+        android:name="com.example.itoken.features.user.presentation.fragment.profile.ProfileFragment"
         android:label="Профиль"
         tools:layout="@layout/fragment_profile">
     </fragment>
@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_trading" />
     <fragment
         android:id="@+id/clickerFragment"
-        android:name="com.example.itoken.features.profile.presentation.fragment.ClickerFragment"
+        android:name="com.example.itoken.features.user.presentation.fragment.profile.ClickerFragment"
         android:label="fragment_clicker"
         tools:layout="@layout/fragment_clicker" />
 </navigation>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentSearchBinding
 import com.example.itoken.features.assetlibrary.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.TokenAdapter

@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
+import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.features.assetlibrary.data.response.Asset
 import com.example.itoken.databinding.FragmentAllTokensBinding
 import com.example.itoken.features.assetlibrary.presentation.adapter.CollectionAdapter

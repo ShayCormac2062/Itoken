@@ -52,11 +52,11 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_go_to_camera"
+            android:id="@+id/btn_go_to_canvas"
             style="@style/AllAppButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Камера"
+            android:text="Нарисовать токен"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_go_to_gallery"
             app:layout_constraintTop_toBottomOf="@+id/cardview_for_picture" />
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Галерея"
-            app:layout_constraintEnd_toStartOf="@+id/btn_go_to_camera"
+            app:layout_constraintEnd_toStartOf="@+id/btn_go_to_canvas"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview_for_picture" />
 

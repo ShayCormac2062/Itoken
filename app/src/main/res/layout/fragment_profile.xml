@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".features.profile.presentation.fragment.ProfileFragment">
+    tools:context=".features.user.presentation.fragment.profile.ProfileFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -199,7 +199,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_collected"
                 android:layout_width="match_parent"
-                android:layout_height="380dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/card_collected" />
 
             <com.google.android.material.card.MaterialCardView
@@ -243,7 +243,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_created"
                 android:layout_width="match_parent"
-                android:layout_height="380dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/card_created" />
 
             <com.google.android.material.card.MaterialCardView
@@ -287,7 +287,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favourite"
                 android:layout_width="match_parent"
-                android:layout_height="380dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/card_favourite" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
