@@ -81,7 +81,7 @@ class CanvasFragment : BottomSheetDialogFragment() {
                     "${System.currentTimeMillis()}token.jpg",
                     "beautiful"
                 )
-                onDestroyView()
+                dismiss()
             }
             rvColors.apply {
                 layoutManager = LinearLayoutManager(context).apply {

@@ -139,20 +139,20 @@ class ProfileFragment : BottomSheetDialogFragment() {
             list?.forEach(action = {
                 briefList.add(it.toItemAssetBrief())
             })
-            adapter = TokenAdapter(briefList, context).apply {
+            adapter = TokenAdapter(briefList).apply {
                 onClick = { asset, likes ->
                     swapTokenInfoBottomSheet(
                         list?.first(
                             predicate = {
                                 it.imageUrl == asset?.imageUrl
                             }
-                        ), likes)
+                        ) as ItemAsset, likes ?: 0)
                 }
                 setItemViewCacheSize(30)
             }
         }
     }
-    private fun swapTokenInfoBottomSheet(asset: ItemAsset?, likes: Int?) {
+    private fun swapTokenInfoBottomSheet(asset: ItemAsset, likes: Int) {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment(asset, likes), "SHIT")
             .commit()

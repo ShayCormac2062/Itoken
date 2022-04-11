@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun swapTokenInfoBottomSheet(asset: InfoAsset?, likes: Int?) {
+    private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment(asset, likes), "SHIT")
             .commit()

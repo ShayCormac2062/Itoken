@@ -6,12 +6,10 @@ import com.example.itoken.utils.DispatcherProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetAllCollectedUseCase @Inject constructor(private val repository: AssetsRepository,
-                                                 private val scope: DispatcherProvider
+class GetAllCollectedUseCase @Inject constructor(
+    private val repository: AssetsRepository
 ) {
 
-    suspend operator fun invoke(name: String) =
-        withContext(scope.IO) {
-            repository.getAllCollected(name)
-        }
+    suspend operator fun invoke(name: String) = repository.getAllCollected(name)
+
 }

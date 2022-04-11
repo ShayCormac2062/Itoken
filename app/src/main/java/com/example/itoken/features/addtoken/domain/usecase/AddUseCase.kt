@@ -6,12 +6,8 @@ import com.example.itoken.utils.DispatcherProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AddUseCase @Inject constructor(private val repository: AddTokenRepository,
-                                     private val scope: DispatcherProvider
+class AddUseCase @Inject constructor(private val repository: AddTokenRepository
 ) {
 
-    suspend operator fun invoke(asset: AssetModel) =
-        withContext(scope.IO) {
-            repository.add(asset.toDatabaseAsset())
-        }
+    suspend operator fun invoke(asset: AssetModel) = repository.add(asset.toDatabaseAsset())
 }

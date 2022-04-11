@@ -9,7 +9,7 @@ import coil.load
 import com.example.itoken.databinding.ViewTokenCardviewBinding
 import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 
-class TokenAdapter(val tokenList: List<ItemAssetBrief>?, private val context: Context) :
+class TokenAdapter(private val tokenList: List<ItemAssetBrief>?) :
     RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
     var onClick: ((ItemAssetBrief?, Int?) -> (Unit))? = null
@@ -18,26 +18,7 @@ class TokenAdapter(val tokenList: List<ItemAssetBrief>?, private val context: Co
         private val binding: ViewTokenCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemAssetBrief?) {
-            with(binding) {
-                tvCreatorName.text = item?.creatorName?.let {
-                    (if (it.length > 18) {
-                        StringBuilder().append(it.substring(0, 15))
-                            .append("...")
-                    } else it)
-                } ?: "Автор неизвестен"
-                tvTokenName.text = item?.tokenName?.let {
-                    (if (it.length > 32) {
-                        StringBuilder().append(it.substring(0, 29))
-                            .append("...")
-                    } else it)
-                } ?: "Название не указано"
-                ivTokenImage.load(Uri.parse(item?.imageUrl))
-                tvTokenPrice.text = item?.price.toString()
-                tvLikesAmount.text = item?.likes?.toString()
-                collectionCardview.setOnClickListener {
-                    onClick?.invoke(item, (tvLikesAmount.text as String).toInt())
-                }
-            }
+            item?.let { onClick?.let { it1 -> binding.collectionCardview.init(it, it1, false) } }
         }
     }
 

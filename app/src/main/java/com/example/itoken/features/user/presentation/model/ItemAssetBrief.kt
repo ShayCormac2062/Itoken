@@ -1,10 +1,19 @@
 package com.example.itoken.features.user.presentation.model
 
+import com.example.itoken.common.entity.BaseAssetBrief
+
 data class ItemAssetBrief(
-    var tokenId: String?,
-    var imageUrl: String?,
-    var creatorName: String?,
-    var tokenName: String?,
-    var price: Int?,
-    var likes: Int?,
+    override var tokenId: String?,
+    override var imageUrl: String?,
+    override var creatorName: String?,
+    override var tokenName: String?,
+    override var price: Int?,
+    override var likes: Int?,
+) : BaseAssetBrief(
+    tokenId,
+    imageUrl,
+    creatorName,
+    tokenName,
+    price,
+    likes
 )

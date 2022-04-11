@@ -10,8 +10,5 @@ class GetAssetsUseCase @Inject constructor(
     private val scope: DispatcherProvider
 ) {
 
-    suspend operator fun invoke() =
-        withContext(scope.IO) {
-            repository.getAssets()
-        } // TODO Переделать на showableAsset
+    suspend operator fun invoke() = repository.getAssets()
 }

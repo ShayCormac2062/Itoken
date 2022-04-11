@@ -37,4 +37,14 @@
         android:name="com.example.itoken.features.user.presentation.fragment.profile.ClickerFragment"
         android:label="fragment_clicker"
         tools:layout="@layout/fragment_clicker" />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.itoken.features.user.presentation.fragment.authentication.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.itoken.features.user.presentation.fragment.authentication.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

@@ -40,7 +40,6 @@ class AssetViewModel @Inject constructor(
                     assetList.add(it)
                 })
                 _collectedAssetList.value = Result.success(assetList)
-                _collectedAssetList.postValue(null)
             } catch (ex: Exception) {
                 _collectedAssetList.value = Result.failure(ex)
             }
@@ -55,7 +54,6 @@ class AssetViewModel @Inject constructor(
                     assetList.add(it)
                 })
                 _createdAssetList.value = Result.success(assetList)
-                _createdAssetList.postValue(null)
             } catch (ex: Exception) {
                 _createdAssetList.value = Result.failure(ex)
             }
@@ -70,7 +68,6 @@ class AssetViewModel @Inject constructor(
                     assetList.add(it)
                 })
                 _favouritesAssetList.value = Result.success(assetList)
-                _favouritesAssetList.postValue(null)
             } catch (ex: Exception) {
                 _favouritesAssetList.value = Result.failure(ex)
             }

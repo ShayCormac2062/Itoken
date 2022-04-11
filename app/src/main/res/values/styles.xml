@@ -4,9 +4,9 @@
     <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox.InputFields">
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_marginStart">16dp</item>
-        <item name="android:textColorHint">@color/white</item>
-        <item name="hintTextColor">@color/white</item>
-        <item name="boxStrokeColor">@color/white</item>
+        <item name="android:textColorHint">@color/red_dark</item>
+        <item name="hintTextColor">@color/red_dark</item>
+        <item name="boxStrokeColor">@color/red_dark</item>
         <item name="layout_constraintVertical_chainStyle">packed</item>
     </style>
 

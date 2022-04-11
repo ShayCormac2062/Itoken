@@ -148,10 +148,10 @@ class AllTokensFragment : Fragment() {
                             predicate = {
                                 it.imageUrl == asset?.imageUrl
                             }
-                        ), likes)
+                        ) as InfoAsset, likes)
                 }
                 setItemViewCacheSize(20)
-                onLastCardClick = {
+                onLastCardClick = { _, _ ->
                     Toast.makeText(
                         context,
                         "Переброс на страницу с токенами",
@@ -171,7 +171,7 @@ class AllTokensFragment : Fragment() {
         rv.visibility = View.VISIBLE
     }
 
-    private fun swapTokenInfoBottomSheet(asset: InfoAsset?, likes: Int?) {
+    private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment(asset, likes), "SHIT")
             .commit()

@@ -6,6 +6,7 @@ import com.example.itoken.common.di.ViewModelKey
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
+import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.example.itoken.utils.MainViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -38,6 +39,13 @@ interface ViewModelModule {
     @ViewModelKey(AssetViewModel::class)
     fun bindAssetViewModel(
         viewModel: AssetViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UsersViewModel::class)
+    fun bindUsersViewModel(
+        viewModel: UsersViewModel
     ): ViewModel
 
 }

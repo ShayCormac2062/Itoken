@@ -6,12 +6,9 @@ import com.example.itoken.utils.DispatcherProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetAllFavouritesUseCase @Inject constructor(private val repository: AssetsRepository,
-                                                  private val scope: DispatcherProvider
+class GetAllFavouritesUseCase @Inject constructor(
+    private val repository: AssetsRepository
 ) {
 
-    suspend operator fun invoke(name: String) =
-        withContext(scope.IO) {
-            repository.getAllFavourites(name)
-        }
+    suspend operator fun invoke(name: String) = repository.getAllFavourites(name)
 }
