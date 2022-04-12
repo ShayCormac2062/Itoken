@@ -20,18 +20,8 @@ class TokenView<M : BaseAssetBrief>(
     fun init(asset: M, onClick: ((M?, Int?) -> (Unit)), isTheLast: Boolean) {
         binding.run {
             if (!isTheLast) {
-                tvCreatorName.text = asset.creatorName?.let {
-                    (if (it.length > 18) {
-                        StringBuilder().append(it.substring(0, 15))
-                            .append("...")
-                    } else it)
-                } ?: "Автор неизвестен"
-                tvTokenName.text = asset.tokenName?.let {
-                    (if (it.length > 32) {
-                        StringBuilder().append(it.substring(0, 29))
-                            .append("...")
-                    } else it)
-                } ?: "Название не указано"
+                tvCreatorName.text = asset.creatorName
+                tvTokenName.text = asset.tokenName
                 ivTokenImage.load(Uri.parse(asset.imageUrl))
                 tvTokenPrice.text = asset.price.toString()
                 tvLikesAmount.text = asset.likes?.toString()

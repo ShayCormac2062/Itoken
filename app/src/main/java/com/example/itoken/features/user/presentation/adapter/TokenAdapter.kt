@@ -1,11 +1,8 @@
 package com.example.itoken.features.user.presentation.adapter
 
-import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.itoken.databinding.ViewTokenCardviewBinding
 import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 

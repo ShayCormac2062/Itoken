@@ -1,7 +1,7 @@
 package com.example.itoken.features.assetlibrary.data.response
 
 data class AssetContract(
-    val address: String,
+    var address: String,
     val asset_contract_type: String,
     val buyer_fee_basis_points: Int,
     val created_date: String,

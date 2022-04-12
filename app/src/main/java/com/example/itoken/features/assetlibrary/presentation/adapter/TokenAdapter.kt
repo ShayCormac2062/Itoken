@@ -21,18 +21,16 @@ class TokenAdapter(val tokenList: List<AssetBrief>?, private val context: Contex
         private val binding: ViewTokenCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AssetBrief?, isTheLast: Boolean) {
-            with(binding) {
-                if (!isTheLast) {
-                    item?.let { onClick?.let { it1 -> binding.collectionCardview.init(it, it1, false) } }
-                } else {
-                    item?.let {
-                        onLastCardClick?.let { it1 ->
-                            binding.collectionCardview.init(
-                                it,
-                                it1,
-                                true
-                            )
-                        }
+            if (!isTheLast) {
+                item?.let {
+                    onClick?.let {
+                            it1 -> binding.collectionCardview.init(it, it1, false)
+                    }
+                }
+            } else {
+                item?.let {
+                    onLastCardClick?.let { it1 ->
+                        binding.collectionCardview.init(it, it1, true)
                     }
                 }
             }

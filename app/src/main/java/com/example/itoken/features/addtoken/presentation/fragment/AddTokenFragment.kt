@@ -2,10 +2,8 @@ package com.example.itoken.features.addtoken.presentation.fragment
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -164,24 +162,28 @@ class AddTokenFragment : BottomSheetDialogFragment() {
 
     //TODO(потом переделать данные токена)
     private fun createToken() {
-        binding?.run {
-            val newToken = AssetModel(
-                "0",
-                url,
-                url,
-                "FUCKYou228",
-                "FUCKYou228",
-                tietName.text.toString(),
-                tietPrise.text.toString().toInt(),
-                0,
-                tietDescription.text.toString(),
-                "0x${(10000000..99999999).random()}"
-            )
-            lifecycleScope.launch {
-                viewModel.add(newToken)
-                makeToast(getString(R.string.add_token_susccessful))
-                onDestroyView()
+        try {
+            binding?.run {
+                val newToken = AssetModel(
+                    "0",
+                    url,
+                    url,
+                    "FUCKYou228",
+                    "FUCKYou228",
+                    tietName.text.toString(),
+                    tietPrise.text.toString().toInt(),
+                    0,
+                    tietDescription.text.toString(),
+                    "0x${(10000000..99999999).random()}"
+                )
+                lifecycleScope.launch {
+                    viewModel.add(newToken)
+                    makeToast(getString(R.string.add_token_susccessful))
+                    onDestroyView()
+                }
             }
+        } catch (e: Exception) {
+            makeToast("Ваш токен слишком дорогой, занизьте цену")
         }
     }
 

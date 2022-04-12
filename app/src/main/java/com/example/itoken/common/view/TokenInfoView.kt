@@ -11,7 +11,7 @@ import com.example.itoken.R
 import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 
-class TokenInfoView<M: BaseAsset>(
+class TokenInfoView<M : BaseAsset>(
     context: Context,
     attrs: AttributeSet? = null
 ) : NestedScrollView(context) {
@@ -22,27 +22,15 @@ class TokenInfoView<M: BaseAsset>(
         binding.run {
             imageView.load(Uri.parse(asset.imagePreviewUrl))
             ivToken.load(Uri.parse(asset.imageUrl))
-            tvCreatorName.text = asset.creatorName ?: "Автор неизвестен"
-            tvTokenName.text = asset.tokenName ?: "Название не указано"
+            tvCreatorName.text = asset.creatorName
+            tvTokenName.text = asset.tokenName
             tvPrice.text = "Цена: ${asset.price} ICrystal"
             tvFavourite.text = likes.toString()
             tvDescription.text = asset.description
-            try {
-                tvContractAddressValue.text = StringBuilder()
-                    .append(asset.address?.substring(14, 28))
-                    .append("...")
-            } catch (e: Exception) {
-                tvContractAddressValue.text = asset.address
-            }
-            tvTokenIdValue.text = asset.tokenId?.let {
-                if (it.length > 10) it.substring(0, 9)
-                else it
-            }.toString()
+            tvContractAddressValue.text = asset.address
+            tvTokenIdValue.text = asset.tokenId
             tvTokenStandardsValue.text = (100..365).random().toString()
-            tvBlockchainValue.text = asset.ownerName?.let {
-                if (it.length > 30) "Имя не указано"
-                else it
-            } ?: "Имя не указано"
+            tvBlockchainValue.text = asset.ownerName
             tvMetadataValue.text = "По умолчанию"
             cardviewShowDetails.setOnClickListener {
                 onDetailClick(cardviewDetails.visibility == View.VISIBLE)
