@@ -19,4 +19,7 @@ interface AssetsDao {
     @Query("SELECT * FROM database_assets")
     suspend fun getAll(): List<DatabaseAsset>
 
+    @Query("DELETE FROM database_assets")
+    suspend fun deleteAll()
+
 }

@@ -3,6 +3,7 @@ package com.example.itoken.common.db.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
 
 @Entity(tableName = "users")
@@ -18,6 +19,12 @@ data class User(
     val nickname: String?,
     @ColumnInfo(name = "description")
     val description: String?,
+    @ColumnInfo(name = "password")
+    val password: String?,
+    @ColumnInfo(name = "email")
+    val email: String?,
+    @ColumnInfo(name = "assets")
+    val assets: List<DatabaseAsset>?,
     @ColumnInfo(name = "balance")
     val balance: Double?,
 ) {
@@ -26,6 +33,17 @@ data class User(
         imageUrl,
         nickname,
         description,
+        password,
+        email,
+        changeList(assets),
         balance
     )
+
+    private fun changeList(assets: List<DatabaseAsset>?): List<ItemAsset> {
+        val result = arrayListOf<ItemAsset>()
+        assets?.forEach {
+            result.add(it.toItemAsset())
+        }
+        return result
+    }
 }

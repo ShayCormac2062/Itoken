@@ -1,15 +1,20 @@
 package com.example.itoken.common.view
 
+import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import coil.load
 import com.example.itoken.R
 import com.example.itoken.common.entity.BaseAsset
+import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentTokenInfoBinding
+import com.example.itoken.databinding.ViewNotificationBinding
 
 class TokenInfoView<M : BaseAsset>(
     context: Context,
@@ -18,7 +23,12 @@ class TokenInfoView<M : BaseAsset>(
 
     private val binding by lazy { FragmentTokenInfoBinding.bind(this) }
 
-    fun init(asset: M, likes: Int) {
+    fun init(
+        asset: M,
+        likes: Int,
+        isUserAuthorized: Boolean,
+        isUserBoughtThisAsset: Boolean
+    ) {
         binding.run {
             imageView.load(Uri.parse(asset.imagePreviewUrl))
             ivToken.load(Uri.parse(asset.imageUrl))
@@ -32,9 +42,57 @@ class TokenInfoView<M : BaseAsset>(
             tvTokenStandardsValue.text = (100..365).random().toString()
             tvBlockchainValue.text = asset.ownerName
             tvMetadataValue.text = "По умолчанию"
-            cardviewShowDetails.setOnClickListener {
-                onDetailClick(cardviewDetails.visibility == View.VISIBLE)
+            if (isUserBoughtThisAsset) {
+                with(cardviewShowDetails) {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        onDetailClick(cardviewDetails.visibility == View.VISIBLE)
+                    }
+                }
+            } else if (isUserAuthorized) {
+                with(btnToCollected) {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        if (TokenInfoFragment.isUserHasEnoughMoney) {
+                            showDialog()
+                        } else makeToast("Недостаточно средств на покупку токена!")
+                    }
+                }
+                with(btnToFavourites) {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        TokenInfoFragment.isNeedToFavourites = true
+                        makeToast("Токен был успешно добавлен в избранное")
+                    }
+                }
             }
+        }
+    }
+
+    private fun makeToast(s: String) =
+        Toast.makeText(
+            context,
+            s,
+            Toast.LENGTH_SHORT
+        ).show()
+
+    private fun showDialog() {
+        val bindingOfDialog: ViewNotificationBinding
+        val alerts = AlertDialog.Builder(context).apply {
+            bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
+            setView(bindingOfDialog.root)
+        }.show()
+        with(bindingOfDialog) {
+            btnNo.setOnClickListener {
+                alerts.dismiss()
+            }
+            btnYes.setOnClickListener {
+                TokenInfoFragment.isNeedToCollect = true
+                makeToast("Токен был успешно добавлен в библиотеку")
+                alerts.dismiss()
+            }
+            tvNotification.text = "Вы уверены, что хотите купить токен? С вас будет списано " +
+                    "${TokenInfoFragment.asset.price} ICrystal. Продолжить?"
         }
     }
 

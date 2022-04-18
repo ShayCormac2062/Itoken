@@ -1,18 +1,15 @@
 package com.example.itoken.features.addtoken.presentation.fragment
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +20,8 @@ import com.example.itoken.databinding.FragmentAddTokenBinding
 import com.example.itoken.databinding.ViewNotificationBinding
 import com.example.itoken.features.addtoken.domain.model.AssetModel
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
+import com.example.itoken.features.addtoken.presentation.viewmodel.CurrentUserViewModel
+import com.example.itoken.features.user.domain.model.UserModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,10 +31,14 @@ class AddTokenFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentAddTokenBinding? = null
     private lateinit var url: String
+    private var currentUser: UserModel? = null
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
     private val viewModel: AddTokenViewModel by viewModels {
+        factory
+    }
+    private val usersViewModel: CurrentUserViewModel by viewModels {
         factory
     }
 
@@ -54,17 +57,17 @@ class AddTokenFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.run {
+            initObservers()
+            lifecycleScope.launch {
+                usersViewModel.getUser()
+            }
             btnGoToGallery.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkPermission(READ_EXTERNAL_STORAGE)) {
-                        selectImageFromGallery()
-                    }
+                    selectImageFromGallery()
                 }
             }
             btnGoToCanvas.setOnClickListener {
-                if (checkPermission(WRITE_EXTERNAL_STORAGE)) {
-                    paintToken()
-                }
+                paintToken()
             }
             //TODO(потом добавить проверку на категорию)
             btnCreateToken.setOnClickListener {
@@ -79,22 +82,18 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun paintToken() {
-        CanvasFragment().show(childFragmentManager, "DAMN")
+    private fun initObservers() {
+        usersViewModel.currentUser.observe(viewLifecycleOwner) {
+            it?.fold(onSuccess = { user ->
+                currentUser = user
+            }, onFailure = { error ->
+                Log.e("FUCK", error.message.toString())
+            })
+        }
     }
 
-    private fun checkPermission(permission: String): Boolean {
-        return if (context?.let { it1 ->
-                checkSelfPermission(
-                    it1,
-                    permission
-                )
-            } == PackageManager.PERMISSION_DENIED
-        ) {
-            val permissions = arrayOf(permission)
-            requestPermissions(permissions, 100)
-            false
-        } else true
+    private fun paintToken() {
+        CanvasFragment().show(childFragmentManager, "DAMN")
     }
 
     private fun makeToast(text: String) = Toast.makeText(
@@ -121,28 +120,6 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            when (permissions[0]) {
-                READ_EXTERNAL_STORAGE -> selectImageFromGallery()
-                else -> paintToken()
-            }
-        } else {
-            Toast.makeText(
-                context,
-                when (permissions[0]) {
-                    READ_EXTERNAL_STORAGE -> "Доступ к фотографиям запрещён"
-                    else -> "Доступ к камере запрещён"
-                },
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 100) {
@@ -158,6 +135,7 @@ class AddTokenFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        currentUser = null
     }
 
     //TODO(потом переделать данные токена)
@@ -168,8 +146,8 @@ class AddTokenFragment : BottomSheetDialogFragment() {
                     "0",
                     url,
                     url,
-                    "FUCKYou228",
-                    "FUCKYou228",
+                    currentUser?.nickname,
+                    "",
                     tietName.text.toString(),
                     tietPrise.text.toString().toInt(),
                     0,

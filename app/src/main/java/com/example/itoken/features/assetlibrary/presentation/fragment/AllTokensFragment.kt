@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
+import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.features.assetlibrary.data.response.Asset
 import com.example.itoken.databinding.FragmentAllTokensBinding
@@ -20,8 +22,8 @@ import com.example.itoken.features.assetlibrary.presentation.adapter.CollectionA
 import com.example.itoken.features.assetlibrary.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.TokenAdapter
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
-import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
+import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -96,7 +98,13 @@ class AllTokensFragment : Fragment() {
             with(viewModel) {
                 assetListCheap.observe(viewLifecycleOwner) {
                     it?.fold(onSuccess = { t ->
-                        initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
+                        if (t.isNotEmpty()) {
+                            initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
+                        } else {
+                            findNavController().navigate(R.id.noConnectionFragment).apply {
+                                NoConnectionFragment.previousFragment = R.id.allTokensFragment
+                            }
+                        }
                     }, onFailure = { error ->
                         Log.e("FUCK", error.message.toString())
                     })
@@ -107,9 +115,6 @@ class AllTokensFragment : Fragment() {
                     }, onFailure = { error ->
                         Log.e("FUCK", error.message.toString())
                     })
-                }
-                error.observe(viewLifecycleOwner) {
-                    it.printStackTrace()
                 }
             }
         }
@@ -173,7 +178,10 @@ class AllTokensFragment : Fragment() {
 
     private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
         parentFragmentManager.beginTransaction()
-            .add(TokenInfoFragment(asset, likes), "SHIT")
+            .add(TokenInfoFragment().apply {
+                TokenInfoFragment.asset = asset
+                TokenInfoFragment.likes = likes
+            }, "SHIT")
             .commit()
     }
 

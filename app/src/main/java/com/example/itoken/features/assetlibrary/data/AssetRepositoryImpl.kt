@@ -33,18 +33,6 @@ class AssetRepositoryImpl @Inject constructor(private val api: APIService) : Ass
 
     private fun setup(asset: Asset): Asset {
         return asset.apply {
-            creator?.user?.username = (creator?.user?.username?.let {
-                (if (it.length > 18) {
-                    StringBuilder().append(it.substring(0, 15))
-                        .append("...")
-                } else it)
-            } ?: "Автор неизвестен").toString()
-            name = (name?.let {
-                (if (it.length > 32) {
-                    StringBuilder().append(it.substring(0, 29))
-                        .append("...")
-                } else it)
-            } ?: "Название не указано").toString()
             try {
                 asset_contract?.address = StringBuilder()
                     .append(asset_contract?.address?.substring(14, 28))
@@ -55,7 +43,7 @@ class AssetRepositoryImpl @Inject constructor(private val api: APIService) : Ass
                 else it
             }.toString()
             owner?.user?.username = owner?.user?.username?.let {
-                if (it.length > 30) "Имя не указано"
+                if (it.length > 23) "Имя не указано"
                 else it
             } ?: "Имя не указано"
         }

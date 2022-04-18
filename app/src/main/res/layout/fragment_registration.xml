@@ -6,6 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.user.presentation.fragment.authentication.RegistrationFragment">
 
+    <View
+        android:id="@+id/crystal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/icrystal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_welcome_to_app"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_welcome_to_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Регистрация на IToken"
+        style="@style/AllAppButtonStyle"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/crystal"
+        app:layout_constraintBottom_toTopOf="@+id/til_nickname" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_nickname"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.InputFields"
@@ -13,7 +37,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_to_app"
         app:layout_constraintBottom_toTopOf="@+id/til_description"
         android:hint="Введите свой никнейм"
         app:boxStrokeColor="@color/white">
@@ -102,6 +126,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_get_photo"
+        style="@style/AllAppButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="48dp"
+        android:text="Добавить фото профиля"
+        app:layout_constraintBottom_toTopOf="@id/btn_register"
+        app:layout_constraintTop_toBottomOf="@+id/til_repeat_password" />
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register"
         style="@style/AllAppButtonStyle"
         android:layout_width="match_parent"
@@ -110,6 +146,6 @@
         android:layout_marginTop="48dp"
         android:text="Зарегестрироваться"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_repeat_password" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_get_photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

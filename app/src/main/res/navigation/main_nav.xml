@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/tradeFragment"
         android:name="com.example.itoken.features.trades.presentation.fragment.TradeFragment"
-        android:label="Пролажи"
+        android:label="Продажи"
         tools:layout="@layout/fragment_trade" >
     </fragment>
     <fragment
@@ -47,4 +47,14 @@
         android:name="com.example.itoken.features.user.presentation.fragment.authentication.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/noConnectionFragment"
+        android:name="com.example.itoken.features.assetlibrary.presentation.fragment.NoConnectionFragment"
+        android:label="fragment_no_connection"
+        tools:layout="@layout/fragment_no_connection" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.itoken.features.user.presentation.fragment.profile.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" />
 </navigation>

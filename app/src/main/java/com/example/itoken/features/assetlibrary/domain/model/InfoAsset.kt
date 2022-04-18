@@ -29,8 +29,19 @@ data class InfoAsset(
     fun toAssetBrief() = AssetBrief(
         tokenId,
         imageUrl,
-        creatorName,
-        tokenName,
+        (creatorName?.let {
+            when {
+                it.length > 18 -> StringBuilder().append(it.substring(0, 15)).append("...")
+                it == "" -> "Имя автора не указано"
+                else -> it
+            }
+        } ?: "Автор неизвестен").toString(),
+        (tokenName?.let {
+            (if (it.length > 32) {
+                StringBuilder().append(it.substring(0, 29))
+                    .append("...")
+            } else it)
+        } ?: "Название не указано").toString(),
         price,
         likes
     )

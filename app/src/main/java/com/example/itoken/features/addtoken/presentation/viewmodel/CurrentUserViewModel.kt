@@ -1,33 +1,24 @@
-package com.example.itoken.features.user.presentation.viewmodel
+package com.example.itoken.features.addtoken.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
-import com.example.itoken.features.user.domain.usecase.*
+import com.example.itoken.features.user.domain.usecase.ChangeBalanceUseCase
+import com.example.itoken.features.user.domain.usecase.GetUserUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class UsersViewModel @Inject constructor(
-    private val addUserUseCase: AddUserUseCase,
-    private val changeBalanceUseCase: ChangeBalanceUseCase,
-    private val deleteUserUseCase: DeleteUserUseCase,
+//TODO(добавить юскейсы для этой модели)
+
+class CurrentUserViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val registerUserUseCase: RegisterUserUseCase,
+    private val changeBalanceUseCase: ChangeBalanceUseCase
 ): ViewModel() {
 
     private var _currentUser: MutableLiveData<Result<UserModel?>?> = MutableLiveData()
     val currentUser: LiveData<Result<UserModel?>?> = _currentUser
-
-    suspend fun addUser(user: UserModel) = addUserUseCase(user)
-
-    suspend fun registerUser(user: UserModel) = registerUserUseCase(user)
-
-    suspend fun signOut() = deleteUserUseCase()
-
-    suspend fun changeBalance(newBalance: Double?) = changeBalanceUseCase(newBalance)
 
     suspend fun getUser() {
         viewModelScope.launch {
@@ -39,4 +30,6 @@ class UsersViewModel @Inject constructor(
             }
         }
     }
+
+    suspend fun changeBalance(newBalance: Double?) = changeBalanceUseCase(newBalance)
 }

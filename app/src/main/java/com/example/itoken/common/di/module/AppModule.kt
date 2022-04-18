@@ -2,8 +2,9 @@ package com.example.itoken.common.di.module
 
 import android.content.Context
 import com.example.itoken.App
+import com.example.itoken.common.db.dao.GetUserDao
 import com.example.itoken.features.addtoken.data.AddTokenRepositoryImpl
-import com.example.itoken.features.addtoken.data.db.AddAssetDao
+import com.example.itoken.common.db.dao.AddAssetDao
 import com.example.itoken.features.addtoken.domain.repository.AddTokenRepository
 import com.example.itoken.features.addtoken.domain.usecase.AddUseCase
 import com.example.itoken.features.assetlibrary.data.AssetRepositoryImpl
@@ -19,6 +20,8 @@ import com.example.itoken.features.user.domain.repository.AssetsRepository
 import com.example.itoken.features.user.domain.repository.UsersRepository
 import com.example.itoken.features.user.domain.usecase.*
 import com.example.itoken.utils.DispatcherProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 
@@ -37,14 +40,18 @@ class AppModule {
     @Provides
     fun provideAssetsRepository(
         assetsDatabase: AssetsDao,
+        addAssetDatabase: AddAssetDao,
+        firebase: DatabaseReference,
         scope: DispatcherProvider
-    ): AssetsRepository = AssetsRepositoryImpl(assetsDatabase, scope)
+    ): AssetsRepository = AssetsRepositoryImpl(assetsDatabase, addAssetDatabase, firebase, scope)
 
     @Provides
     fun provideUsersRepository(
         usersDatabase: UsersDao,
+        getUserDatabase: GetUserDao,
+        firebase: DatabaseReference,
         scope: DispatcherProvider
-    ): UsersRepository = UsersRepositoryImpl(usersDatabase, scope)
+    ): UsersRepository = UsersRepositoryImpl(usersDatabase, getUserDatabase, firebase, scope)
 
     @Provides
     fun provideGetAssetsBriefUseCase(
@@ -101,4 +108,19 @@ class AppModule {
     fun provideDeleteUserUseCase(
         repository: UsersRepository
     ): DeleteUserUseCase = DeleteUserUseCase(repository)
+
+    @Provides
+    fun provideGetUserUseCase(
+        repository: UsersRepository
+    ): GetUserUseCase = GetUserUseCase(repository)
+
+    @Provides
+    fun provideAddAssetUseCase(
+        repository: AssetsRepository
+    ): AddAllUseCase = AddAllUseCase(repository)
+
+    @Provides
+    fun provideRegisterUserUseCase(
+        repository: UsersRepository
+    ): RegisterUserUseCase = RegisterUserUseCase(repository)
 }

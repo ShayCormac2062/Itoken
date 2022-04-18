@@ -1,4 +1,4 @@
-package com.example.itoken.features.addtoken.data.db
+package com.example.itoken.common.db.dao
 
 import androidx.room.*
 import com.example.itoken.common.db.model.DatabaseAsset

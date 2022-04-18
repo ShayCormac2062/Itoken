@@ -49,7 +49,10 @@ class SearchFragment : Fragment() {
 
     private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
         parentFragmentManager.beginTransaction()
-            .add(TokenInfoFragment(asset, likes), "SHIT")
+            .add(TokenInfoFragment().apply {
+                TokenInfoFragment.asset = asset
+                TokenInfoFragment.likes = likes
+            }, "SHIT")
             .commit()
     }
 

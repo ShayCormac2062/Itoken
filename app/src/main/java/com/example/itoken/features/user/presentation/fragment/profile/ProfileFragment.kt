@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -20,9 +20,11 @@ import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentProfileBinding
 import com.example.itoken.features.user.domain.model.ItemAsset
+import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.adapter.TokenAdapter
 import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
+import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,10 +35,14 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
-    private val viewModel: AssetViewModel by viewModels {
+    private val assetViewModel: AssetViewModel by viewModels {
+        factory
+    }
+    private val usersViewModel: UsersViewModel by viewModels {
         factory
     }
     private var allList: List<ItemAsset>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.appComponent.inject(this)
@@ -55,7 +61,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
         binding?.run {
-            lifecycleScope.launch {  viewModel.getAll() }
             btnGoToClicker.setOnClickListener {
                 activity?.findNavController(R.id.fragmentContainerView)
                     ?.navigate(R.id.clickerFragment)
@@ -71,8 +76,14 @@ class ProfileFragment : BottomSheetDialogFragment() {
             cardFavourite.setOnClickListener {
                 clickCard(rvFavourite, ivFavouriteCard, it.isActivated, 3)
                 it.isActivated = !it.isActivated
-
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            usersViewModel.getUser()
         }
     }
 
@@ -83,17 +94,22 @@ class ProfileFragment : BottomSheetDialogFragment() {
         } else lifecycleScope.launch {
             iv.load(R.drawable.arrow_up)
             when (point) {
-                1 -> viewModel.getCollected(binding?.tvCreatorName?.text.toString())
-                2 -> viewModel.getCreated(binding?.tvCreatorName?.text.toString())
-                else -> viewModel.getFavourites(binding?.tvCreatorName?.text.toString())
+                1 -> assetViewModel.getCollected(binding?.tvCreatorName?.text.toString())
+                2 -> assetViewModel.getCreated(binding?.tvCreatorName?.text.toString())
+                else -> assetViewModel.getFavourites(binding?.tvCreatorName?.text.toString())
             }
         }
-        rv.startAnimation(AnimationUtils.loadAnimation(context, if (isActivated) R.anim.swipe_up else R.anim.swipe_down))
+        rv.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                if (isActivated) R.anim.swipe_up else R.anim.swipe_down
+            )
+        )
     }
 
     private fun initObservers() {
         binding?.run {
-            with(viewModel) {
+            with(assetViewModel) {
                 allAssetList.observe(viewLifecycleOwner) {
                     it?.fold(onSuccess = { t ->
                         tvCreated.text = "Собрано: ${t.size}"
@@ -122,6 +138,55 @@ class ProfileFragment : BottomSheetDialogFragment() {
                     }, onFailure = { error ->
                         Log.e("FUCK", error.message.toString())
                     })
+                }
+                collectedAssetListAmount.observe(viewLifecycleOwner) {
+                    it?.fold(onSuccess = {
+                        binding?.tvCollected?.text = "Куплено: ${it}"
+                    }, onFailure = { error ->
+                        Log.e("FUCK", error.message.toString())
+                    })
+                }
+                createdAssetListAmount.observe(viewLifecycleOwner) {
+                    it?.fold(onSuccess = {
+                        binding?.tvCreated?.text = "Создано: ${it}"
+                    }, onFailure = { error ->
+                        Log.e("FUCK", error.message.toString())
+                    })
+                }
+                favouritesAssetListAmount.observe(viewLifecycleOwner) {
+                    it?.fold(onSuccess = {
+                        binding?.tvFavourite?.text = "Избранное: ${it}"
+                    }, onFailure = { error ->
+                        Log.e("FUCK", error.message.toString())
+                    })
+                }
+            }
+            with(usersViewModel) {
+                currentUser.observe(viewLifecycleOwner) {
+                    it?.fold(onSuccess = { user ->
+                        setupScreen(user)
+                        Log.e("MY_USER", user.toString())
+                    }, onFailure = { error ->
+                        Log.e("FUCK", error.message.toString())
+                    })
+                }
+            }
+        }
+    }
+
+    private fun setupScreen(user: UserModel?) {
+        binding?.run {
+            imageView.load(user?.imageUrl)
+            ivCreatorAvatar.load(user?.imageUrl)
+            tvDescription.text = user?.description
+            tvCreatorAddress.text = user?.stringId
+            tvCreatorName.text = user?.nickname
+            tvCrystalAmount.text = "${user?.balance?.toInt()} ICrystal"
+            lifecycleScope.launch {
+                with(assetViewModel) {
+                    getCollectedAmount(user?.nickname.toString())
+                    getCreatedAmount(user?.nickname.toString())
+                    getFavouritesAmount(user?.nickname.toString())
                 }
             }
         }
@@ -152,9 +217,13 @@ class ProfileFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
     private fun swapTokenInfoBottomSheet(asset: ItemAsset, likes: Int) {
         parentFragmentManager.beginTransaction()
-            .add(TokenInfoFragment(asset, likes), "SHIT")
+            .add(TokenInfoFragment().apply {
+                TokenInfoFragment.asset = asset
+                TokenInfoFragment.likes = likes
+            }, "SHIT")
             .commit()
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.itoken.common.di.ViewModelKey
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
+import com.example.itoken.features.addtoken.presentation.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
@@ -46,6 +47,13 @@ interface ViewModelModule {
     @ViewModelKey(UsersViewModel::class)
     fun bindUsersViewModel(
         viewModel: UsersViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CurrentUserViewModel::class)
+    fun bindCurrentUserViewModel(
+        viewModel: CurrentUserViewModel
     ): ViewModel
 
 }

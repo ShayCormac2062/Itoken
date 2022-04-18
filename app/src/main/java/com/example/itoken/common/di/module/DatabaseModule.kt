@@ -2,9 +2,10 @@ package com.example.itoken.common.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.itoken.features.addtoken.data.db.AddAssetDao
+import com.example.itoken.common.db.dao.AddAssetDao
 import com.example.itoken.common.db.AssetsDatabase
 import com.example.itoken.common.db.UserDatabase
+import com.example.itoken.common.db.dao.GetUserDao
 import com.example.itoken.features.user.data.db.dao.AssetsDao
 import com.example.itoken.features.user.data.db.dao.UsersDao
 import dagger.Module
@@ -39,4 +40,8 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideUsersDao(db: UserDatabase): UsersDao = db.usersDao()
+
+    @Singleton
+    @Provides
+    fun provideAddUserDao(db: UserDatabase): GetUserDao = db.getUserDao()
 }

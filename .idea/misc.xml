@@ -30,7 +30,9 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_all_tokens.xml" value="0.2" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_canvas.xml" value="0.13033175355450238" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_clicker.xml" value="0.15925925925925927" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_loading.xml" value="0.33" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_no_connection.xml" value="0.2" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_own_token_info.xml" value="0.1" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_registration.xml" value="0.22" />
@@ -49,6 +51,7 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_info.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_trade_cardview.xml" value="0.14629629629629629" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_trending_collection_cardview.xml" value="0.2" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/menu/main_menu.xml" value="0.15925925925925927" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/xml/file_paths.xml" value="0.20416666666666666" />
       </map>
     </option>

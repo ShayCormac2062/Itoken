@@ -19,6 +19,7 @@ class TokenView<M : BaseAssetBrief>(
 
     fun init(asset: M, onClick: ((M?, Int?) -> (Unit)), isTheLast: Boolean) {
         binding.run {
+            cardElevation = 8f
             if (!isTheLast) {
                 tvCreatorName.text = asset.creatorName
                 tvTokenName.text = asset.tokenName

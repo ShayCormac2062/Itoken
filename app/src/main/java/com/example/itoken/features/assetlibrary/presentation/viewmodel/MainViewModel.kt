@@ -15,7 +15,6 @@ class MainViewModel @Inject constructor(
     private val getAssetsUseCase: GetAssetsUseCase
     ): ViewModel() {
 
-
     private var _assetList: MutableLiveData<Result<List<InfoAsset>>?> = MutableLiveData()
     val assetList: LiveData<Result<List<InfoAsset>>?> = _assetList
 

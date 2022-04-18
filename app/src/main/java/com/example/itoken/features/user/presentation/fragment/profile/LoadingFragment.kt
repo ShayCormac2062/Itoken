@@ -2,25 +2,26 @@ package com.example.itoken.features.user.presentation.fragment.profile
 
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.itoken.App
+import com.example.itoken.MainActivity
 import com.example.itoken.R
-import com.example.itoken.databinding.FragmentClickerBinding
+import com.example.itoken.databinding.FragmentLoadingBinding
+import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ClickerFragment : Fragment() {
+class LoadingFragment : Fragment() {
 
-    private var binding: FragmentClickerBinding? = null
+    private var binding: FragmentLoadingBinding? = null
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -37,44 +38,28 @@ class ClickerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentClickerBinding.inflate(layoutInflater)
+        binding = FragmentLoadingBinding.inflate(layoutInflater)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
-        binding?.run {
-            lifecycleScope.launch {
-                usersViewModel.getUser()
-            }
-            btnEnd.setOnClickListener {
-                activity?.findNavController(R.id.fragmentContainerView)
-                    ?.navigate(R.id.profileFragment)
-            }
-            ivCrystalAnim.setOnClickListener {
-                it.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_up))
-                tvUserCrystals.text =  String.format("%.2f", tvUserCrystals.text.toString().toDouble() + 0.02)
-            }
+        lifecycleScope.launch {
+            usersViewModel.getUser()
         }
     }
 
     private fun initObservers() {
         usersViewModel.currentUser.observe(viewLifecycleOwner) {
             it?.fold(onSuccess = { user ->
-                binding?.tvUserCrystals?.text = user?.balance?.toString()
-                Log.e("MY_USER", user.toString())
+                if (user != null) {
+                    (requireActivity() as MainActivity).changeButtonVisibility(false)
+                    findNavController().navigate(R.id.profileFragment)
+                } else findNavController().navigate(R.id.loginFragment)
             }, onFailure = { error ->
                 Log.e("FUCK", error.message.toString())
             })
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        lifecycleScope.launch {
-            usersViewModel.changeBalance(binding?.tvUserCrystals?.text.toString().toDouble())
-        }
-        binding = null
     }
 }

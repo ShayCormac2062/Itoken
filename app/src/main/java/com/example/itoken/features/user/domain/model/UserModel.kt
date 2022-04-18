@@ -1,5 +1,6 @@
 package com.example.itoken.features.user.domain.model
 
+import com.example.itoken.common.db.model.DatabaseAsset
 import com.example.itoken.common.db.model.User
 
 data class UserModel(
@@ -7,6 +8,9 @@ data class UserModel(
     val imageUrl: String?,
     val nickname: String?,
     val description: String?,
+    val password: String?,
+    val email: String?,
+    var assets: List<ItemAsset>?,
     var balance: Double?,
 ) {
     fun toUser() = User(
@@ -15,6 +19,17 @@ data class UserModel(
         imageUrl,
         nickname,
         description,
+        password,
+        email,
+        changeList(assets),
         balance
     )
+
+    private fun changeList(assets: List<ItemAsset>?): List<DatabaseAsset> {
+        val result = arrayListOf<DatabaseAsset>()
+        assets?.forEach {
+            result.add(it.toDatabaseAsset())
+        }
+        return result
+    }
 }
