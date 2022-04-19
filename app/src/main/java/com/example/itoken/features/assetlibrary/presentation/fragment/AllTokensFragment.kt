@@ -1,7 +1,6 @@
 package com.example.itoken.features.assetlibrary.presentation.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
-import com.example.itoken.features.assetlibrary.data.response.Asset
 import com.example.itoken.databinding.FragmentAllTokensBinding
+import com.example.itoken.features.assetlibrary.data.response.Asset
+import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.example.itoken.features.assetlibrary.presentation.adapter.CollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.TokenAdapter
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
-import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -96,25 +95,17 @@ class AllTokensFragment : Fragment() {
     private fun initObservers() {
         binding?.run {
             with(viewModel) {
-                assetListCheap.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { t ->
-                        if (t.isNotEmpty()) {
-                            initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
-                        } else {
-                            findNavController().navigate(R.id.noConnectionFragment).apply {
-                                NoConnectionFragment.previousFragment = R.id.allTokensFragment
-                            }
+                assetListCheap.observe(viewLifecycleOwner) { t ->
+                    if (t?.isNotEmpty() == true) {
+                        initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
+                    } else {
+                        findNavController().navigate(R.id.noConnectionFragment).apply {
+                            NoConnectionFragment.previousFragment = R.id.allTokensFragment
                         }
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                    }
                 }
-                assetList.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { t ->
-                        initTokensRecyclerView(rvTokens, slTokens, t)
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                assetList.observe(viewLifecycleOwner) { t ->
+                    initTokensRecyclerView(rvTokens, slTokens, t)
                 }
             }
         }
@@ -177,10 +168,13 @@ class AllTokensFragment : Fragment() {
     }
 
     private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
+        val bundle = Bundle().apply {
+            putSerializable("asset", asset)
+            putInt("likes", likes)
+        }
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {
-                TokenInfoFragment.asset = asset
-                TokenInfoFragment.likes = likes
+                arguments = bundle
             }, "SHIT")
             .commit()
     }

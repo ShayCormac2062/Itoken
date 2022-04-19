@@ -15,16 +15,16 @@ class MainViewModel @Inject constructor(
     private val getAssetsUseCase: GetAssetsUseCase
     ): ViewModel() {
 
-    private var _assetList: MutableLiveData<Result<List<InfoAsset>>?> = MutableLiveData()
-    val assetList: LiveData<Result<List<InfoAsset>>?> = _assetList
+    private var _assetList: MutableLiveData<List<InfoAsset>?> = MutableLiveData()
+    val assetList: LiveData<List<InfoAsset>?> = _assetList
 
     // TODO(
     //  Сюда надо будет добавить LiveData с коллекциями. ХВАТИТ ЛЕНИТЬСЯ, ТЫ, ВОНЮЧАЯ ЗАДНИЦА!
     //  Начни писать api для коллекций
     //  )
 
-    private var _assetListCheap: MutableLiveData<Result<List<InfoAsset>>?> = MutableLiveData()
-    val assetListCheap: LiveData<Result<List<InfoAsset>>?> = _assetListCheap
+    private var _assetListCheap: MutableLiveData<List<InfoAsset>?> = MutableLiveData()
+    val assetListCheap: LiveData<List<InfoAsset>?> = _assetListCheap
 
     private var _error: MutableLiveData<Exception> = MutableLiveData()
     val error: LiveData<Exception> = _error
@@ -36,10 +36,9 @@ class MainViewModel @Inject constructor(
                 getAssetsBriefUseCase().forEach(action = {
                     assetList.add(it)
                 })
-                _assetListCheap.value = Result.success(assetList)
-                _assetListCheap.postValue(null)
+                _assetListCheap.value = assetList
             } catch (ex: Exception) {
-                _assetListCheap.value = Result.failure(ex)
+                _assetListCheap.value = null
                 _error.value = ex
             }
         }
@@ -52,10 +51,9 @@ class MainViewModel @Inject constructor(
                 getAssetsBriefUseCase().forEach(action = {
                     assetList.add(it)
                 })
-                _assetList.value = Result.success(assetList)
-                _assetList.postValue(null)
+                _assetList.value = assetList
             } catch (ex: Exception) {
-                _assetList.value = Result.failure(ex)
+                _assetList.value = null
                 _error.value = ex
             }
         }

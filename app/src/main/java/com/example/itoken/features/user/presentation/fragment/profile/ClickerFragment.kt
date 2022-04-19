@@ -1,7 +1,6 @@
 package com.example.itoken.features.user.presentation.fragment.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,19 +53,14 @@ class ClickerFragment : Fragment() {
             }
             ivCrystalAnim.setOnClickListener {
                 it.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_up))
-                tvUserCrystals.text =  String.format("%.2f", tvUserCrystals.text.toString().toDouble() + 0.02)
+                tvUserCrystals.text = (tvUserCrystals.text.toString().toDouble() + 0.25f).toString()
             }
         }
     }
 
     private fun initObservers() {
-        usersViewModel.currentUser.observe(viewLifecycleOwner) {
-            it?.fold(onSuccess = { user ->
-                binding?.tvUserCrystals?.text = user?.balance?.toString()
-                Log.e("MY_USER", user.toString())
-            }, onFailure = { error ->
-                Log.e("FUCK", error.message.toString())
-            })
+        usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            binding?.tvUserCrystals?.text = user?.balance?.toString()
         }
     }
 

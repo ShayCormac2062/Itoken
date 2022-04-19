@@ -2,9 +2,6 @@
     <string name="app_name">IToken</string>
     <string name="see_all_tokens_notif">Увидеть всю библиотеку</string>
     <string name="see_collections_notif">Открыть библиотеку коллекций</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="add_token_susccessful">Токен был успешно создан!</string>
     <string name="no_price_notif">Сколько стоит ваш токен?</string>
     <string name="no_name_notif">Вы не добавили имя ._.</string>

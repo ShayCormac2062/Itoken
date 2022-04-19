@@ -22,6 +22,7 @@ class TokenInfoView<M : BaseAsset>(
 ) : NestedScrollView(context) {
 
     private val binding by lazy { FragmentTokenInfoBinding.bind(this) }
+    private lateinit var currentAsset: M
 
     fun init(
         asset: M,
@@ -29,6 +30,7 @@ class TokenInfoView<M : BaseAsset>(
         isUserAuthorized: Boolean,
         isUserBoughtThisAsset: Boolean
     ) {
+        currentAsset = asset
         binding.run {
             imageView.load(Uri.parse(asset.imagePreviewUrl))
             ivToken.load(Uri.parse(asset.imageUrl))
@@ -92,7 +94,7 @@ class TokenInfoView<M : BaseAsset>(
                 alerts.dismiss()
             }
             tvNotification.text = "Вы уверены, что хотите купить токен? С вас будет списано " +
-                    "${TokenInfoFragment.asset.price} ICrystal. Продолжить?"
+                    "${currentAsset.price} ICrystal. Продолжить?"
         }
     }
 

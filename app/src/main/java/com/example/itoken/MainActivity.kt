@@ -1,7 +1,6 @@
 package com.example.itoken
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -53,12 +52,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        usersViewModel.currentUser.observe(this) {
-            it?.fold(onSuccess = { t ->
-                if (t == null) changeButtonVisibility(true)
-            }, onFailure = { error ->
-                Log.e("FUCK", error.message.toString())
-            })
+        usersViewModel.currentUser.observe(this) { t ->
+            if (t == null) changeButtonVisibility(true)
         }
     }
 

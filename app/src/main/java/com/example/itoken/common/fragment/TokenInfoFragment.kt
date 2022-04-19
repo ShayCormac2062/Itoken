@@ -20,10 +20,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TokenInfoFragment :
-    BottomSheetDialogFragment() { //поменять получение из бандла
+    BottomSheetDialogFragment() {
 
     private var binding: FragmentTokenInfoBinding? = null
-    private var currenUser: UserModel? = null
+    private var currentUser: UserModel? = null
+    private lateinit var asset: BaseAsset
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -47,40 +48,35 @@ class TokenInfoFragment :
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTokenInfoBinding.inflate(layoutInflater)
-        isNeedToCollect = false
-        isNeedToFavourites = false
+        asset = arguments?.get("asset") as BaseAsset
         return binding?.root
     }
 
     private fun initObservers() {
-        usersViewModel.currentUser.observe(viewLifecycleOwner) {
-            it?.fold(onSuccess = { user ->
-                currenUser = user
-                isUserAuthorized = true
-                currenUser?.balance?.let { balance ->
-                    asset.price?.let { price ->
-                        isUserHasEnoughMoney = balance.toInt() >= price.toDouble()
-                    }
+        usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            currentUser = user
+            isUserAuthorized = true
+            currentUser?.balance?.let { balance ->
+                asset.price?.let { price ->
+                    isUserHasEnoughMoney = balance.toInt() >= price.toDouble()
                 }
-                lifecycleScope.launch {
-                    assetViewModel.getAll()
-                }
-                Log.e("MY_USER_AT_TOKEN_INFO", user.toString())
-            }, onFailure = { error ->
-                Log.e("FUCK", error.message.toString())
-            })
+            }
+            lifecycleScope.launch {
+                assetViewModel.getAll()
+            }
         }
-        assetViewModel.allAssetList.observe(viewLifecycleOwner) {
-            it?.fold(onSuccess = { list ->
-                if (list.contains(asset)) {
-                    isUserBoughtThisAsset = true
-                }
-                binding?.run {
-                    tokenInfoContainer.init(asset, likes, isUserAuthorized, isUserBoughtThisAsset)
-                }
-            }, onFailure = { error ->
-                Log.e("FUCK", error.message.toString())
-            })
+        assetViewModel.allAssetList.observe(viewLifecycleOwner) { list ->
+            if (list?.contains(asset) == true) {
+                isUserBoughtThisAsset = true
+            }
+            binding?.run {
+                tokenInfoContainer.init(
+                    asset,
+                    arguments?.getInt("likes") as Int,
+                    isUserAuthorized,
+                    isUserBoughtThisAsset
+                )
+            }
         }
     }
 
@@ -96,17 +92,15 @@ class TokenInfoFragment :
         super.onDestroyView()
         if (isNeedToCollect) {
             viewModel.add(asset.toAssetModel().apply {
-                ownerName = currenUser?.nickname
+                ownerName = currentUser?.nickname
             })
             lifecycleScope.launch {
                 usersViewModel.changeBalance(asset.price?.toDouble()
-                    ?.let { currenUser?.balance?.minus(it) })
-                println(currenUser?.toString())
+                    ?.let { currentUser?.balance?.minus(it) })
             }
         } else if (isNeedToFavourites) {
             viewModel.add(asset.toAssetModel())
         }
-        likes = 0
         isUserAuthorized = false
         isUserBoughtThisAsset = false
         isNeedToCollect = false
@@ -116,8 +110,6 @@ class TokenInfoFragment :
     }
 
     companion object {
-        lateinit var asset: BaseAsset
-        var likes = 0
         var isUserAuthorized = false
         var isUserBoughtThisAsset = false
         var isNeedToCollect = false

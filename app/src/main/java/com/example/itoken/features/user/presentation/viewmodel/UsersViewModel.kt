@@ -18,8 +18,8 @@ class UsersViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
 ): ViewModel() {
 
-    private var _currentUser: MutableLiveData<Result<UserModel?>?> = MutableLiveData()
-    val currentUser: LiveData<Result<UserModel?>?> = _currentUser
+    private var _currentUser: MutableLiveData<UserModel?> = MutableLiveData()
+    val currentUser: LiveData<UserModel?> = _currentUser
 
     suspend fun addUser(user: UserModel) = addUserUseCase(user)
 
@@ -32,10 +32,9 @@ class UsersViewModel @Inject constructor(
     suspend fun getUser() {
         viewModelScope.launch {
             try {
-                _currentUser.value = Result.success(getUserUseCase())
-                _currentUser.postValue(null)
+                _currentUser.value = getUserUseCase()
             } catch (ex: Exception) {
-                _currentUser.value = Result.failure(ex)
+                _currentUser.value = null
             }
         }
     }

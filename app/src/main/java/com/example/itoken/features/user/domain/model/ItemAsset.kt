@@ -3,6 +3,7 @@ package com.example.itoken.features.user.domain.model
 import com.example.itoken.common.db.model.DatabaseAsset
 import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.features.user.presentation.model.ItemAssetBrief
+import java.io.Serializable
 
 data class ItemAsset(
     override var tokenId: String?,
@@ -26,7 +27,7 @@ data class ItemAsset(
     likes,
     description,
     address
-) {
+), Serializable {
     fun toItemAssetBrief() = ItemAssetBrief(
         tokenId,
         imageUrl,

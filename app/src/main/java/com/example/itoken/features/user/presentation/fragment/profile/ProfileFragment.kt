@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -111,64 +110,31 @@ class ProfileFragment : BottomSheetDialogFragment() {
         binding?.run {
             with(assetViewModel) {
                 allAssetList.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { t ->
-                        tvCreated.text = "Собрано: ${t.size}"
-                        allList = t
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                    allList = it
                 }
-                collectedAssetList.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { t ->
-                        initTokensRecyclerView(rvCollected, t)
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                collectedAssetList.observe(viewLifecycleOwner) { t ->
+                    initTokensRecyclerView(rvCollected, t)
                 }
-                createdAssetList.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { t ->
-                        initTokensRecyclerView(rvCreated, t)
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                createdAssetList.observe(viewLifecycleOwner) { t ->
+                    initTokensRecyclerView(rvCreated, t)
                 }
-                favouritesAssetList.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { t ->
-                        initTokensRecyclerView(rvFavourite, t)
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                favouritesAssetList.observe(viewLifecycleOwner) { t ->
+                    initTokensRecyclerView(rvFavourite, t)
                 }
                 collectedAssetListAmount.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = {
-                        binding?.tvCollected?.text = "Куплено: ${it}"
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                    binding?.tvCollected?.text = "Куплено: ${it}"
                 }
                 createdAssetListAmount.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = {
-                        binding?.tvCreated?.text = "Создано: ${it}"
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                    binding?.tvCreated?.text = "Создано: ${it}"
                 }
                 favouritesAssetListAmount.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = {
-                        binding?.tvFavourite?.text = "Избранное: ${it}"
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                    binding?.tvFavourite?.text = "Избранное: ${it}"
                 }
             }
             with(usersViewModel) {
-                currentUser.observe(viewLifecycleOwner) {
-                    it?.fold(onSuccess = { user ->
-                        setupScreen(user)
-                        Log.e("MY_USER", user.toString())
-                    }, onFailure = { error ->
-                        Log.e("FUCK", error.message.toString())
-                    })
+                currentUser.observe(viewLifecycleOwner) { user ->
+                    setupScreen(user)
+                    Log.e("MY_USER", user.toString())
                 }
             }
         }
@@ -219,10 +185,13 @@ class ProfileFragment : BottomSheetDialogFragment() {
     }
 
     private fun swapTokenInfoBottomSheet(asset: ItemAsset, likes: Int) {
+        val bundle = Bundle().apply {
+            putSerializable("asset", asset)
+            putInt("likes", likes)
+        }
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {
-                TokenInfoFragment.asset = asset
-                TokenInfoFragment.likes = likes
+                arguments = bundle
             }, "SHIT")
             .commit()
     }

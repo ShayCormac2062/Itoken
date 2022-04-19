@@ -18,29 +18,29 @@ class AssetViewModel @Inject constructor(
     private val addAllUseCase: AddAllUseCase,
 ) : ViewModel() {
 
-    private var _collectedAssetList: MutableLiveData<Result<List<ItemAsset>>?> = MutableLiveData()
-    val collectedAssetList: LiveData<Result<List<ItemAsset>>?> = _collectedAssetList
+    private var _collectedAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
+    val collectedAssetList: LiveData<List<ItemAsset>?> = _collectedAssetList
 
-    private var _createdAssetList: MutableLiveData<Result<List<ItemAsset>>?> = MutableLiveData()
-    val createdAssetList: LiveData<Result<List<ItemAsset>>?> = _createdAssetList
+    private var _createdAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
+    val createdAssetList: LiveData<List<ItemAsset>?> = _createdAssetList
 
-    private var _favouritesAssetList: MutableLiveData<Result<List<ItemAsset>>?> = MutableLiveData()
-    val favouritesAssetList: LiveData<Result<List<ItemAsset>>?> = _favouritesAssetList
+    private var _favouritesAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
+    val favouritesAssetList: LiveData<List<ItemAsset>?> = _favouritesAssetList
 
-    private var _allAssetList: MutableLiveData<Result<List<ItemAsset>>?> = MutableLiveData()
-    val allAssetList: LiveData<Result<List<ItemAsset>>?> = _allAssetList
+    private var _allAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
+    val allAssetList: LiveData<List<ItemAsset>?> = _allAssetList
 
-    private var _collectedAssetListAmount: MutableLiveData<Result<Int>> = MutableLiveData()
-    val collectedAssetListAmount: LiveData<Result<Int>> = _collectedAssetListAmount
+    private var _collectedAssetListAmount: MutableLiveData<Int> = MutableLiveData()
+    val collectedAssetListAmount: LiveData<Int> = _collectedAssetListAmount
 
-    private var _createdAssetListAmount: MutableLiveData<Result<Int>> = MutableLiveData()
-    val createdAssetListAmount: LiveData<Result<Int>> = _createdAssetListAmount
+    private var _createdAssetListAmount: MutableLiveData<Int> = MutableLiveData()
+    val createdAssetListAmount: LiveData<Int> = _createdAssetListAmount
 
-    private var _favouritesAssetListAmount: MutableLiveData<Result<Int>> = MutableLiveData()
-    val favouritesAssetListAmount: LiveData<Result<Int>> = _favouritesAssetListAmount
+    private var _favouritesAssetListAmount: MutableLiveData<Int> = MutableLiveData()
+    val favouritesAssetListAmount: LiveData<Int> = _favouritesAssetListAmount
 
-    private var _allAssetListAmount: MutableLiveData<Result<Int>> = MutableLiveData()
-    val allAssetListAmount: LiveData<Result<Int>> = _allAssetListAmount
+    private var _allAssetListAmount: MutableLiveData<Int> = MutableLiveData()
+    val allAssetListAmount: LiveData<Int> = _allAssetListAmount
 
     suspend fun getCollected(name: String) {
         viewModelScope.launch {
@@ -49,10 +49,9 @@ class AssetViewModel @Inject constructor(
                 getAllCollectedUseCase(name).forEach(action = {
                     assetList.add(it)
                 })
-                _collectedAssetList.value = Result.success(assetList)
-                _collectedAssetList.postValue(null)
+                _collectedAssetList.value = assetList
             } catch (ex: Exception) {
-                _collectedAssetList.value = Result.failure(ex)
+                _collectedAssetList.value = null
             }
         }
     }
@@ -60,9 +59,9 @@ class AssetViewModel @Inject constructor(
     suspend fun getCollectedAmount(name: String) {
         viewModelScope.launch {
             try {
-                _collectedAssetListAmount.value = Result.success(getAllCollectedUseCase(name).size)
+                _collectedAssetListAmount.value = getAllCollectedUseCase(name).size
             } catch (ex: Exception) {
-                _collectedAssetList.value = Result.failure(ex)
+                _collectedAssetListAmount.value = 0
             }
         }
     }
@@ -74,10 +73,9 @@ class AssetViewModel @Inject constructor(
                 getAllCreatedUseCase(name).forEach(action = {
                     assetList.add(it)
                 })
-                _createdAssetList.value = Result.success(assetList)
-                _createdAssetList.postValue(null)
+                _createdAssetList.value = assetList
             } catch (ex: Exception) {
-                _createdAssetList.value = Result.failure(ex)
+                _createdAssetList.value = null
             }
         }
     }
@@ -85,9 +83,9 @@ class AssetViewModel @Inject constructor(
     suspend fun getCreatedAmount(name: String) {
         viewModelScope.launch {
             try {
-                _createdAssetListAmount.value = Result.success(getAllCreatedUseCase(name).size)
+                _createdAssetListAmount.value = getAllCreatedUseCase(name).size
             } catch (ex: Exception) {
-                _collectedAssetList.value = Result.failure(ex)
+                _collectedAssetListAmount.value = 0
             }
         }
     }
@@ -99,10 +97,9 @@ class AssetViewModel @Inject constructor(
                 getAllFavouritesUseCase(name).forEach(action = {
                     assetList.add(it)
                 })
-                _favouritesAssetList.value = Result.success(assetList)
-                _favouritesAssetList.postValue(null)
+                _favouritesAssetList.value = assetList
             } catch (ex: Exception) {
-                _favouritesAssetList.value = Result.failure(ex)
+                _favouritesAssetList.value = null
             }
         }
     }
@@ -110,9 +107,9 @@ class AssetViewModel @Inject constructor(
     suspend fun getFavouritesAmount(name: String) {
         viewModelScope.launch {
             try {
-                _favouritesAssetListAmount.value = Result.success(getAllFavouritesUseCase(name).size)
+                _favouritesAssetListAmount.value = getAllFavouritesUseCase(name).size
             } catch (ex: Exception) {
-                _collectedAssetList.value = Result.failure(ex)
+                _collectedAssetListAmount.value = 0
             }
         }
     }
@@ -124,9 +121,9 @@ class AssetViewModel @Inject constructor(
                 getAllUseCase().forEach(action = {
                     assetList.add(it)
                 })
-                _allAssetList.value = Result.success(assetList)
+                _allAssetList.value = assetList
             } catch (ex: Exception) {
-                _allAssetList.value = Result.failure(ex)
+                _allAssetList.value = null
             }
         }
     }

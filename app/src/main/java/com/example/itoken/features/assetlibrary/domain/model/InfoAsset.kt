@@ -2,6 +2,7 @@ package com.example.itoken.features.assetlibrary.domain.model
 
 import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
+import java.io.Serializable
 
 data class InfoAsset(
     override var tokenId: String?,
@@ -25,7 +26,7 @@ data class InfoAsset(
     likes,
     description,
     address
-) {
+), Serializable {
     fun toAssetBrief() = AssetBrief(
         tokenId,
         imageUrl,

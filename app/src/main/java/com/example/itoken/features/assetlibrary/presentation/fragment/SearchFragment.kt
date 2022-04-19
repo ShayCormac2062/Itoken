@@ -48,10 +48,13 @@ class SearchFragment : Fragment() {
     }
 
     private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
+        val bundle = Bundle().apply {
+            putSerializable("asset", asset)
+            putInt("likes", likes)
+        }
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {
-                TokenInfoFragment.asset = asset
-                TokenInfoFragment.likes = likes
+                arguments = bundle
             }, "SHIT")
             .commit()
     }

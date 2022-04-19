@@ -1,7 +1,6 @@
 package com.example.itoken.features.user.presentation.fragment.authentication
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,29 +67,21 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObservers() {
-        assetsViewModel.allAssetList.observe(viewLifecycleOwner) {
-            it?.fold(onSuccess = { t ->
-                if (t.isEmpty()) {
-                    lifecycleScope.launch {
-                        currentUser?.assets?.let { it1 -> assetsViewModel.addAll(it1) }
-                    }
+        assetsViewModel.allAssetList.observe(viewLifecycleOwner) { t ->
+            if (t?.isEmpty() == true) {
+                lifecycleScope.launch {
+                    currentUser?.assets?.let { it1 -> assetsViewModel.addAll(it1) }
                 }
-                findNavController().navigate(R.id.loadingFragment)
-            }, onFailure = { error ->
-                Log.e("AT_ASSET_LIST", error.message.toString())
-            })
+            }
+            findNavController().navigate(R.id.loadingFragment)
         }
-        usersViewModel.currentUser.observe(viewLifecycleOwner) {
-            it?.fold(onSuccess = { um ->
-                if (um != null) {
-                    currentUser = um
-                    lifecycleScope.launch {
-                        assetsViewModel.getAll()
-                    }
-                } else makeToast("Ошибка в введённых данных. Проверьте их и повторите попытку")
-            }, onFailure = { error ->
-                Log.e("AT_CURRENT_USER", error.message.toString())
-            })
+        usersViewModel.currentUser.observe(viewLifecycleOwner) { um ->
+            if (um != null) {
+                currentUser = um
+                lifecycleScope.launch {
+                    assetsViewModel.getAll()
+                }
+            } else makeToast("Ошибка в введённых данных. Проверьте их и повторите попытку")
         }
     }
 
@@ -105,17 +96,17 @@ class LoginFragment : Fragment() {
             val isThisEmailOrNickname: Boolean = tietName.text.toString().contains('@')
             lifecycleScope.launch {
                 usersViewModel.addUser(
-                        UserModel(
-                            null,
-                            null,
-                            if (!isThisEmailOrNickname) tietName.text.toString() else null,
-                            null,
-                            tietPassword.text.toString(),
-                            if (isThisEmailOrNickname) tietName.text.toString() else null,
-                            null,
-                            null
-                        )
+                    UserModel(
+                        null,
+                        null,
+                        if (!isThisEmailOrNickname) tietName.text.toString() else null,
+                        null,
+                        tietPassword.text.toString(),
+                        if (isThisEmailOrNickname) tietName.text.toString() else null,
+                        null,
+                        null
                     )
+                )
                 usersViewModel.getUser()
             }
         }
