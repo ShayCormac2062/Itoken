@@ -133,4 +133,15 @@ class AssetViewModel @Inject constructor(
             addAllUseCase(assets)
         }
     }
+
+    fun closePage() {
+        _collectedAssetList.value = null
+        _createdAssetList.value = null
+        _favouritesAssetList.value = null
+        _collectedAssetListAmount.value = 0
+        _createdAssetListAmount.value = 0
+        _favouritesAssetListAmount.value = 0
+        _allAssetList.value = null
+        _allAssetListAmount.value = 0
+    }
 }

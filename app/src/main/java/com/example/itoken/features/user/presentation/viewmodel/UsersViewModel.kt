@@ -38,4 +38,8 @@ class UsersViewModel @Inject constructor(
             }
         }
     }
+
+    fun closePage() {
+        _currentUser.value = null
+    }
 }

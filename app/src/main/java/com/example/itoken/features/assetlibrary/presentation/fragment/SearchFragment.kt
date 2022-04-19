@@ -38,7 +38,7 @@ class SearchFragment : Fragment() {
                 layoutManager = GridLayoutManager(context, 2).apply {
                     orientation = RecyclerView.VERTICAL
                 }
-                adapter = TokenAdapter( null, context).apply {
+                adapter = TokenAdapter( null).apply {
                     onClick = { asset, likes ->
                         //swapTokenInfoBottomSheet(asset, likes)
                     }

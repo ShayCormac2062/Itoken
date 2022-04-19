@@ -68,6 +68,7 @@ class ClickerFragment : Fragment() {
         super.onDestroyView()
         lifecycleScope.launch {
             usersViewModel.changeBalance(binding?.tvUserCrystals?.text.toString().toDouble())
+            usersViewModel.closePage()
         }
         binding = null
     }

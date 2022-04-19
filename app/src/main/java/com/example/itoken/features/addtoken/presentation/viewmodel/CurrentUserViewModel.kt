@@ -22,7 +22,6 @@ class CurrentUserViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _currentUser.value = getUserUseCase()
-                _currentUser.postValue(null)
             } catch (ex: Exception) {
                 _currentUser.value = null
             }

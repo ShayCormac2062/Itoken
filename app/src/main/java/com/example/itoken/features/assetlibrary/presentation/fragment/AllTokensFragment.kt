@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,6 @@ import com.example.itoken.features.assetlibrary.presentation.adapter.TokenAdapte
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AllTokensFragment : Fragment() {
@@ -49,12 +47,12 @@ class AllTokensFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAllTokensBinding.inflate(layoutInflater)
-        initObservers()
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.run {
+            initObservers()
             rvGenres.apply {
                 layoutManager = LinearLayoutManager(context).apply {
                     orientation = RecyclerView.HORIZONTAL
@@ -65,11 +63,7 @@ class AllTokensFragment : Fragment() {
                     }
                 }
             }
-            try {
-                (rvCheapTokens.adapter as TokenAdapter).tokenList
-            } catch (ex: Exception) {
-                setupScreen()
-            }
+            setupScreen()
             rvCollections.apply {
                 layoutManager = LinearLayoutManager(context).apply {
                     orientation = RecyclerView.HORIZONTAL
@@ -93,34 +87,40 @@ class AllTokensFragment : Fragment() {
     }
 
     private fun initObservers() {
+        with(viewModel) {
+            assetListCheap.observe(viewLifecycleOwner) { t ->
+                observing(t, 1)
+            }
+            assetList.observe(viewLifecycleOwner) { t ->
+                observing(t, 2)
+            }
+        }
+    }
+
+    private fun observing(t: List<InfoAsset>?, isForWho: Int) {
         binding?.run {
-            with(viewModel) {
-                assetListCheap.observe(viewLifecycleOwner) { t ->
-                    if (t?.isNotEmpty() == true) {
-                        initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
-                    } else {
-                        findNavController().navigate(R.id.noConnectionFragment).apply {
-                            NoConnectionFragment.previousFragment = R.id.allTokensFragment
-                        }
-                    }
-                }
-                assetList.observe(viewLifecycleOwner) { t ->
-                    initTokensRecyclerView(rvTokens, slTokens, t)
+            if (t?.isNotEmpty() == true) {
+                if (isForWho == 1) {
+                    initTokensRecyclerView(rvCheapTokens, slCheapTokens, t)
+                } else initTokensRecyclerView(rvTokens, slTokens, t)
+            } else if (t != null) {
+                findNavController().navigate(R.id.noConnectionFragment).apply {
+                    NoConnectionFragment.previousFragment = R.id.allTokensFragment
                 }
             }
         }
     }
 
     private fun setupScreen() {
-        lifecycleScope.launch {
-            binding?.run {
-                slGenres.startShimmer()
-                slTokens.startShimmer()
-                slCheapTokens.startShimmer()
-                viewModel.getAssets()
-                viewModel.getAssetsBrief()
-                initRecycler(slGenres, rvGenres)
+        binding?.run {
+            slGenres.startShimmer()
+            slTokens.startShimmer()
+            slCheapTokens.startShimmer()
+            with(viewModel) {
+                getAssetsBrief()
+                getAssets()
             }
+            initRecycler(slGenres, rvGenres)
         }
     }
 
@@ -137,12 +137,12 @@ class AllTokensFragment : Fragment() {
             list?.forEach(action = {
                 briefList.add(it.toAssetBrief())
             })
-            adapter = TokenAdapter(briefList, context).apply {
+            adapter = TokenAdapter(briefList).apply {
                 onClick = { asset, likes ->
                     swapTokenInfoBottomSheet(
                         list?.first(
                             predicate = {
-                                it.imageUrl == asset?.imageUrl
+                                it.tokenName == asset?.tokenName
                             }
                         ) as InfoAsset, likes)
                 }
@@ -177,6 +177,12 @@ class AllTokensFragment : Fragment() {
                 arguments = bundle
             }, "SHIT")
             .commit()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.close()
+        binding = null
     }
 
 }

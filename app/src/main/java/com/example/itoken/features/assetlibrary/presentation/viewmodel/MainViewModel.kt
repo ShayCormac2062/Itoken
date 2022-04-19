@@ -1,9 +1,6 @@
 package com.example.itoken.features.assetlibrary.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBriefUseCase
 import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsUseCase
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
@@ -29,7 +26,7 @@ class MainViewModel @Inject constructor(
     private var _error: MutableLiveData<Exception> = MutableLiveData()
     val error: LiveData<Exception> = _error
 
-    suspend fun getAssetsBrief() {
+    fun getAssetsBrief() {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<InfoAsset>()
@@ -44,7 +41,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    suspend fun getAssets() {
+    fun getAssets() {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<InfoAsset>()
@@ -59,4 +56,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun close() {
+        _assetList.value = null
+        _assetListCheap.value = null
+    }
 }

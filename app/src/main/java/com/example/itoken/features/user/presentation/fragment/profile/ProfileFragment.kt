@@ -198,6 +198,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        lifecycleScope.launch {
+            assetViewModel.closePage()
+            usersViewModel.closePage()
+        }
         binding = null
     }
 }
