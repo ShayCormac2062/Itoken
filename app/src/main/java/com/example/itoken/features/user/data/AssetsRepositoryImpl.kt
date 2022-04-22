@@ -6,14 +6,12 @@ import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.repository.AssetsRepository
 import com.example.itoken.utils.DispatcherProvider
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AssetsRepositoryImpl @Inject constructor(
     private val assetsDatabase: AssetsDao,
     private val addAssetsDatabase: AddAssetDao,
-    private val firebase: DatabaseReference,
     private val scope: DispatcherProvider
 ) : AssetsRepository {
 

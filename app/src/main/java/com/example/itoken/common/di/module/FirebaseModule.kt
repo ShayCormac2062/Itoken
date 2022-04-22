@@ -2,6 +2,10 @@ package com.example.itoken.common.di.module
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,6 +25,9 @@ class FirebaseModule {
     fun provideDatabaseReference(firebaseDatabase: FirebaseDatabase): DatabaseReference =
         firebaseDatabase.reference
 
+    @Provides
+    @Singleton
+    fun provideStorage(): FirebaseStorage = Firebase.storage("gs://itoken-b3e4a.appspot.com/")
 
 }
 

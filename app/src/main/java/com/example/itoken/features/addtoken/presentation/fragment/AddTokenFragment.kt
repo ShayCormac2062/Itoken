@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.itoken.App
 import com.example.itoken.R
@@ -88,7 +89,8 @@ class AddTokenFragment : BottomSheetDialogFragment() {
     }
 
     private fun paintToken() {
-        CanvasFragment().show(childFragmentManager, "DAMN")
+        dismiss()
+        findNavController().navigate(R.id.canvasFragment)
     }
 
     private fun makeToast(text: String) = Toast.makeText(
@@ -133,7 +135,6 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         currentUser = null
     }
 
-    //TODO(потом переделать данные токена)
     private fun createToken() {
         try {
             binding?.run {
@@ -144,7 +145,7 @@ class AddTokenFragment : BottomSheetDialogFragment() {
                     currentUser?.nickname,
                     "",
                     tietName.text.toString(),
-                    tietPrise.text.toString().toInt(),
+                    tietPrise.text.toString().toLong(),
                     0,
                     tietDescription.text.toString(),
                     "0x${(10000000..99999999).random()}"

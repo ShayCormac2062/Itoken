@@ -9,8 +9,8 @@ import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
 class TokenAdapter(val tokenList: List<AssetBrief>?) :
     RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
-    var onClick: ((AssetBrief?, Int) -> (Unit))? = null
-    var onLastCardClick: ((AssetBrief, Int) -> (Unit))? = null
+    var onClick: ((AssetBrief?, Long) -> (Unit))? = null
+    var onLastCardClick: ((AssetBrief, Long) -> (Unit))? = null
 
     inner class TokenCollectionViewHolder(
         private val binding: ViewTokenCardviewBinding

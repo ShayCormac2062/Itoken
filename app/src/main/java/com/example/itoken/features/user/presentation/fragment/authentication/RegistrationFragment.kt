@@ -127,6 +127,7 @@ class RegistrationFragment : Fragment() {
             if (requestCode == 100) {
                 imageUrl = data?.data.toString()
                 binding?.btnGetPhoto?.isActivated = true
+                binding?.btnGetPhoto?.text = "Фото выбрано"
             }
         }
     }

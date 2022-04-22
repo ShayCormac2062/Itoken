@@ -142,7 +142,8 @@ class AllTokensFragment : Fragment() {
                     swapTokenInfoBottomSheet(
                         list?.first(
                             predicate = {
-                                it.tokenName == asset?.tokenName
+                                it.imageUrl == asset?.imageUrl &&
+                                        it.likes == likes
                             }
                         ) as InfoAsset, likes)
                 }
@@ -167,10 +168,10 @@ class AllTokensFragment : Fragment() {
         rv.visibility = View.VISIBLE
     }
 
-    private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
+    private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Long) {
         val bundle = Bundle().apply {
             putSerializable("asset", asset)
-            putInt("likes", likes)
+            putLong("likes", likes)
         }
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {

@@ -1,8 +1,8 @@
-package com.example.itoken.features.addtoken.domain.model
+package com.example.itoken.features.trades.data.entity
 
-import com.example.itoken.common.db.model.DatabaseAsset
+import com.example.itoken.features.trades.domain.model.Lot
 
-data class AssetModel(
+data class TradableAsset(
     var tokenId: String?,
     var imagePreviewUrl: String?,
     var imageUrl: String?,
@@ -14,8 +14,9 @@ data class AssetModel(
     var description: String?,
     var address: String?,
 ) {
-    fun toDatabaseAsset() = DatabaseAsset(
-        0,
+
+    fun toLot() = Lot(
+        tokenId,
         imagePreviewUrl,
         imageUrl,
         creatorName,
@@ -26,4 +27,5 @@ data class AssetModel(
         description,
         address
     )
+
 }

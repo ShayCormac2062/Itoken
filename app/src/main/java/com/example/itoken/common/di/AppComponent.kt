@@ -7,6 +7,8 @@ import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.features.addtoken.presentation.fragment.AddTokenFragment
 import com.example.itoken.features.assetlibrary.presentation.fragment.AllTokensFragment
 import com.example.itoken.features.assetlibrary.presentation.fragment.SearchFragment
+import com.example.itoken.features.trades.presentation.fragment.TradeFragment
+import com.example.itoken.features.trades.presentation.fragment.TradingFragment
 import com.example.itoken.features.user.presentation.fragment.authentication.LoginFragment
 import com.example.itoken.features.user.presentation.fragment.authentication.RegistrationFragment
 import com.example.itoken.features.user.presentation.fragment.profile.ClickerFragment
@@ -32,6 +34,8 @@ interface AppComponent {
     fun inject(fragment: AddTokenFragment)
     fun inject(fragment: ProfileFragment)
     fun inject(fragment: LoginFragment)
+    fun inject(fragment: TradeFragment)
+    fun inject(fragment: TradingFragment)
     fun inject(fragment: RegistrationFragment)
     fun inject(fragment: ClickerFragment)
     fun inject(fragment: SearchFragment)

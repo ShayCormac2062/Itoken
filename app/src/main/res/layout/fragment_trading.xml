@@ -35,7 +35,6 @@
             android:id="@+id/iv_token_picture"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ai"
             android:layout_height="match_parent"/>
 
     </com.google.android.material.card.MaterialCardView>
@@ -47,7 +46,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginStart="0dp"
-        android:text="Название токена"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview_for_token" />
@@ -57,17 +55,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TokenCardsTextStyle.CollectionTextStyle"
-        android:text="Автор: ТвойСладкийПирожок228"
         android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_token_name"/>
 
     <TextView
+        android:id="@+id/tv_price"
         style="@style/AllTokensFragmentTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginStart="0dp"
-        android:text="Минимальная цена: 30 "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_creator_name" />

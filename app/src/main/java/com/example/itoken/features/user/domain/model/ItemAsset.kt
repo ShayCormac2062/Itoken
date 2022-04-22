@@ -12,8 +12,8 @@ data class ItemAsset(
     override var creatorName: String?,
     override var ownerName: String?,
     override var tokenName: String?,
-    override var price: Int?,
-    override var likes: Int?,
+    override var price: Long?,
+    override var likes: Long?,
     override var description: String?,
     override var address: String?,
 ) : BaseAsset(

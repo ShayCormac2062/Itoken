@@ -57,4 +57,9 @@
         android:name="com.example.itoken.features.user.presentation.fragment.profile.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading" />
+    <fragment
+        android:id="@+id/canvasFragment"
+        android:name="com.example.itoken.features.addtoken.presentation.fragment.CanvasFragment"
+        android:label="fragment_canvas"
+        tools:layout="@layout/fragment_canvas" />
 </navigation>

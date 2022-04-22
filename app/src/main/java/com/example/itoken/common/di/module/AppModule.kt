@@ -12,6 +12,13 @@ import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
 import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBriefUseCase
 import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsUseCase
+import com.example.itoken.common.trade_repository.CreateTradeRepositoryImpl
+import com.example.itoken.features.trades.data.TradeRepositoryImpl
+import com.example.itoken.common.trade_repository.CreateTradeRepository
+import com.example.itoken.features.trades.domain.repository.TradeRepository
+import com.example.itoken.features.trades.domain.usecase.CreateTradeUseCase
+import com.example.itoken.features.trades.domain.usecase.GetActiveTradesUseCase
+import com.example.itoken.features.trades.domain.usecase.GetAllTradesUseCase
 import com.example.itoken.features.user.data.AssetsRepositoryImpl
 import com.example.itoken.features.user.data.UsersRepositoryImpl
 import com.example.itoken.features.user.data.db.dao.AssetsDao
@@ -21,7 +28,7 @@ import com.example.itoken.features.user.domain.repository.UsersRepository
 import com.example.itoken.features.user.domain.usecase.*
 import com.example.itoken.utils.DispatcherProvider
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 
@@ -34,16 +41,16 @@ class AppModule {
     @Provides
     fun provideAddTokenRepository(
         addAssetDatabase: AddAssetDao,
+        firebase: DatabaseReference,
         scope: DispatcherProvider
-    ): AddTokenRepository = AddTokenRepositoryImpl(addAssetDatabase, scope)
+    ): AddTokenRepository = AddTokenRepositoryImpl(addAssetDatabase, firebase, scope)
 
     @Provides
     fun provideAssetsRepository(
         assetsDatabase: AssetsDao,
         addAssetDatabase: AddAssetDao,
-        firebase: DatabaseReference,
         scope: DispatcherProvider
-    ): AssetsRepository = AssetsRepositoryImpl(assetsDatabase, addAssetDatabase, firebase, scope)
+    ): AssetsRepository = AssetsRepositoryImpl(assetsDatabase, addAssetDatabase, scope)
 
     @Provides
     fun provideUsersRepository(
@@ -68,6 +75,17 @@ class AppModule {
     fun provideAssetRepository(
         api: APIService
     ): AssetRepository = AssetRepositoryImpl(api)
+
+    @Provides
+    fun provideTradeRepository(
+        ref: DatabaseReference
+    ): TradeRepository = TradeRepositoryImpl(ref)
+
+    @Provides
+    fun provideCreateTradeRepository(
+        storage: FirebaseStorage,
+        ref: DatabaseReference
+    ): CreateTradeRepository = CreateTradeRepositoryImpl(ref, storage)
 
     @Provides
     fun provideAddUseCase(
@@ -123,4 +141,19 @@ class AppModule {
     fun provideRegisterUserUseCase(
         repository: UsersRepository
     ): RegisterUserUseCase = RegisterUserUseCase(repository)
+
+    @Provides
+    fun provideCreateTradeUseCase(
+        repository: CreateTradeRepository
+    ): CreateTradeUseCase = CreateTradeUseCase(repository)
+
+    @Provides
+    fun provideGetActiveTradesUseCase(
+        repository: TradeRepository
+    ): GetActiveTradesUseCase = GetActiveTradesUseCase(repository)
+
+    @Provides
+    fun provideGetAllTradesUseCase(
+        repository: TradeRepository
+    ): GetAllTradesUseCase = GetAllTradesUseCase(repository)
 }

@@ -47,10 +47,10 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Int) {
+    private fun swapTokenInfoBottomSheet(asset: InfoAsset, likes: Long) {
         val bundle = Bundle().apply {
             putSerializable("asset", asset)
-            putInt("likes", likes)
+            putLong("likes", likes)
         }
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {

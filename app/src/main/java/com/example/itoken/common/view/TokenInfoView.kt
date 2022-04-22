@@ -26,7 +26,7 @@ class TokenInfoView<M : BaseAsset>(
 
     fun init(
         asset: M,
-        likes: Int,
+        likes: Long,
         isUserAuthorized: Boolean,
         isUserBoughtThisAsset: Boolean
     ) {
@@ -51,20 +51,37 @@ class TokenInfoView<M : BaseAsset>(
                         onDetailClick(cardviewDetails.visibility == View.VISIBLE)
                     }
                 }
+                if (TokenInfoFragment.isUserCreator) {
+                    with(btnCreateTrade) {
+                        visibility = View.VISIBLE
+                        setOnClickListener {
+                            showDialog(
+                                "Вы уверены, что хотите продать токен на аукционе? Продолжить?",
+                                "Ваш токен отправлен системе продаж",
+                                true
+                            )
+                        }
+                    }
+                }
             } else if (isUserAuthorized) {
                 with(btnToCollected) {
                     visibility = View.VISIBLE
                     setOnClickListener {
                         if (TokenInfoFragment.isUserHasEnoughMoney) {
-                            showDialog()
+                            showDialog(
+                                "Вы уверены, что хотите купить токен? С вас будет списано " +
+                                    "${currentAsset.price} ICrystal. Продолжить?",
+                                "Токен был успешно добавлен в библиотеку",
+                                false
+                            )
                         } else makeToast("Недостаточно средств на покупку токена!")
                     }
                 }
                 with(btnToFavourites) {
                     visibility = View.VISIBLE
                     setOnClickListener {
-                        TokenInfoFragment.isNeedToFavourites = true
                         makeToast("Токен был успешно добавлен в избранное")
+                        TokenInfoFragment.isNeedToFavourites = true
                     }
                 }
             }
@@ -78,7 +95,7 @@ class TokenInfoView<M : BaseAsset>(
             Toast.LENGTH_SHORT
         ).show()
 
-    private fun showDialog() {
+    private fun showDialog(message: String, notifForToast: String, isForTrade: Boolean) {
         val bindingOfDialog: ViewNotificationBinding
         val alerts = AlertDialog.Builder(context).apply {
             bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
@@ -89,12 +106,12 @@ class TokenInfoView<M : BaseAsset>(
                 alerts.dismiss()
             }
             btnYes.setOnClickListener {
-                TokenInfoFragment.isNeedToCollect = true
-                makeToast("Токен был успешно добавлен в библиотеку")
+                if (!isForTrade) TokenInfoFragment.isNeedToCollect = true
+                else TokenInfoFragment.isNeedToTrade = true
+                makeToast(notifForToast)
                 alerts.dismiss()
             }
-            tvNotification.text = "Вы уверены, что хотите купить токен? С вас будет списано " +
-                    "${currentAsset.price} ICrystal. Продолжить?"
+            tvNotification.text = message
         }
     }
 

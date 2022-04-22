@@ -40,8 +40,8 @@ data class Asset(
             creator?.user?.username,
             owner?.user?.username,
             name,
-            asset_contract?.seller_fee_basis_points ?: 0,
-            (0..599).random(),
+            asset_contract?.seller_fee_basis_points.toString().toLong(),
+            (0..599).random().toLong(),
             description ?: collection?.description,
             asset_contract?.address
         )

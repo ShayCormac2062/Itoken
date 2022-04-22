@@ -40,7 +40,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
     private val usersViewModel: UsersViewModel by viewModels {
         factory
     }
-    private var allList: List<ItemAsset>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,9 +108,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
     private fun initObservers() {
         binding?.run {
             with(assetViewModel) {
-                allAssetList.observe(viewLifecycleOwner) {
-                    allList = it
-                }
                 collectedAssetList.observe(viewLifecycleOwner) { t ->
                     initTokensRecyclerView(rvCollected, t)
                 }

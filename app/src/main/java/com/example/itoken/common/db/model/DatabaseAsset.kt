@@ -15,8 +15,8 @@ data class DatabaseAsset(
     @ColumnInfo(name = "creator_name") var creatorName: String?,
     @ColumnInfo(name = "owner_name") var ownerName: String?,
     @ColumnInfo(name = "token_name") var tokenName: String?,
-    @ColumnInfo(name = "price") var price: Int?,
-    @ColumnInfo(name = "likes") var likes: Int?,
+    @ColumnInfo(name = "price") var price: Long?,
+    @ColumnInfo(name = "likes") var likes: Long?,
     @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "address") var address: String?,
 ) {

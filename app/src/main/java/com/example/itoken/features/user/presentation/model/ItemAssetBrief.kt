@@ -7,8 +7,8 @@ data class ItemAssetBrief(
     override var imageUrl: String?,
     override var creatorName: String?,
     override var tokenName: String?,
-    override var price: Int?,
-    override var likes: Int?,
+    override var price: Long?,
+    override var likes: Long?,
 ) : BaseAssetBrief(
     tokenId,
     imageUrl,

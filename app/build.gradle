@@ -40,8 +40,10 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'androidx.annotation:annotation:1.2.0'
+
 
     def livedata = "2.4.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${livedata}"
@@ -60,6 +62,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
     def retrofit = "2.9.0"
@@ -75,7 +78,7 @@ dependencies {
 
     implementation "io.coil-kt:coil:1.1.1"
 
-    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'

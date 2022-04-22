@@ -1,7 +1,6 @@
 package com.example.itoken.common.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,14 @@ import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
 import com.example.itoken.features.addtoken.presentation.viewmodel.CurrentUserViewModel
+import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TokenInfoFragment :
-    BottomSheetDialogFragment() {
+class TokenInfoFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentTokenInfoBinding? = null
     private var currentUser: UserModel? = null
@@ -35,6 +34,9 @@ class TokenInfoFragment :
         factory
     }
     private val assetViewModel: AssetViewModel by viewModels {
+        factory
+    }
+    private val createTradeViewModel: TradeViewModel by viewModels {
         factory
     }
 
@@ -54,11 +56,16 @@ class TokenInfoFragment :
 
     private fun initObservers() {
         usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-            currentUser = user
-            isUserAuthorized = true
-            currentUser?.balance?.let { balance ->
-                asset.price?.let { price ->
-                    isUserHasEnoughMoney = balance.toInt() >= price.toDouble()
+            if (user != null) {
+                currentUser = user
+                isUserAuthorized = true
+                if (user.nickname == asset.creatorName) {
+                    isUserCreator = true
+                }
+                currentUser?.balance?.let { balance ->
+                    asset.price?.let { price ->
+                        isUserHasEnoughMoney = balance.toInt() >= price.toDouble()
+                    }
                 }
             }
             lifecycleScope.launch {
@@ -72,7 +79,7 @@ class TokenInfoFragment :
             binding?.run {
                 tokenInfoContainer.init(
                     asset,
-                    arguments?.getInt("likes") as Int,
+                    arguments?.getLong("likes") as Long,
                     isUserAuthorized,
                     isUserBoughtThisAsset
                 )
@@ -90,22 +97,30 @@ class TokenInfoFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (isNeedToCollect) {
-            viewModel.add(asset.toAssetModel().apply {
-                ownerName = currentUser?.nickname
-            })
-            lifecycleScope.launch {
-                usersViewModel.changeBalance(asset.price?.toDouble()
-                    ?.let { currentUser?.balance?.minus(it) })
+        when {
+            isNeedToTrade -> {
+                createTradeViewModel.createTrade(asset.toLot())
             }
-        } else if (isNeedToFavourites) {
-            viewModel.add(asset.toAssetModel())
+            isNeedToCollect -> {
+                viewModel.add(asset.toAssetModel().apply {
+                    ownerName = currentUser?.nickname
+                })
+                lifecycleScope.launch {
+                    usersViewModel.changeBalance(asset.price?.toDouble()
+                        ?.let { currentUser?.balance?.minus(it) })
+                }
+            }
+            isNeedToFavourites -> {
+                viewModel.add(asset.toAssetModel())
+            }
         }
         isUserAuthorized = false
         isUserBoughtThisAsset = false
         isNeedToCollect = false
         isNeedToFavourites = false
+        isNeedToTrade = false
         isUserHasEnoughMoney = false
+        isUserCreator = false
         binding = null
     }
 
@@ -115,5 +130,7 @@ class TokenInfoFragment :
         var isNeedToCollect = false
         var isNeedToFavourites = false
         var isUserHasEnoughMoney = false
+        var isUserCreator = false
+        var isNeedToTrade = false
     }
 }

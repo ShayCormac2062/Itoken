@@ -7,8 +7,8 @@ data class AssetBrief(
     override val imageUrl: String?,
     override val creatorName: String?,
     override val tokenName: String?,
-    override val price: Int?,
-    override val likes: Int?,
+    override val price: Long?,
+    override val likes: Long?,
 ) : BaseAssetBrief(
     tokenId,
     imageUrl,

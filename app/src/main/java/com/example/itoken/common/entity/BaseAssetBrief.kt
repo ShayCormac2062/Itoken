@@ -5,6 +5,6 @@ open class BaseAssetBrief(
     open val imageUrl: String?,
     open val creatorName: String?,
     open val tokenName: String?,
-    open val price: Int?,
-    open val likes: Int?,
+    open val price: Long?,
+    open val likes: Long?,
 )

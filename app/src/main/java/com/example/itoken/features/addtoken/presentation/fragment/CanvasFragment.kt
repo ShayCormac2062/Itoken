@@ -1,23 +1,20 @@
 package com.example.itoken.features.addtoken.presentation.fragment
 
-import android.annotation.SuppressLint
-import android.app.Dialog
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentCanvasBinding
 import com.example.itoken.features.addtoken.presentation.adapter.ColorAdapter
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class CanvasFragment : BottomSheetDialogFragment() {
+class CanvasFragment : Fragment() {
 
     private var binding: FragmentCanvasBinding? = null
 
@@ -27,32 +24,6 @@ class CanvasFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = FragmentCanvasBinding.inflate(layoutInflater)
         return binding?.root
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        val d = dialog as BottomSheetDialog
-        d.setContentView(R.layout.fragment_canvas)
-        try {
-            val behaviorField = d.javaClass.getDeclaredField("behavior").apply {
-                isAccessible = true
-            }
-            (behaviorField.get(d) as BottomSheetBehavior<*>).apply {
-                binding?.root?.let {
-                    peekHeight = it.height
-                }
-                setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                    override fun onStateChanged(bottomSheet: View, newState: Int) {
-                        state = BottomSheetBehavior.STATE_EXPANDED
-                    }
-
-                    override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-
-                })
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,7 +52,7 @@ class CanvasFragment : BottomSheetDialogFragment() {
                     "${System.currentTimeMillis()}token.jpg",
                     "beautiful"
                 )
-                dismiss()
+                onDestroyView()
             }
             rvColors.apply {
                 layoutManager = LinearLayoutManager(context).apply {
@@ -108,7 +79,11 @@ class CanvasFragment : BottomSheetDialogFragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        findNavController().popBackStack()
+        parentFragmentManager.beginTransaction()
+            .add(AddTokenFragment(), "FUCK")
+            .commit()
         binding = null
+        super.onDestroyView()
     }
 }
