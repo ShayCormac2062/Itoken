@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.itoken.common.db.model.DatabaseAsset
 import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.usecase.*
 import kotlinx.coroutines.launch
@@ -13,7 +12,7 @@ import javax.inject.Inject
 class AssetViewModel @Inject constructor(
     private val getAllCollectedUseCase: GetAllCollectedUseCase,
     private val getAllCreatedUseCase: GetAllCreatedUseCase,
-    private val getAllFavouritesUseCase: GetAllFavouritesUseCase,
+    private val getAllTradedUseCase: GetAllTradedUseCase,
     private val getAllUseCase: GetAllUseCase,
     private val addAllUseCase: AddAllUseCase,
 ) : ViewModel() {
@@ -24,8 +23,8 @@ class AssetViewModel @Inject constructor(
     private var _createdAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
     val createdAssetList: LiveData<List<ItemAsset>?> = _createdAssetList
 
-    private var _favouritesAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
-    val favouritesAssetList: LiveData<List<ItemAsset>?> = _favouritesAssetList
+    private var _tradedAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
+    val tradedAssetList: LiveData<List<ItemAsset>?> = _tradedAssetList
 
     private var _allAssetList: MutableLiveData<List<ItemAsset>?> = MutableLiveData()
     val allAssetList: LiveData<List<ItemAsset>?> = _allAssetList
@@ -36,8 +35,8 @@ class AssetViewModel @Inject constructor(
     private var _createdAssetListAmount: MutableLiveData<Int> = MutableLiveData()
     val createdAssetListAmount: LiveData<Int> = _createdAssetListAmount
 
-    private var _favouritesAssetListAmount: MutableLiveData<Int> = MutableLiveData()
-    val favouritesAssetListAmount: LiveData<Int> = _favouritesAssetListAmount
+    private var _tradedAssetListAmount: MutableLiveData<Int> = MutableLiveData()
+    val tradedAssetListAmount: LiveData<Int> = _tradedAssetListAmount
 
     private var _allAssetListAmount: MutableLiveData<Int> = MutableLiveData()
     val allAssetListAmount: LiveData<Int> = _allAssetListAmount
@@ -90,24 +89,24 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getFavourites(name: String) {
+    suspend fun getTraded(name: String) {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<ItemAsset>()
-                getAllFavouritesUseCase(name).forEach(action = {
+                getAllTradedUseCase(name).forEach(action = {
                     assetList.add(it)
                 })
-                _favouritesAssetList.value = assetList
+                _tradedAssetList.value = assetList
             } catch (ex: Exception) {
-                _favouritesAssetList.value = null
+                _tradedAssetList.value = null
             }
         }
     }
 
-    suspend fun getFavouritesAmount(name: String) {
+    suspend fun getTradedAmount(name: String) {
         viewModelScope.launch {
             try {
-                _favouritesAssetListAmount.value = getAllFavouritesUseCase(name).size
+                _tradedAssetListAmount.value = getAllTradedUseCase(name).size
             } catch (ex: Exception) {
                 _collectedAssetListAmount.value = 0
             }
@@ -137,10 +136,10 @@ class AssetViewModel @Inject constructor(
     fun closePage() {
         _collectedAssetList.value = null
         _createdAssetList.value = null
-        _favouritesAssetList.value = null
+        _tradedAssetList.value = null
         _collectedAssetListAmount.value = 0
         _createdAssetListAmount.value = 0
-        _favouritesAssetListAmount.value = 0
+        _tradedAssetListAmount.value = 0
         _allAssetList.value = null
         _allAssetListAmount.value = 0
     }

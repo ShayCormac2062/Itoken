@@ -17,7 +17,9 @@ class TradeRepositoryImpl @Inject constructor(
         val result = arrayListOf<TradeModel>()
         val snapshot = ref.get().await()
         for (dto in snapshot.child("trades").children) {
-            result.add(retrieveAsset(dto))
+            if (dto.child("active").value == false) {
+                result.add(retrieveAsset(dto))
+            }
         }
         return result
     }

@@ -11,7 +11,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 private const val DATABASE_ROOT = "https://itoken-b3e4a-default-rtdb.europe-west1.firebasedatabase.app"
-
+private const val STORAGE_ROOT = "gs://itoken-b3e4a.appspot.com/"
 @Module
 class FirebaseModule {
 
@@ -27,7 +27,7 @@ class FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideStorage(): FirebaseStorage = Firebase.storage("gs://itoken-b3e4a.appspot.com/")
+    fun provideStorage(): FirebaseStorage = Firebase.storage(STORAGE_ROOT)
 
 }
 

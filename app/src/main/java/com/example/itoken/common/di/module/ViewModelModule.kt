@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.itoken.common.di.ViewModelKey
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
-import com.example.itoken.features.addtoken.presentation.viewmodel.CurrentUserViewModel
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
+import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.example.itoken.utils.MainViewModelFactory
@@ -62,6 +63,13 @@ interface ViewModelModule {
     @ViewModelKey(TradeViewModel::class)
     fun bindTradeViewModel(
         viewModel: TradeViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TransactionViewModel::class)
+    fun bindTransactionViewModel(
+        viewModel: TransactionViewModel
     ): ViewModel
 
 }

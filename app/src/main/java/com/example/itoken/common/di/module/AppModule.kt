@@ -12,13 +12,13 @@ import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
 import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBriefUseCase
 import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsUseCase
-import com.example.itoken.common.trade_repository.CreateTradeRepositoryImpl
+import com.example.itoken.common.traderepository.CreateTradeRepositoryImpl
 import com.example.itoken.features.trades.data.TradeRepositoryImpl
-import com.example.itoken.common.trade_repository.CreateTradeRepository
+import com.example.itoken.common.traderepository.CreateTradeRepository
+import com.example.itoken.features.trades.data.TransactionRepositoryImpl
 import com.example.itoken.features.trades.domain.repository.TradeRepository
-import com.example.itoken.features.trades.domain.usecase.CreateTradeUseCase
-import com.example.itoken.features.trades.domain.usecase.GetActiveTradesUseCase
-import com.example.itoken.features.trades.domain.usecase.GetAllTradesUseCase
+import com.example.itoken.features.trades.domain.repository.TransactionRepository
+import com.example.itoken.features.trades.domain.usecase.*
 import com.example.itoken.features.user.data.AssetsRepositoryImpl
 import com.example.itoken.features.user.data.UsersRepositoryImpl
 import com.example.itoken.features.user.data.db.dao.AssetsDao
@@ -57,8 +57,14 @@ class AppModule {
         usersDatabase: UsersDao,
         getUserDatabase: GetUserDao,
         firebase: DatabaseReference,
+        storage: FirebaseStorage,
         scope: DispatcherProvider
-    ): UsersRepository = UsersRepositoryImpl(usersDatabase, getUserDatabase, firebase, scope)
+    ): UsersRepository = UsersRepositoryImpl(usersDatabase, getUserDatabase, firebase, storage, scope)
+
+    @Provides
+    fun provideTransactionRepository(
+        firebase: DatabaseReference,
+    ): TransactionRepository = TransactionRepositoryImpl(firebase)
 
     @Provides
     fun provideGetAssetsBriefUseCase(
@@ -110,7 +116,7 @@ class AppModule {
     @Provides
     fun provideGetAllFavouritesUseCase(
         repository: AssetsRepository,
-    ): GetAllFavouritesUseCase = GetAllFavouritesUseCase(repository)
+    ): GetAllTradedUseCase = GetAllTradedUseCase(repository)
 
     @Provides
     fun provideAddUserUseCase(
@@ -156,4 +162,20 @@ class AppModule {
     fun provideGetAllTradesUseCase(
         repository: TradeRepository
     ): GetAllTradesUseCase = GetAllTradesUseCase(repository)
+
+    @Provides
+    fun provideSendTokenToUserUseCase(
+        repository: TransactionRepository
+    ): SendTokenToUserUseCase = SendTokenToUserUseCase(repository)
+
+    @Provides
+    fun provideCloseTradeUseCase(
+        repository: TransactionRepository
+    ): CloseTradeUseCase = CloseTradeUseCase(repository)
+
+    @Provides
+    fun provideChangeMemberListUseCase(
+        repository: TransactionRepository
+    ): ChangeMemberListUseCase = ChangeMemberListUseCase(repository)
+
 }

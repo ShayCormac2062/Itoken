@@ -47,14 +47,22 @@ class TradeFragment : Fragment() {
         binding?.run {
             btnCurrentTrades.setOnClickListener {
                 viewModel.update()
-                pbLoading.visibility = View.INVISIBLE
+                loading()
                 viewModel.getActiveTrades()
             }
             btnTradesHistory.setOnClickListener {
                 viewModel.update()
-                pbLoading.visibility = View.INVISIBLE
+                loading()
                 viewModel.getAllTrades()
             }
+        }
+    }
+
+    private fun loading() {
+        binding?.run {
+            ivNoTrades.visibility = View.INVISIBLE
+            tvNoTrades.visibility = View.INVISIBLE
+            pbLoading.visibility = View.VISIBLE
         }
     }
 

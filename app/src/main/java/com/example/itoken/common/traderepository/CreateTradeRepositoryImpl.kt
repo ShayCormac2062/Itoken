@@ -1,4 +1,4 @@
-package com.example.itoken.common.trade_repository
+package com.example.itoken.common.traderepository
 
 import android.net.Uri
 import com.example.itoken.features.trades.data.entity.Trade
@@ -21,6 +21,7 @@ class CreateTradeRepositoryImpl @Inject constructor(
                             imageUrl = url.toString()
                             imagePreviewUrl = url.toString()
                             ref.child("trades")
+                                .child(trade.address.toString())
                                 .push()
                                 .setValue(
                                     Trade(

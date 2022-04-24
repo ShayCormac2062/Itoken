@@ -14,7 +14,7 @@ interface AssetsDao {
     suspend fun getAllCollected(name: String): List<DatabaseAsset>
 
     @Query("SELECT * FROM database_assets WHERE owner_name != :name and creator_name != :name")
-    suspend fun getAllFavourites(name: String): List<DatabaseAsset>
+    suspend fun getAllTraded(name: String): List<DatabaseAsset>
 
     @Query("SELECT * FROM database_assets")
     suspend fun getAll(): List<DatabaseAsset>

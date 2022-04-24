@@ -1,7 +1,7 @@
 package com.example.itoken.features.trades.domain.usecase
 
 import com.example.itoken.features.trades.domain.model.Lot
-import com.example.itoken.common.trade_repository.CreateTradeRepository
+import com.example.itoken.common.traderepository.CreateTradeRepository
 import javax.inject.Inject
 
 class CreateTradeUseCase @Inject constructor(

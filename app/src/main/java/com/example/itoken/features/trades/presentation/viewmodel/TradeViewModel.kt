@@ -28,7 +28,7 @@ class TradeViewModel @Inject constructor(
                 _tradeList.value = getAllTradesUseCase()
             } catch (ex: Exception) {
                 Log.e("DAMN", ex.message.toString())
-                _tradeList.value = null
+                _tradeList.value = arrayListOf()
             }
         }
     }
@@ -39,7 +39,7 @@ class TradeViewModel @Inject constructor(
                 _tradeList.value = getActiveTradesUseCase()
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                _tradeList.value = null
+                _tradeList.value = arrayListOf()
             }
         }
     }

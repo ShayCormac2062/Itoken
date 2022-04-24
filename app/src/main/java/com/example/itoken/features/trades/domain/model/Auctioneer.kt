@@ -2,21 +2,27 @@ package com.example.itoken.features.trades.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.itoken.features.trades.data.entity.Candidate
 
 data class Auctioneer(
+    val stringId: String?,
     val name: String?,
     var price: Long?,
+    var imageUrl: String?,
 ) : Parcelable {
-
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readValue(Long::class.java.classLoader) as? Long
+        parcel.readString(),
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readString()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(stringId)
         parcel.writeString(name)
         parcel.writeValue(price)
+        parcel.writeString(imageUrl)
     }
 
     override fun describeContents(): Int {
@@ -32,4 +38,11 @@ data class Auctioneer(
             return arrayOfNulls(size)
         }
     }
+
+    fun toCandidate() = Candidate(
+        stringId,
+        name,
+        price,
+        imageUrl
+    )
 }

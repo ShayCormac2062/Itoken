@@ -20,7 +20,7 @@ import com.example.itoken.databinding.FragmentAddTokenBinding
 import com.example.itoken.databinding.ViewNotificationBinding
 import com.example.itoken.features.addtoken.domain.model.AssetModel
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
-import com.example.itoken.features.addtoken.presentation.viewmodel.CurrentUserViewModel
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.user.domain.model.UserModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
@@ -69,7 +69,6 @@ class AddTokenFragment : BottomSheetDialogFragment() {
             btnGoToCanvas.setOnClickListener {
                 paintToken()
             }
-            //TODO(потом добавить проверку на категорию)
             btnCreateToken.setOnClickListener {
                 if (btnGoToCanvas.isActivated || btnGoToGallery.isActivated) {
                     if (tietName.text.toString() != "") {

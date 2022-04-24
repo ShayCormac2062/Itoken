@@ -1,0 +1,47 @@
+package com.example.itoken.features.trades.data
+
+import com.example.itoken.features.trades.data.entity.Candidate
+import com.example.itoken.features.trades.domain.model.Auctioneer
+import com.example.itoken.features.trades.domain.model.Lot
+import com.example.itoken.features.trades.domain.repository.TransactionRepository
+import com.google.firebase.database.DatabaseReference
+import com.google.gson.Gson
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+
+class TransactionRepositoryImpl @Inject constructor(
+    private val firebase: DatabaseReference,
+): TransactionRepository {
+
+    override suspend fun sendTokenToUser(userId: String?, trade: Lot) {
+        firebase.child("users")
+            .child(userId.toString())
+            .child("bought_assets")
+            .push()
+            .setValue(trade.apply {
+                ownerName = "Вы"
+            }).await()
+    }
+
+    override suspend fun closeTrade(tradeId: String?) {
+        firebase.child("trades")
+            .child(tradeId.toString())
+            .child("active")
+            .setValue(false)
+    }
+
+    override suspend fun changeMembersList(tradeId: String?, members: List<Auctioneer>?) {
+        firebase.child("trades")
+            .child(tradeId.toString())
+            .child("candidates")
+            .setValue(listToString(members))
+    }
+
+    private fun listToString(value: List<Auctioneer>?): String {
+        val result = arrayListOf<Candidate>()
+        value?.forEach {
+            result.add(it.toCandidate())
+        }
+        return Gson().toJson(result)
+    }
+}

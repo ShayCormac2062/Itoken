@@ -79,11 +79,12 @@ class CanvasFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        findNavController().popBackStack()
+        findNavController().navigate(R.id.allTokensFragment)
         parentFragmentManager.beginTransaction()
             .add(AddTokenFragment(), "FUCK")
             .commit()
         binding = null
         super.onDestroyView()
     }
+
 }

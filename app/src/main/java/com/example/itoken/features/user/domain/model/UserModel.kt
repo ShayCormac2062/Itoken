@@ -2,10 +2,11 @@ package com.example.itoken.features.user.domain.model
 
 import com.example.itoken.common.db.model.DatabaseAsset
 import com.example.itoken.common.db.model.User
+import java.io.Serializable
 
 data class UserModel(
     val stringId: String?,
-    val imageUrl: String?,
+    var imageUrl: String?,
     val nickname: String?,
     val description: String?,
     val password: String?,

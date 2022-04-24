@@ -95,16 +95,16 @@
             android:layout_height="30dp"
             android:layout_marginTop="48dp"
             android:src="@drawable/create"
-            app:layout_constraintEnd_toStartOf="@+id/iv_favourite"
+            app:layout_constraintEnd_toStartOf="@+id/iv_traded"
             app:layout_constraintStart_toEndOf="@+id/iv_collected"
             app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
         <ImageView
-            android:id="@+id/iv_favourite"
+            android:id="@+id/iv_traded"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="48dp"
-            android:src="@drawable/like_filled"
+            android:src="@drawable/trade"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_created"
             app:layout_constraintTop_toBottomOf="@+id/tv_description" />
@@ -128,13 +128,13 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_created" />
 
         <TextView
-            android:id="@+id/tv_favourite"
+            android:id="@+id/tv_traded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/iv_favourite"
-            app:layout_constraintStart_toStartOf="@+id/iv_favourite"
-            app:layout_constraintTop_toBottomOf="@+id/iv_favourite" />
+            app:layout_constraintEnd_toEndOf="@+id/iv_traded"
+            app:layout_constraintStart_toStartOf="@+id/iv_traded"
+            app:layout_constraintTop_toBottomOf="@+id/iv_traded" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -235,7 +235,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_created" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_favourite"
+            android:id="@+id/card_traded"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:backgroundTint="@color/gray"
@@ -247,11 +247,11 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/tv_favourite_card"
+                    android:id="@+id/tv_traded_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="Избранное"
+                    android:text="Куплено на аукционах"
                     android:textColor="@color/red_dark"
                     android:textSize="25sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -259,7 +259,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/iv_favourite_card"
+                    android:id="@+id/iv_traded_card"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginEnd="24dp"
@@ -273,10 +273,10 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_favourite"
+            android:id="@+id/rv_traded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/card_favourite" />
+            app:layout_constraintTop_toBottomOf="@+id/card_traded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

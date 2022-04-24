@@ -19,11 +19,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentRegistrationBinding
-import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -57,6 +54,13 @@ class RegistrationFragment : Fragment() {
         binding?.run {
             btnRegister.setOnClickListener {
                 if (isNoEmptyFields()) {
+                    pbLoading.visibility = View.VISIBLE
+                    tilNickname.visibility = View.INVISIBLE
+                    tilDescription.visibility = View.INVISIBLE
+                    tilEmail.visibility = View.INVISIBLE
+                    tilPassword.visibility = View.INVISIBLE
+                    tilRepeatPassword.visibility = View.INVISIBLE
+                    btnGetPhoto.visibility = View.INVISIBLE
                     registerUser()
                 } else makeToast("Заполните все поля")
             }
@@ -77,26 +81,25 @@ class RegistrationFragment : Fragment() {
 
     private fun registerUser() {
         binding?.run {
-            btnRegister.setOnClickListener {
-                if (tietPassword.text.toString() == tietRepeatPassword.text.toString()) {
-                    lifecycleScope.launch {
-                        if (usersViewModel.registerUser(
-                                UserModel(
-                                    generateString(),
-                                    imageUrl,
-                                    tietNickname.text.toString(),
-                                    tietDescription.text.toString(),
-                                    tietPassword.text.toString(),
-                                    tietEmail.text.toString(),
-                                    arrayListOf(),
-                                    1250.00
-                                )
-                            )) {
-                            findNavController().navigate(R.id.loadingFragment)
-                        } else makeToast("Такой пользователь уже существует")
-                    }
-                } else makeToast("Пароли должны совпадать")
-            }
+            if (tietPassword.text.toString() == tietRepeatPassword.text.toString()) {
+                lifecycleScope.launch {
+                    if (usersViewModel.registerUser(
+                            UserModel(
+                                generateString(),
+                                imageUrl,
+                                tietNickname.text.toString(),
+                                tietDescription.text.toString(),
+                                tietPassword.text.toString(),
+                                tietEmail.text.toString(),
+                                arrayListOf(),
+                                1250.00
+                            )
+                        )
+                    ) {
+                        findNavController().navigate(R.id.loadingFragment)
+                    } else makeToast("Такой пользователь уже существует")
+                }
+            } else makeToast("Пароли должны совпадать")
         }
     }
 
@@ -106,17 +109,15 @@ class RegistrationFragment : Fragment() {
         grantResults: IntArray
     ) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            when (permissions[0]) {
-                Manifest.permission.READ_EXTERNAL_STORAGE -> selectImageFromGallery()
-                else -> null
+            if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE)  {
+                selectImageFromGallery()
             }
         } else {
             Toast.makeText(
                 context,
-                when (permissions[0]) {
-                    Manifest.permission.READ_EXTERNAL_STORAGE -> "Доступ к фотографиям запрещён"
-                    else -> ""
-                },
+                if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE) {
+                    "Доступ к фотографиям запрещён"
+                } else "",
                 Toast.LENGTH_SHORT
             ).show()
         }

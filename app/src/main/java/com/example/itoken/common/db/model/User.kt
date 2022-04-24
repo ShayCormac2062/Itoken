@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
+import java.io.Serializable
 
 @Entity(tableName = "users")
 data class User(
@@ -27,7 +28,7 @@ data class User(
     val assets: List<DatabaseAsset>?,
     @ColumnInfo(name = "balance")
     val balance: Double?,
-) {
+) : Serializable {
     fun toUserModel() = UserModel(
         stringId,
         imageUrl,

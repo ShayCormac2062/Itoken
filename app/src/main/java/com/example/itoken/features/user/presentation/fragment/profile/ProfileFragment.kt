@@ -25,6 +25,7 @@ import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,6 +41,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
     private val usersViewModel: UsersViewModel by viewModels {
         factory
     }
+    @Inject
+    lateinit var ref: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,9 +74,18 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 clickCard(rvCreated, ivCreatedCard, it.isActivated, 2)
                 it.isActivated = !it.isActivated
             }
-            cardFavourite.setOnClickListener {
-                clickCard(rvFavourite, ivFavouriteCard, it.isActivated, 3)
+            cardTraded.setOnClickListener {
+                clickCard(rvTraded, ivTradedCard, it.isActivated, 3)
                 it.isActivated = !it.isActivated
+            }
+            ivCollected.setOnClickListener {
+                cardCollected.performClick()
+            }
+            ivCreated.setOnClickListener {
+                cardCreated.performClick()
+            }
+            ivTraded.setOnClickListener {
+                cardTraded.performClick()
             }
         }
     }
@@ -94,7 +106,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
             when (point) {
                 1 -> assetViewModel.getCollected(binding?.tvCreatorName?.text.toString())
                 2 -> assetViewModel.getCreated(binding?.tvCreatorName?.text.toString())
-                else -> assetViewModel.getFavourites(binding?.tvCreatorName?.text.toString())
+                else -> assetViewModel.getTraded(binding?.tvCreatorName?.text.toString())
             }
         }
         rv.startAnimation(
@@ -114,8 +126,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 createdAssetList.observe(viewLifecycleOwner) { t ->
                     initTokensRecyclerView(rvCreated, t)
                 }
-                favouritesAssetList.observe(viewLifecycleOwner) { t ->
-                    initTokensRecyclerView(rvFavourite, t)
+                tradedAssetList.observe(viewLifecycleOwner) { t ->
+                    initTokensRecyclerView(rvTraded, t)
                 }
                 collectedAssetListAmount.observe(viewLifecycleOwner) {
                     binding?.tvCollected?.text = "Куплено: ${it}"
@@ -123,8 +135,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 createdAssetListAmount.observe(viewLifecycleOwner) {
                     binding?.tvCreated?.text = "Создано: ${it}"
                 }
-                favouritesAssetListAmount.observe(viewLifecycleOwner) {
-                    binding?.tvFavourite?.text = "Избранное: ${it}"
+                tradedAssetListAmount.observe(viewLifecycleOwner) {
+                    binding?.tvTraded?.text = "Аукционы: ${it}"
                 }
             }
             with(usersViewModel) {
@@ -148,7 +160,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 with(assetViewModel) {
                     getCollectedAmount(user?.nickname.toString())
                     getCreatedAmount(user?.nickname.toString())
-                    getFavouritesAmount(user?.nickname.toString())
+                    getTradedAmount(user?.nickname.toString())
                 }
             }
         }

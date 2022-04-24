@@ -11,7 +11,7 @@ import com.example.itoken.App
 import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
-import com.example.itoken.features.addtoken.presentation.viewmodel.CurrentUserViewModel
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
@@ -110,14 +110,10 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
                         ?.let { currentUser?.balance?.minus(it) })
                 }
             }
-            isNeedToFavourites -> {
-                viewModel.add(asset.toAssetModel())
-            }
         }
         isUserAuthorized = false
         isUserBoughtThisAsset = false
         isNeedToCollect = false
-        isNeedToFavourites = false
         isNeedToTrade = false
         isUserHasEnoughMoney = false
         isUserCreator = false
@@ -128,7 +124,6 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
         var isUserAuthorized = false
         var isUserBoughtThisAsset = false
         var isNeedToCollect = false
-        var isNeedToFavourites = false
         var isUserHasEnoughMoney = false
         var isUserCreator = false
         var isNeedToTrade = false

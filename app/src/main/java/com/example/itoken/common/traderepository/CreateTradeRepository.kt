@@ -1,4 +1,4 @@
-package com.example.itoken.common.trade_repository
+package com.example.itoken.common.traderepository
 
 import com.example.itoken.features.trades.domain.model.Lot
 

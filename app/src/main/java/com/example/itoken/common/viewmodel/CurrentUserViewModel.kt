@@ -1,4 +1,4 @@
-package com.example.itoken.features.addtoken.presentation.viewmodel
+package com.example.itoken.common.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -77,13 +77,6 @@ class TokenInfoView<M : BaseAsset>(
                         } else makeToast("Недостаточно средств на покупку токена!")
                     }
                 }
-                with(btnToFavourites) {
-                    visibility = View.VISIBLE
-                    setOnClickListener {
-                        makeToast("Токен был успешно добавлен в избранное")
-                        TokenInfoFragment.isNeedToFavourites = true
-                    }
-                }
             }
         }
     }

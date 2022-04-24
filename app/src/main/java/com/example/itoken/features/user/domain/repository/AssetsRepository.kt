@@ -8,7 +8,7 @@ interface AssetsRepository {
 
     suspend fun getAllCollected(name: String): List<ItemAsset>
 
-    suspend fun getAllFavourites(name: String): List<ItemAsset>
+    suspend fun getAllTraded(name: String): List<ItemAsset>
 
     suspend fun getAll(): List<ItemAsset>
 
