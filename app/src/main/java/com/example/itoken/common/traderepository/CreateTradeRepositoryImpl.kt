@@ -22,7 +22,6 @@ class CreateTradeRepositoryImpl @Inject constructor(
                             imagePreviewUrl = url.toString()
                             ref.child("trades")
                                 .child(trade.address.toString())
-                                .push()
                                 .setValue(
                                     Trade(
                                         (0..9999999).random().toLong(),
