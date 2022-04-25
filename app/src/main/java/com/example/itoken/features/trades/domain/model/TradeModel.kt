@@ -7,5 +7,5 @@ data class TradeModel(
     val author: String?,
     val price: Long?,
     var isActive: Boolean,
-    var candidates: List<Auctioneer>,
+    var candidates: ArrayList<Auctioneer>?,
 ) : Serializable

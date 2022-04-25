@@ -2,11 +2,13 @@ package com.example.itoken.features.trades.data
 
 import com.example.itoken.features.trades.data.entity.TradableAsset
 import com.example.itoken.features.trades.data.entity.Trade
+import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.trades.domain.repository.TradeRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await
+import java.util.ArrayList
 import javax.inject.Inject
 
 class TradeRepositoryImpl @Inject constructor(
@@ -53,7 +55,21 @@ class TradeRepositoryImpl @Inject constructor(
             dto.child("author").value as String?,
             dto.child("price").value as Long?,
             dto.child("active").value as Boolean,
-            dto.child("candidates").value as String?
+            getListOfMembers(dto.child("candidates"))
         ).toTradeModel()
+
+    private fun getListOfMembers(dto: DataSnapshot): ArrayList<Auctioneer> {
+        val result = arrayListOf<Auctioneer>()
+        for (member in dto.children) {
+            result.add(
+                Auctioneer(
+                member.child("stringId").value as String?,
+                member.child("name").value as String?,
+                member.child("price").value as Long?,
+                member.child("imageUrl").value as String?,
+            ))
+        }
+        return result
+    }
 
 }

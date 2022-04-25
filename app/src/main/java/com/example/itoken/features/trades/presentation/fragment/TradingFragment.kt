@@ -15,7 +15,6 @@ import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentTradingBinding
-import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.user.domain.model.UserModel
 import kotlinx.coroutines.launch
@@ -90,7 +89,6 @@ class TradingFragment : Fragment() {
 
     private fun showBottomSheet() {
         val bundle = Bundle().apply {
-            putParcelableArrayList("candidates", trade?.candidates as ArrayList<Auctioneer>)
             putSerializable("user", currentUser?.toUser())
             putSerializable("trade", trade)
         }

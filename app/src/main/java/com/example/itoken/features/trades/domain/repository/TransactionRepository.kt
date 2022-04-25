@@ -9,5 +9,5 @@ interface TransactionRepository {
 
     suspend fun closeTrade(tradeId: String?)
 
-    suspend fun changeMembersList(tradeId: String?, members: List<Auctioneer>?)
+    suspend fun changeMembersList(tradeId: String?, member: Auctioneer?)
 }

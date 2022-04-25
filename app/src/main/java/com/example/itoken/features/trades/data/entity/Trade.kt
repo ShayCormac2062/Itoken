@@ -10,17 +10,13 @@ data class Trade(
     val author: String?,
     val price: Long?,
     var isActive: Boolean,
-    var candidates: String?,
+    var candidates: ArrayList<Auctioneer>?,
 ) {
     fun toTradeModel() = TradeModel(
         token.toLot(),
         author,
         price,
         isActive,
-        changeToList(candidates)
+        candidates
     )
-
-    private fun changeToList(candidates: String?): List<Auctioneer> =
-        Gson().fromJson(candidates, Array<Auctioneer>::class.java)?.toList() ?: arrayListOf()
-
 }

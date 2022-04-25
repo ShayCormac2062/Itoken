@@ -23,6 +23,7 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/like_filled.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/people.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/red.xml" value="0.109" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/rounded.xml" value="0.1" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/trade.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/white.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/yellow.xml" value="0.109" />
@@ -49,7 +50,7 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_choose_mark.xml" value="0.32575757575757575" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_color.xml" value="0.5" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_genre_cardview.xml" value="0.5" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_member_cardview.xml" value="0.16" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_member_cardview.xml" value="0.14" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_notification.xml" value="0.22" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_cardview.xml" value="0.33" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_info.xml" value="0.20416666666666666" />

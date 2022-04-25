@@ -30,18 +30,11 @@ class TransactionRepositoryImpl @Inject constructor(
             .setValue(false)
     }
 
-    override suspend fun changeMembersList(tradeId: String?, members: List<Auctioneer>?) {
+    override suspend fun changeMembersList(tradeId: String?, member: Auctioneer?) {
         firebase.child("trades")
             .child(tradeId.toString())
             .child("candidates")
-            .setValue(listToString(members))
-    }
-
-    private fun listToString(value: List<Auctioneer>?): String {
-        val result = arrayListOf<Candidate>()
-        value?.forEach {
-            result.add(it.toCandidate())
-        }
-        return Gson().toJson(result)
+            .child(member?.stringId.toString())
+            .setValue(member)
     }
 }

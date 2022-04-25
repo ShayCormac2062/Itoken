@@ -28,9 +28,9 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-    fun changeMembersList(tradeId: String?, members: List<Auctioneer>?) {
+    fun changeMembersList(tradeId: String?, member: Auctioneer?) {
         viewModelScope.launch {
-            changeMemberListUseCase(tradeId, members)
+            changeMemberListUseCase(tradeId, member)
         }
     }
 

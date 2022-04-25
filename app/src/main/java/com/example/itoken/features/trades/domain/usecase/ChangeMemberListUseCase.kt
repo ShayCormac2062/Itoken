@@ -8,7 +8,7 @@ class ChangeMemberListUseCase @Inject constructor(
     private val repository: TransactionRepository
 ) {
 
-    suspend operator fun invoke(tradeId: String?, members: List<Auctioneer>?) =
-        repository.changeMembersList(tradeId, members)
+    suspend operator fun invoke(tradeId: String?, member: Auctioneer?) =
+        repository.changeMembersList(tradeId, member)
 
 }

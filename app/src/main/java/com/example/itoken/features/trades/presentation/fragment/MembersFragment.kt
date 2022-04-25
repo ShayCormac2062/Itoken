@@ -27,7 +27,6 @@ import javax.inject.Inject
 class MembersFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentMembersBinding? = null
-    private var members: ArrayList<Auctioneer>? = null
     private var user: User? = null
     private var trade: TradeModel? = null
 
@@ -47,7 +46,6 @@ class MembersFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMembersBinding.inflate(layoutInflater)
-        members = arguments?.get("candidates") as ArrayList<Auctioneer>?
         user = arguments?.get("user") as User?
         trade = arguments?.get("trade") as TradeModel?
         return binding?.root
@@ -68,7 +66,7 @@ class MembersFragment : BottomSheetDialogFragment() {
                 layoutManager = LinearLayoutManager(context).apply {
                     orientation = RecyclerView.VERTICAL
                 }
-                adapter = MembersAdapter(members, trade?.author == user?.nickname).apply {
+                adapter = MembersAdapter(trade?.candidates, trade?.author == user?.nickname).apply {
                     onClick = {
                         createSendTokenDialog(it)
                     }
@@ -132,19 +130,7 @@ class MembersFragment : BottomSheetDialogFragment() {
                             tietMark.text.toString().toLong(),
                             user?.imageUrl
                         )
-                        val checkedAuctioneer = try {
-                            members?.first {
-                                it.name == newAuctioneer.name &&
-                                        it.stringId == newAuctioneer.stringId
-                            }
-                        } catch (ex: Exception)  {
-                            null
-                        }
-                        if (checkedAuctioneer != null) {
-                            members?.remove(checkedAuctioneer)
-                        }
-                        members?.add(newAuctioneer)
-                        transactionViewModel.changeMembersList(trade?.token?.tokenId, members)
+                        transactionViewModel.changeMembersList(trade?.token?.address, newAuctioneer)
                         makeToast("Ваша ставка принята!")
                         dismiss()
                     }
@@ -160,6 +146,4 @@ class MembersFragment : BottomSheetDialogFragment() {
         Toast.LENGTH_SHORT
     ).show()
 
-
-        //TODO не работает подача ставки. Исправить
 }

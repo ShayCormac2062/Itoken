@@ -29,7 +29,7 @@ class CreateTradeRepositoryImpl @Inject constructor(
                                         trade.creatorName,
                                         trade.price,
                                         true,
-                                        ""
+                                        arrayListOf()
                                     )
                                 )
                         }
