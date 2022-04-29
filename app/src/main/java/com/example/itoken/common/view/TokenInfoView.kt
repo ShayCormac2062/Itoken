@@ -26,7 +26,7 @@ class TokenInfoView<M : BaseAsset>(
 
     fun init(
         asset: M,
-        likes: Long,
+        likes: Int,
         isUserAuthorized: Boolean,
         isUserBoughtThisAsset: Boolean
     ) {
@@ -34,8 +34,8 @@ class TokenInfoView<M : BaseAsset>(
         binding.run {
             imageView.load(Uri.parse(asset.imagePreviewUrl))
             ivToken.load(Uri.parse(asset.imageUrl))
-            tvCreatorName.text = asset.creatorName
-            tvTokenName.text = asset.tokenName
+            tvCreatorName.text = if (asset.creatorName != "" || asset.creatorName != null) asset.creatorName else "Автор не известен"
+            tvTokenName.text = if (asset.tokenName != "" || asset.tokenName != null) asset.tokenName else "Название не указано"
             tvPrice.text = "Цена: ${asset.price} ICrystal"
             tvFavourite.text = likes.toString()
             tvDescription.text = asset.description

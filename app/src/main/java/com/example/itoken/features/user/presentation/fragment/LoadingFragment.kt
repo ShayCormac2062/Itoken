@@ -1,4 +1,4 @@
-package com.example.itoken.features.user.presentation.fragment.profile
+package com.example.itoken.features.user.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

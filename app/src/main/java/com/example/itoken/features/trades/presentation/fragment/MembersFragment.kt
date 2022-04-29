@@ -131,6 +131,7 @@ class MembersFragment : BottomSheetDialogFragment() {
                             user?.imageUrl
                         )
                         transactionViewModel.changeMembersList(trade?.token?.address, newAuctioneer)
+                        trade?.candidates?.add(newAuctioneer)
                         makeToast("Ваша ставка принята!")
                         dismiss()
                     }

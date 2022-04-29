@@ -23,7 +23,7 @@ class TokenView<M : BaseAssetBrief>(
             if (!isTheLast) {
                 tvCreatorName.text = asset.creatorName
                 tvTokenName.text = asset.tokenName
-                ivTokenImage.load(Uri.parse(asset.imageUrl))
+                ivTokenImage.load(Uri.parse(asset.imageUrl ?: ""))
                 tvTokenPrice.text = asset.price.toString()
                 tvLikesAmount.text = asset.likes?.toString()
                 collectionCardview.setOnClickListener {

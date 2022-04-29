@@ -13,7 +13,7 @@ import com.example.itoken.features.trades.presentation.fragment.TradingFragment
 import com.example.itoken.features.user.presentation.fragment.authentication.LoginFragment
 import com.example.itoken.features.user.presentation.fragment.authentication.RegistrationFragment
 import com.example.itoken.features.user.presentation.fragment.profile.ClickerFragment
-import com.example.itoken.features.user.presentation.fragment.profile.LoadingFragment
+import com.example.itoken.features.user.presentation.fragment.LoadingFragment
 import com.example.itoken.features.user.presentation.fragment.profile.ProfileFragment
 import dagger.BindsInstance
 import dagger.Component

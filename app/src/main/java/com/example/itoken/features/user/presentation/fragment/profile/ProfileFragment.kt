@@ -78,13 +78,13 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 clickCard(rvTraded, ivTradedCard, it.isActivated, 3)
                 it.isActivated = !it.isActivated
             }
-            ivCollected.setOnClickListener {
+            collectedCardview.setOnClickListener {
                 cardCollected.performClick()
             }
-            ivCreated.setOnClickListener {
+            createdCardview.setOnClickListener {
                 cardCreated.performClick()
             }
-            ivTraded.setOnClickListener {
+            tradedCardview.setOnClickListener {
                 cardTraded.performClick()
             }
         }

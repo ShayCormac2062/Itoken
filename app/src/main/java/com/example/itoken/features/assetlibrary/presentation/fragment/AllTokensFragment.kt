@@ -21,7 +21,7 @@ import com.example.itoken.features.assetlibrary.presentation.adapter.CollectionA
 import com.example.itoken.features.assetlibrary.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.TokenAdapter
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
-import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
+import com.example.itoken.features.assetlibrary.presentation.viewmodel.AssetsLibraryViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ class AllTokensFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
-    private val viewModel: MainViewModel by viewModels {
+    private val viewModel: AssetsLibraryViewModel by viewModels {
         factory
     }
 
@@ -60,6 +60,9 @@ class AllTokensFragment : Fragment() {
                 adapter = GenreCollectionAdapter().apply {
                     setItemViewCacheSize(10)
                     onClick = {
+                        findNavController().navigate(R.id.searchFragment).apply {
+                            SearchFragment.category = it
+                        }
                     }
                 }
             }
@@ -117,8 +120,8 @@ class AllTokensFragment : Fragment() {
             slTokens.startShimmer()
             slCheapTokens.startShimmer()
             with(viewModel) {
-                getAssetsBrief()
-                getAssets()
+                getAssetsCheap()
+                getTenAssets()
             }
             initRecycler(slGenres, rvGenres)
         }
@@ -149,11 +152,7 @@ class AllTokensFragment : Fragment() {
                 }
                 setItemViewCacheSize(20)
                 onLastCardClick = { _, _ ->
-                    Toast.makeText(
-                        context,
-                        "Переброс на страницу с токенами",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    findNavController().navigate(R.id.searchFragment)
                 }
             }
             initRecycler(shimmer, rv)

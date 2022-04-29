@@ -10,11 +10,10 @@ import com.example.itoken.features.addtoken.domain.usecase.AddUseCase
 import com.example.itoken.features.assetlibrary.data.AssetRepositoryImpl
 import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBriefUseCase
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsUseCase
 import com.example.itoken.common.traderepository.CreateTradeRepositoryImpl
 import com.example.itoken.features.trades.data.TradeRepositoryImpl
 import com.example.itoken.common.traderepository.CreateTradeRepository
+import com.example.itoken.features.assetlibrary.domain.usecase.*
 import com.example.itoken.features.trades.data.TransactionRepositoryImpl
 import com.example.itoken.features.trades.domain.repository.TradeRepository
 import com.example.itoken.features.trades.domain.repository.TransactionRepository
@@ -112,6 +111,21 @@ class AppModule {
     fun provideGetAllUseCase(
         repository: AssetsRepository,
     ): GetAllUseCase = GetAllUseCase(repository)
+
+    @Provides
+    fun provideGetAssetsByCategoryUseCase(
+        repository: AssetRepository,
+    ): GetAssetsByCategoryUseCase = GetAssetsByCategoryUseCase(repository)
+
+    @Provides
+    fun provideGetAssetsBySearchUseCase(
+        repository: AssetRepository,
+    ): GetAssetsBySearchUseCase = GetAssetsBySearchUseCase(repository)
+
+    @Provides
+    fun provideGetAssetsCheapUseCase(
+        repository: AssetRepository,
+    ): GetAssetsCheapUseCase = GetAssetsCheapUseCase(repository)
 
     @Provides
     fun provideGetAllFavouritesUseCase(

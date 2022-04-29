@@ -54,7 +54,7 @@
         tools:layout="@layout/fragment_no_connection" />
     <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.example.itoken.features.user.presentation.fragment.profile.LoadingFragment"
+        android:name="com.example.itoken.features.user.presentation.fragment.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading" />
     <fragment

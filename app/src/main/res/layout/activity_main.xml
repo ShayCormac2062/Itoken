@@ -12,23 +12,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/plus"
-        android:foregroundGravity="top"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/red"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_main"/>
+        android:foregroundGravity="top"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_main"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:background="@drawable/rounded"
         android:id="@+id/bottom_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:background="@drawable/rounded"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/main_menu"
-        android:layout_marginHorizontal="12dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/main_menu" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"

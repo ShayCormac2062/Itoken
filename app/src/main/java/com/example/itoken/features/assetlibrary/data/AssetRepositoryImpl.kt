@@ -23,10 +23,42 @@ class AssetRepositoryImpl @Inject constructor(private val api: APIService) : Ass
         return result
     }
 
+    override suspend fun getAssetsCheap(): List<InfoAsset> {
+        val result = arrayListOf<InfoAsset>()
+        val rand = (1..35).random()
+        try {
+            val assets = api.getAssets().assets
+            for (asset in assets) {
+                if (assets.indexOf(asset) % rand == 0 && asset.name != null) {
+                    result.add(setup(asset).toInfoAsset().apply {
+                        price = price?.minus((50..150).random())
+                    })
+                }
+                if (result.size == 25) return result
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return result
+    }
+
     override suspend fun getAssets(): List<InfoAsset> {
         val result = arrayListOf<InfoAsset>()
         for (asset in api.getAssets().assets) {
             result.add(setup(asset).toInfoAsset())
+        }
+        return result
+    }
+
+    override suspend fun getAssetsByCategory(category: String): List<InfoAsset> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAssetsBySearch(request: String): List<InfoAsset> {
+        val result = arrayListOf<InfoAsset>()
+        for (asset in api.getAssets().assets) {
+            val newAsset = setup(asset).toInfoAsset()
+            if (newAsset.tokenName?.contains(request) == true) result.add(newAsset)
         }
         return result
     }

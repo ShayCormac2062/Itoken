@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.itoken.common.di.ViewModelKey
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
 import com.example.itoken.common.viewmodel.CurrentUserViewModel
-import com.example.itoken.features.assetlibrary.presentation.viewmodel.MainViewModel
+import com.example.itoken.features.assetlibrary.presentation.viewmodel.AssetsLibraryViewModel
+import com.example.itoken.features.assetlibrary.presentation.viewmodel.SearchAssetViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
@@ -25,9 +26,16 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun bindMainViewModel(
-        viewModel: MainViewModel
+    @ViewModelKey(AssetsLibraryViewModel::class)
+    fun bindAssetsLibraryViewModel(
+        viewModel: AssetsLibraryViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchAssetViewModel::class)
+    fun bindSearchAssetViewModel(
+        viewModel: SearchAssetViewModel
     ): ViewModel
 
     @Binds

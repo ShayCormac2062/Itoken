@@ -79,7 +79,7 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
             binding?.run {
                 tokenInfoContainer.init(
                     asset,
-                    arguments?.getLong("likes") as Long,
+                    asset.likes?.toInt() ?: arguments?.getInt("likes") as Int,
                     isUserAuthorized,
                     isUserBoughtThisAsset
                 )

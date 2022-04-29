@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.databinding.ViewTokenCardviewBinding
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
 
-class TokenAdapter(val tokenList: List<AssetBrief>?) :
+class TokenAdapter(private val tokenList: List<AssetBrief>?) :
     RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
     var onClick: ((AssetBrief?, Long) -> (Unit))? = null
@@ -38,11 +38,11 @@ class TokenAdapter(val tokenList: List<AssetBrief>?) :
         )
 
     override fun onBindViewHolder(holder: TokenCollectionViewHolder, position: Int) =
-        holder.bind(tokenList?.get(position), position == 9)
+        holder.bind(tokenList?.get(position), position == (tokenList?.size?.minus(1)))
 
     override fun getItemCount(): Int {
         tokenList?.let {
-            return if (it.size > 10) 10 else it.size
+            return it.size
         }
         return 0
     }

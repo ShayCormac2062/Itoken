@@ -1,11 +1,9 @@
 package com.example.itoken.features.trades.data
 
-import com.example.itoken.features.trades.data.entity.Candidate
 import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.Lot
 import com.example.itoken.features.trades.domain.repository.TransactionRepository
 import com.google.firebase.database.DatabaseReference
-import com.google.gson.Gson
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

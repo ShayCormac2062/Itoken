@@ -10,10 +10,11 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-private const val DATABASE_ROOT = "https://itoken-b3e4a-default-rtdb.europe-west1.firebasedatabase.app"
-private const val STORAGE_ROOT = "gs://itoken-b3e4a.appspot.com/"
 @Module
 class FirebaseModule {
+
+    private val DATABASE_ROOT = "https://itoken-b3e4a-default-rtdb.europe-west1.firebasedatabase.app"
+    private val STORAGE_ROOT = "gs://itoken-b3e4a.appspot.com/"
 
     @Provides
     @Singleton
