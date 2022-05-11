@@ -21,15 +21,32 @@ class UsersViewModel @Inject constructor(
     private var _currentUser: MutableLiveData<UserModel?> = MutableLiveData()
     val currentUser: LiveData<UserModel?> = _currentUser
 
-    suspend fun addUser(user: UserModel) = addUserUseCase(user)
+    fun addUser(user: UserModel) =
+        viewModelScope.launch {
+            addUserUseCase(user)
+        }
 
-    suspend fun registerUser(user: UserModel) = registerUserUseCase(user)
+    fun registerUser(user: UserModel): Boolean {
+        var result = false
+        viewModelScope.launch {
+            result = registerUserUseCase(user)
+        }
+        return result
+    }
 
-    suspend fun signOut() = deleteUserUseCase()
+    fun signOut() {
+        viewModelScope.launch {
+            deleteUserUseCase()
+        }
+    }
 
-    suspend fun changeBalance(newBalance: Double?) = changeBalanceUseCase(newBalance)
+    fun changeBalance(newBalance: Double?) {
+        viewModelScope.launch {
+            changeBalanceUseCase(newBalance)
+        }
+    }
 
-    suspend fun getUser() {
+    fun getUser() {
         viewModelScope.launch {
             try {
                 _currentUser.value = getUserUseCase()

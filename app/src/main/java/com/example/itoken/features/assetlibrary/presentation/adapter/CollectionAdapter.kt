@@ -1,36 +1,29 @@
 package com.example.itoken.features.assetlibrary.presentation.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.example.itoken.R
 import com.example.itoken.databinding.ViewTrendingCollectionCardviewBinding
-import com.example.itoken.features.assetlibrary.data.response.Asset
+import com.example.itoken.features.assetlibrary.presentation.model.CollectionBrief
 
-class CollectionAdapter(private val context: Context, private var collectionList: List<Asset>?) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
+class CollectionAdapter(private var collectionList: List<CollectionBrief>) :
+    RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
-    var onClick: ((Asset?) -> (Unit))? = null
-    var onLastCardClick: (() -> (Unit))? = null
+    var onClick: ((CollectionBrief?) -> (Unit))? = null
 
     inner class CollectionViewHolder(
         private val binding: ViewTrendingCollectionCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Asset?, isTheLast: Boolean) {
+        fun bind(item: CollectionBrief?) {
             with(binding) {
-                if (!isTheLast) {
-//                    ivCollection.load(Uri.parse(item.collection?.image_url))
-//                    ivCreator.load(Uri.parse(item.creator?.profile_img_url))
-//                    tvCollectionName.text = item.collection?.name
-//                    tvCreatorName.text = item.creator?.user?.username
-                } else {
-//                    with(collectionCardview) {
-//                        setBackgroundResource(
-//                            R.drawable.gradient_login)
-//                        setOnClickListener {
-//                            onLastCardClick?.invoke()
-//                        }
-//                    }
-//                    tvCreatorName.text = context.getString(R.string.see_collections_notif)
+                ivCollection.load(item?.bannerImageUrl)
+                ivCreator.load(R.drawable.ai)
+                tvCollectionName.text = item?.name
+                tvCreatorName.text = item?.username
+                collectionCardview.setOnClickListener {
+                    onClick?.invoke(item)
                 }
             }
         }
@@ -38,12 +31,16 @@ class CollectionAdapter(private val context: Context, private var collectionList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder =
         CollectionViewHolder(
-            ViewTrendingCollectionCardviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewTrendingCollectionCardviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
 
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) =
-        holder.bind(collectionList?.get(position), position == 8)
+        holder.bind(collectionList[position])
 
-    override fun getItemCount(): Int = 0//if (collectionList.size > 9) 9 else collectionList.size
+    override fun getItemCount(): Int = collectionList.size
 
 }

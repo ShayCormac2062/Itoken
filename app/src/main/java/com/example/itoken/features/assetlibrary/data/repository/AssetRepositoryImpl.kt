@@ -1,12 +1,14 @@
-package com.example.itoken.features.assetlibrary.data
+package com.example.itoken.features.assetlibrary.data.repository
 
-import com.example.itoken.features.assetlibrary.data.response.Asset
+import com.example.itoken.features.assetlibrary.data.response.asset.Asset
 import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
 import javax.inject.Inject
 
-class AssetRepositoryImpl @Inject constructor(private val api: APIService) : AssetRepository {
+class AssetRepositoryImpl @Inject constructor(
+    private val api: APIService
+) : AssetRepository {
 
     override suspend fun getAssetsBrief(): List<InfoAsset> {
         val result = arrayListOf<InfoAsset>()

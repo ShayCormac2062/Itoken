@@ -18,7 +18,7 @@ class CurrentUserViewModel @Inject constructor(
     private var _currentUser: MutableLiveData<UserModel?> = MutableLiveData()
     val currentUser: LiveData<UserModel?> = _currentUser
 
-    suspend fun getUser() {
+    fun getUser() {
         viewModelScope.launch {
             try {
                 _currentUser.value = getUserUseCase()
@@ -28,5 +28,9 @@ class CurrentUserViewModel @Inject constructor(
         }
     }
 
-    suspend fun changeBalance(newBalance: Double?) = changeBalanceUseCase(newBalance)
+    fun changeBalance(newBalance: Double?) {
+        viewModelScope.launch {
+            val s = changeBalanceUseCase(newBalance)
+        }
+    }
 }

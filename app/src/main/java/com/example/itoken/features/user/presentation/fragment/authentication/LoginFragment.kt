@@ -78,9 +78,7 @@ class LoginFragment : Fragment() {
         usersViewModel.currentUser.observe(viewLifecycleOwner) { um ->
             if (um != null) {
                 currentUser = um
-                lifecycleScope.launch {
-                    assetsViewModel.getAll()
-                }
+                assetsViewModel.getAll()
             } else makeToast("Ошибка в введённых данных. Проверьте их и повторите попытку")
         }
     }
@@ -94,21 +92,19 @@ class LoginFragment : Fragment() {
     private fun enter() {
         binding?.run {
             val isThisEmailOrNickname: Boolean = tietName.text.toString().contains('@')
-            lifecycleScope.launch {
-                usersViewModel.addUser(
-                    UserModel(
-                        null,
-                        null,
-                        if (!isThisEmailOrNickname) tietName.text.toString() else null,
-                        null,
-                        tietPassword.text.toString(),
-                        if (isThisEmailOrNickname) tietName.text.toString() else null,
-                        null,
-                        null
-                    )
+            usersViewModel.addUser(
+                UserModel(
+                    null,
+                    null,
+                    if (!isThisEmailOrNickname) tietName.text.toString() else null,
+                    null,
+                    tietPassword.text.toString(),
+                    if (isThisEmailOrNickname) tietName.text.toString() else null,
+                    null,
+                    null
                 )
-                usersViewModel.getUser()
-            }
+            )
+            usersViewModel.getUser()
         }
     }
 

@@ -9,4 +9,6 @@
     <string name="notif_ending_create_token">Вы уверены в своих данных? Удалить токен уже не получится. Продолжить?</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
+    <string name="ok">Хорошо</string>
+    <string name="info">Дополнительная информация:</string>
 </resources>

@@ -16,11 +16,11 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.itoken.App
 import com.example.itoken.R
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentAddTokenBinding
 import com.example.itoken.databinding.ViewNotificationBinding
 import com.example.itoken.features.addtoken.domain.model.AssetModel
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
-import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.user.domain.model.UserModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
@@ -149,11 +149,9 @@ class AddTokenFragment : BottomSheetDialogFragment() {
                     tietDescription.text.toString(),
                     "0x${(10000000..99999999).random()}"
                 )
-                lifecycleScope.launch {
-                    viewModel.add(newToken)
-                    makeToast(getString(R.string.add_token_susccessful))
-                    onDestroyView()
-                }
+                viewModel.add(newToken)
+                makeToast(getString(R.string.add_token_susccessful))
+                onDestroyView()
             }
         } catch (e: Exception) {
             makeToast("Ваш токен слишком дорогой, занизьте цену")

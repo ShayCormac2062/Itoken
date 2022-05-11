@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -15,24 +14,28 @@ import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentAllTokensBinding
-import com.example.itoken.features.assetlibrary.data.response.Asset
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
+import com.example.itoken.features.assetlibrary.domain.model.InfoCollection
 import com.example.itoken.features.assetlibrary.presentation.adapter.CollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.GenreCollectionAdapter
 import com.example.itoken.features.assetlibrary.presentation.adapter.TokenAdapter
 import com.example.itoken.features.assetlibrary.presentation.model.AssetBrief
+import com.example.itoken.features.assetlibrary.presentation.model.CollectionBrief
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.AssetsLibraryViewModel
+import com.example.itoken.features.assetlibrary.presentation.viewmodel.CollectionViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import javax.inject.Inject
 
 class AllTokensFragment : Fragment() {
 
     private var binding: FragmentAllTokensBinding? = null
-    private var collections: List<Asset>? = null //TODO(сделай api для коллекций, даун!!!)
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
-    private val viewModel: AssetsLibraryViewModel by viewModels {
+    private val assetViewModel: AssetsLibraryViewModel by viewModels {
+        factory
+    }
+    private val collectionViewModel: CollectionViewModel by viewModels {
         factory
     }
 
@@ -67,35 +70,48 @@ class AllTokensFragment : Fragment() {
                 }
             }
             setupScreen()
-            rvCollections.apply {
-                layoutManager = LinearLayoutManager(context).apply {
-                    orientation = RecyclerView.HORIZONTAL
-                }
-                adapter = context?.let {
-                    CollectionAdapter(it, null).apply {
-                        onClick = {
-                            //TODO
-                        }
-                        onLastCardClick = {
-                            Toast.makeText(
-                                context,
-                                "Переброс на страницу с коллекциями",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-            }
         }
     }
 
     private fun initObservers() {
-        with(viewModel) {
+        with(assetViewModel) {
             assetListCheap.observe(viewLifecycleOwner) { t ->
                 observing(t, 1)
             }
             assetList.observe(viewLifecycleOwner) { t ->
                 observing(t, 2)
+            }
+        }
+        collectionViewModel.collectionList.observe(viewLifecycleOwner) { c ->
+            if (c != null) {
+                initCollectionRecyclerView(c)
+            } else binding?.slCollections?.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initCollectionRecyclerView(list: List<InfoCollection>?) {
+        binding?.run {
+            rvCollections.apply {
+                layoutManager = LinearLayoutManager(context).apply {
+                    orientation = RecyclerView.HORIZONTAL
+                }
+                if (list != null) {
+                    val briefList = arrayListOf<CollectionBrief>()
+                    for (collection in list) {
+                        briefList.add(collection.toCollectionBrief())
+                    }
+                    adapter = CollectionAdapter(briefList).apply {
+                        onClick = { collection ->
+                            swapCollectionInfoBottomSheet(
+                                list.first(predicate = {
+                                    it.bannerImageUrl == collection?.bannerImageUrl &&
+                                            it.username == collection?.username
+                                })
+                            )
+                        }
+                    }
+                }
+                initRecycler(slCollections, rvCollections)
             }
         }
     }
@@ -119,10 +135,11 @@ class AllTokensFragment : Fragment() {
             slGenres.startShimmer()
             slTokens.startShimmer()
             slCheapTokens.startShimmer()
-            with(viewModel) {
+            with(assetViewModel) {
                 getAssetsCheap()
                 getTenAssets()
             }
+            collectionViewModel.getCollections()
             initRecycler(slGenres, rvGenres)
         }
     }
@@ -179,9 +196,21 @@ class AllTokensFragment : Fragment() {
             .commit()
     }
 
+    private fun swapCollectionInfoBottomSheet(collection: InfoCollection?) {
+        val bundle = Bundle().apply {
+            putSerializable("collection", collection)
+        }
+        parentFragmentManager.beginTransaction()
+            .add(CollectionInfoFragment().apply {
+                arguments = bundle
+            }, "COLLECTION")
+            .commit()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.close()
+        assetViewModel.close()
+        collectionViewModel.close()
         binding = null
     }
 

@@ -9,48 +9,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/til_mark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_mark"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.InputFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="Введите нужную сумму"
+            app:boxStrokeColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/btn_yes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="24dp"
-            android:hint="Введите нужную сумму"
-            app:boxStrokeColor="@color/white">
+            app:layout_constraintTop_toBottomOf="@+id/tv_balance">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_mark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number"/>
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_no"
+            style="@style/AllAppButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/AllAppButtonStyle"
-            android:text="Отмена"
             android:layout_marginBottom="28dp"
+            android:text="Отмена"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_yes"
-            app:layout_constraintTop_toBottomOf="@+id/til_mark"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/til_mark" />
 
         <Button
             android:id="@+id/btn_yes"
             style="@style/AllAppButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Готово"
             android:layout_marginBottom="28dp"
+            android:text="Готово"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_no"/>
+            app:layout_constraintStart_toEndOf="@+id/btn_no" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
@@ -21,7 +20,6 @@ import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.trades.presentation.adapter.MembersAdapter
 import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MembersFragment : BottomSheetDialogFragment() {
@@ -86,17 +84,14 @@ class MembersFragment : BottomSheetDialogFragment() {
                 alerts.dismiss()
             }
             btnYes.setOnClickListener {
-                lifecycleScope.launch {
-                    trade?.token?.let { lot ->
-                        with(transactionViewModel) {
-                            sendTokenToUser(
-                                auctioneer?.stringId,
-                                lot
-                            )
-                            closeTrade(lot.tokenId)
-                        }
+                trade?.token?.let { lot ->
+                    with(transactionViewModel) {
+                        sendTokenToUser(
+                            auctioneer?.stringId,
+                            lot
+                        )
+                        closeTrade(lot.tokenId)
                     }
-
                 }
                 makeToast("Ваш токен был продан пользователю \"${auctioneer?.name}\"")
                 alerts.dismiss()
@@ -114,6 +109,7 @@ class MembersFragment : BottomSheetDialogFragment() {
             setView(bindingOfDialog.root)
         }.show()
         with(bindingOfDialog) {
+            tvBalance.text = "На вашем счету: ${user?.balance?.toInt()} ICrystal"
             btnNo.setOnClickListener {
                 alerts.dismiss()
             }
@@ -123,18 +119,16 @@ class MembersFragment : BottomSheetDialogFragment() {
                     tietMark.text.toString().toDouble() <= user?.balance.toString().toDouble() &&
                     tietMark.text.toString().toDouble() >= trade?.price.toString().toDouble()
                 ) {
-                    lifecycleScope.launch {
-                        val newAuctioneer = Auctioneer(
-                            user?.stringId,
-                            user?.nickname,
-                            tietMark.text.toString().toLong(),
-                            user?.imageUrl
-                        )
-                        transactionViewModel.changeMembersList(trade?.token?.address, newAuctioneer)
-                        trade?.candidates?.add(newAuctioneer)
-                        makeToast("Ваша ставка принята!")
-                        dismiss()
-                    }
+                    val newAuctioneer = Auctioneer(
+                        user?.stringId,
+                        user?.nickname,
+                        tietMark.text.toString().toLong(),
+                        user?.imageUrl
+                    )
+                    transactionViewModel.changeMembersList(trade?.token?.address, newAuctioneer)
+                    trade?.candidates?.add(newAuctioneer)
+                    makeToast("Ваша ставка принята!")
+                    dismiss()
                     alerts.dismiss()
                 } else makeToast("Введите сумму, которая есть на вашем счету!")
             }

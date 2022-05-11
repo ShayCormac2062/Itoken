@@ -1,4 +1,4 @@
-package com.example.itoken.features.assetlibrary.data.response
+package com.example.itoken.features.assetlibrary.data.response.asset
 
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 

@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="355dp"
+            android:layout_height="385dp"
             android:alpha=".4"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             style="@style/TokenCardsStyle"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
             android:layout_marginTop="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

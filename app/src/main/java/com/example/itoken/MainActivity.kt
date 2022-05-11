@@ -37,7 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavController() {
         initObservers()
-        controller = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
+        controller = (supportFragmentManager
+            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
+            .navController
         binding?.run {
             lifecycleScope.launch {
                 usersViewModel.getUser()

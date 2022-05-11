@@ -1,4 +1,4 @@
-package com.example.itoken.features.assetlibrary.data.response
+package com.example.itoken.features.assetlibrary.data.response.asset
 
 data class Collection(
     val banner_image_url: String,

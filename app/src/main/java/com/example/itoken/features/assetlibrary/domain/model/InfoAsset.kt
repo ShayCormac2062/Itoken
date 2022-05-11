@@ -27,6 +27,7 @@ data class InfoAsset(
     description,
     address
 ), Serializable {
+
     fun toAssetBrief() = AssetBrief(
         tokenId,
         imageUrl,
@@ -46,4 +47,5 @@ data class InfoAsset(
         price,
         likes
     )
+
 }

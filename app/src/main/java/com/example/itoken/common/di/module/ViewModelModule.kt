@@ -6,6 +6,7 @@ import com.example.itoken.common.di.ViewModelKey
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
 import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.AssetsLibraryViewModel
+import com.example.itoken.features.assetlibrary.presentation.viewmodel.CollectionViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.SearchAssetViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
@@ -78,6 +79,13 @@ interface ViewModelModule {
     @ViewModelKey(TransactionViewModel::class)
     fun bindTransactionViewModel(
         viewModel: TransactionViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CollectionViewModel::class)
+    fun bindCollectionViewModel(
+        viewModel: CollectionViewModel
     ): ViewModel
 
 }

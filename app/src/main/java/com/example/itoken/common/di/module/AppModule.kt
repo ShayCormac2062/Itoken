@@ -7,12 +7,14 @@ import com.example.itoken.features.addtoken.data.AddTokenRepositoryImpl
 import com.example.itoken.common.db.dao.AddAssetDao
 import com.example.itoken.features.addtoken.domain.repository.AddTokenRepository
 import com.example.itoken.features.addtoken.domain.usecase.AddUseCase
-import com.example.itoken.features.assetlibrary.data.AssetRepositoryImpl
+import com.example.itoken.features.assetlibrary.data.repository.AssetRepositoryImpl
 import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
 import com.example.itoken.common.traderepository.CreateTradeRepositoryImpl
 import com.example.itoken.features.trades.data.TradeRepositoryImpl
 import com.example.itoken.common.traderepository.CreateTradeRepository
+import com.example.itoken.features.assetlibrary.data.repository.CollectionRepositoryImpl
+import com.example.itoken.features.assetlibrary.domain.repository.CollectionRepository
 import com.example.itoken.features.assetlibrary.domain.usecase.*
 import com.example.itoken.features.trades.data.TransactionRepositoryImpl
 import com.example.itoken.features.trades.domain.repository.TradeRepository
@@ -64,6 +66,11 @@ class AppModule {
     fun provideTransactionRepository(
         firebase: DatabaseReference,
     ): TransactionRepository = TransactionRepositoryImpl(firebase)
+
+    @Provides
+    fun provideCollectionRepository(
+        api: APIService
+    ): CollectionRepository = CollectionRepositoryImpl(api)
 
     @Provides
     fun provideGetAssetsBriefUseCase(
@@ -191,5 +198,10 @@ class AppModule {
     fun provideChangeMemberListUseCase(
         repository: TransactionRepository
     ): ChangeMemberListUseCase = ChangeMemberListUseCase(repository)
+
+    @Provides
+    fun provideGetCollectionsUseCase(
+        repository: CollectionRepository
+    ): GetCollectionsUseCase = GetCollectionsUseCase(repository)
 
 }

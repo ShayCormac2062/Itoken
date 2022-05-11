@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.itoken.features.assetlibrary.presentation.view.CollectionInfoView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collection_info_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.assetlibrary.presentation.fragment.CollectionInfoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="385dp"
+            android:alpha=".4"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            style="@style/TokenCardsStyle"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_collection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_creator_name"
+            style="@style/AllTokensFragmentTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+        <TextView
+            android:id="@+id/tv_collection_name"
+            style="@style/AllTokensFragmentTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_creator_name" />
+
+        <ImageView
+            android:id="@+id/iv_crystal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/itoken_icon"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_collection_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/gray_dark"
+            app:layout_constraintTop_toBottomOf="@+id/iv_crystal" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red_dark"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_crystal"
+            app:layout_constraintStart_toEndOf="@+id/iv_crystal"
+            app:layout_constraintTop_toTopOf="@+id/iv_crystal" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_count"
+            android:text="Дата создания:"/>
+
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Количество токенов:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"/>
+
+        <TextView
+            android:id="@+id/tv_count_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle.InfoTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_value"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.example.itoken.features.assetlibrary.presentation.view.CollectionInfoView>

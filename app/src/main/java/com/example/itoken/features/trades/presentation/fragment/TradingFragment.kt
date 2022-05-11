@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import coil.load
 import com.example.itoken.App
@@ -17,7 +16,6 @@ import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentTradingBinding
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.user.domain.model.UserModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TradingFragment : Fragment() {
@@ -49,9 +47,7 @@ class TradingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
-        lifecycleScope.launch {
-            currentUserViewModel.getUser()
-        }
+        currentUserViewModel.getUser()
         binding?.run {
             init()
             btnShowMembers.setOnClickListener {

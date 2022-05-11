@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.itoken.App
 import com.example.itoken.common.entity.BaseAsset
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
-import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TokenInfoFragment : BottomSheetDialogFragment() {
@@ -68,9 +66,7 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
                     }
                 }
             }
-            lifecycleScope.launch {
-                assetViewModel.getAll()
-            }
+            assetViewModel.getAll()
         }
         assetViewModel.allAssetList.observe(viewLifecycleOwner) { list ->
             if (list?.contains(asset) == true) {
@@ -90,9 +86,7 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
-        lifecycleScope.launch {
-            usersViewModel.getUser()
-        }
+        usersViewModel.getUser()
     }
 
     override fun onDestroyView() {
@@ -105,10 +99,9 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
                 viewModel.add(asset.toAssetModel().apply {
                     ownerName = currentUser?.nickname
                 })
-                lifecycleScope.launch {
-                    usersViewModel.changeBalance(asset.price?.toDouble()
-                        ?.let { currentUser?.balance?.minus(it) })
-                }
+                usersViewModel.changeBalance(asset.price?.toDouble()
+                    ?.let { currentUser?.balance?.minus(it) })
+
             }
         }
         isUserAuthorized = false

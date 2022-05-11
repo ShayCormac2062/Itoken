@@ -41,7 +41,7 @@ class AssetViewModel @Inject constructor(
     private var _allAssetListAmount: MutableLiveData<Int> = MutableLiveData()
     val allAssetListAmount: LiveData<Int> = _allAssetListAmount
 
-    suspend fun getCollected(name: String) {
+    fun getCollected(name: String) {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<ItemAsset>()
@@ -55,7 +55,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getCollectedAmount(name: String) {
+    fun getCollectedAmount(name: String) {
         viewModelScope.launch {
             try {
                 _collectedAssetListAmount.value = getAllCollectedUseCase(name).size
@@ -65,7 +65,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getCreated(name: String) {
+    fun getCreated(name: String) {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<ItemAsset>()
@@ -79,7 +79,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getCreatedAmount(name: String) {
+    fun getCreatedAmount(name: String) {
         viewModelScope.launch {
             try {
                 _createdAssetListAmount.value = getAllCreatedUseCase(name).size
@@ -89,7 +89,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getTraded(name: String) {
+    fun getTraded(name: String) {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<ItemAsset>()
@@ -103,7 +103,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getTradedAmount(name: String) {
+    fun getTradedAmount(name: String) {
         viewModelScope.launch {
             try {
                 _tradedAssetListAmount.value = getAllTradedUseCase(name).size
@@ -113,7 +113,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun getAll() {
+    fun getAll() {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<ItemAsset>()
@@ -127,7 +127,7 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    suspend fun addAll(assets: List<ItemAsset>) {
+    fun addAll(assets: List<ItemAsset>) {
         viewModelScope.launch {
             addAllUseCase(assets)
         }
