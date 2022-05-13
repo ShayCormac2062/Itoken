@@ -1,4 +1,4 @@
-package com.example.itoken.features.user.domain.usecase
+package com.example.itoken.features.user.domain.usecase.assets
 
 import com.example.itoken.features.user.domain.repository.AssetsRepository
 import com.example.itoken.utils.DispatcherProvider

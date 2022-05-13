@@ -26,7 +26,8 @@ import com.example.itoken.features.user.data.db.dao.AssetsDao
 import com.example.itoken.features.user.data.db.dao.UsersDao
 import com.example.itoken.features.user.domain.repository.AssetsRepository
 import com.example.itoken.features.user.domain.repository.UsersRepository
-import com.example.itoken.features.user.domain.usecase.*
+import com.example.itoken.features.user.domain.usecase.assets.*
+import com.example.itoken.features.user.domain.usecase.user.*
 import com.example.itoken.utils.DispatcherProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.FirebaseStorage
@@ -85,7 +86,7 @@ class AppModule {
 
     @Provides
     fun provideAssetRepository(
-        api: APIService
+        api: APIService,
     ): AssetRepository = AssetRepositoryImpl(api)
 
     @Provides
@@ -168,6 +169,11 @@ class AppModule {
     fun provideRegisterUserUseCase(
         repository: UsersRepository
     ): RegisterUserUseCase = RegisterUserUseCase(repository)
+
+    @Provides
+    fun provideChangePhotoUseCase(
+        repository: UsersRepository
+    ): ChangePhotoUseCase = ChangePhotoUseCase(repository)
 
     @Provides
     fun provideCreateTradeUseCase(

@@ -34,10 +34,12 @@ class TokenInfoView<M : BaseAsset>(
         binding.run {
             imageView.load(Uri.parse(asset.imagePreviewUrl))
             ivToken.load(Uri.parse(asset.imageUrl))
-            tvCreatorName.text = if (asset.creatorName != "" || asset.creatorName != null) asset.creatorName else "Автор не известен"
-            tvTokenName.text = if (asset.tokenName != "" || asset.tokenName != null) asset.tokenName else "Название не указано"
+            tvCreatorName.text = if (!asset.creatorName.isNullOrEmpty()) asset.creatorName else "Автор не известен"
+            tvTokenName.text = if (!asset.tokenName.isNullOrEmpty()) asset.tokenName else "Название не указано"
             tvPrice.text = "Цена: ${asset.price} ICrystal"
-            tvFavourite.text = likes.toString()
+            tvFavourite.text = "Оценок: $likes"
+            tvCollected.text = "Владельцев: ${countOwners()}"
+            tvCreated.text = "Создателей: ${if (!asset.creatorName.isNullOrEmpty()) 1 else 0}"
             tvDescription.text = asset.description
             tvContractAddressValue.text = asset.address
             tvTokenIdValue.text = asset.tokenId
@@ -79,6 +81,18 @@ class TokenInfoView<M : BaseAsset>(
                 }
             }
         }
+    }
+
+    private fun countOwners(): Int {
+        return if (
+            currentAsset.creatorName.toString().isNotEmpty() ||
+            currentAsset.ownerName.toString().isNotEmpty()
+        ) 2
+        else if (
+            currentAsset.creatorName.toString().isNotEmpty() &&
+            currentAsset.ownerName.toString().isNotEmpty()
+        ) 1
+        else 0
     }
 
     private fun makeToast(s: String) =

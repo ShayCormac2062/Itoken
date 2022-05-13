@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itoken.features.user.domain.model.UserModel
-import com.example.itoken.features.user.domain.usecase.ChangeBalanceUseCase
-import com.example.itoken.features.user.domain.usecase.GetUserUseCase
+import com.example.itoken.features.user.domain.usecase.user.ChangeBalanceUseCase
+import com.example.itoken.features.user.domain.usecase.user.GetUserUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -39,7 +39,7 @@
                 style="@style/TokenCardsTextStyle.CollectionTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="My Favourite Collection"
+                android:textColor="@color/red_dark"
                 app:layout_constraintTop_toBottomOf="@+id/iv_creator"/>
 
             <TextView
@@ -48,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:text="ShayCormac2062"
                 app:layout_constraintTop_toBottomOf="@+id/tv_collection_name" />
 
 

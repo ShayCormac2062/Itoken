@@ -1,9 +1,6 @@
 package com.example.itoken.features.user.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.itoken.common.db.model.User
 
 @Dao
@@ -17,5 +14,8 @@ interface UsersDao {
 
     @Query("UPDATE users SET balance=:newBalance")
     suspend fun changeBalance(newBalance: Double?)
+
+    @Query("UPDATE users SET image_url=:imageUrl")
+    suspend fun changePhoto(imageUrl: String?)
 
 }

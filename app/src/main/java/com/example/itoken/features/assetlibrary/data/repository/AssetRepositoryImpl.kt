@@ -1,5 +1,6 @@
 package com.example.itoken.features.assetlibrary.data.repository
 
+import com.example.itoken.features.assetlibrary.data.category.CategoryController
 import com.example.itoken.features.assetlibrary.data.response.asset.Asset
 import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
@@ -7,7 +8,7 @@ import com.example.itoken.features.assetlibrary.domain.repository.AssetRepositor
 import javax.inject.Inject
 
 class AssetRepositoryImpl @Inject constructor(
-    private val api: APIService
+    private val api: APIService,
 ) : AssetRepository {
 
     override suspend fun getAssetsBrief(): List<InfoAsset> {
@@ -53,7 +54,16 @@ class AssetRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAssetsByCategory(category: String): List<InfoAsset> {
-        TODO("Not yet implemented")
+        val result = arrayListOf<InfoAsset>()
+        for (asset in api.getAssets().assets) {
+            for (word in CategoryController.getList(category)) {
+                if (asset.name?.contains(word) == true) {
+                    result.add(asset.toInfoAsset())
+                    break
+                }
+            }
+        }
+        return result
     }
 
     override suspend fun getAssetsBySearch(request: String): List<InfoAsset> {

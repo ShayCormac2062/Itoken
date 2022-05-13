@@ -1,12 +1,19 @@
 package com.example.itoken.features.user.presentation.fragment.profile
 
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +25,7 @@ import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentProfileBinding
+import com.example.itoken.databinding.ViewNotificationBinding
 import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.adapter.TokenAdapter
@@ -25,13 +33,13 @@ import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProfileFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentProfileBinding? = null
+    private var myUser: UserModel? = null
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -41,8 +49,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
     private val usersViewModel: UsersViewModel by viewModels {
         factory
     }
-    @Inject
-    lateinit var ref: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +68,30 @@ class ProfileFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
         binding?.run {
+            ivCreatorAvatar.setOnClickListener {
+                showDialog(
+                    "Вы уверены, что хотите изменить фото профиля?",
+                    "Выберите фото из галереи",
+                    click = {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                                selectImageFromGallery()
+                            }
+                        }
+                    }
+                )
+            }
+            btnSignOut.setOnClickListener {
+                showDialog(
+                    "Вы уверены, что хотите выйти?",
+                    "Вы вышли из системы",
+                    click = {
+                        usersViewModel.signOut()
+                        activity?.findNavController(R.id.fragmentContainerView)
+                            ?.navigate(R.id.loadingFragment)
+                    }
+                )
+            }
             btnGoToClicker.setOnClickListener {
                 activity?.findNavController(R.id.fragmentContainerView)
                     ?.navigate(R.id.clickerFragment)
@@ -92,16 +122,51 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch {
-            usersViewModel.getUser()
+        usersViewModel.getUser()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 100) {
+                val url = data?.data.toString()
+                binding?.ivCreatorAvatar?.load(url)
+                usersViewModel.changePhoto(url)
+                makeToast("Фото было изменено")
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        assetViewModel.closePage()
+        binding = null
+    }
+
+    private fun selectImageFromGallery() {
+        val i = Intent(Intent.ACTION_PICK)
+        i.type = "image/*"
+        startActivityForResult(i, 100)
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return if (context?.let { it1 ->
+                ContextCompat.checkSelfPermission(
+                    it1,
+                    permission
+                )
+            } == PackageManager.PERMISSION_DENIED
+        ) {
+            val permissions = arrayOf(permission)
+            requestPermissions(permissions, 100)
+            false
+        } else true
     }
 
     private fun clickCard(rv: RecyclerView, iv: ImageView, isActivated: Boolean, point: Int) {
         if (isActivated) {
             iv.load(R.drawable.arrow_down)
             rv.adapter = null
-        } else lifecycleScope.launch {
+        } else {
             iv.load(R.drawable.arrow_up)
             when (point) {
                 1 -> assetViewModel.getCollected(binding?.tvCreatorName?.text.toString())
@@ -141,8 +206,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
             }
             with(usersViewModel) {
                 currentUser.observe(viewLifecycleOwner) { user ->
+                    myUser = user
                     setupScreen(user)
-                    Log.e("MY_USER", user.toString())
                 }
             }
         }
@@ -156,12 +221,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
             tvCreatorAddress.text = user?.stringId
             tvCreatorName.text = user?.nickname
             tvCrystalAmount.text = "${user?.balance?.toInt()} ICrystal"
-            lifecycleScope.launch {
-                with(assetViewModel) {
-                    getCollectedAmount(user?.nickname.toString())
-                    getCreatedAmount(user?.nickname.toString())
-                    getTradedAmount(user?.nickname.toString())
-                }
+            with(assetViewModel) {
+                getCollectedAmount(user?.nickname.toString())
+                getCreatedAmount(user?.nickname.toString())
+                getTradedAmount(user?.nickname.toString())
             }
         }
     }
@@ -204,12 +267,28 @@ class ProfileFragment : BottomSheetDialogFragment() {
             .commit()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        lifecycleScope.launch {
-            assetViewModel.closePage()
-            usersViewModel.closePage()
+    private fun makeToast(message: String) = Toast.makeText(
+        context,
+        message,
+        Toast.LENGTH_SHORT
+    ).show()
+
+    private fun showDialog(message: String, notifForToast: String, click: (() -> Unit)) {
+        val bindingOfDialog: ViewNotificationBinding
+        val alerts = AlertDialog.Builder(context).apply {
+            bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
+            setView(bindingOfDialog.root)
+        }.show()
+        with(bindingOfDialog) {
+            btnNo.setOnClickListener {
+                alerts.dismiss()
+            }
+            btnYes.setOnClickListener {
+                click.invoke()
+                makeToast(notifForToast)
+                alerts.dismiss()
+            }
+            tvNotification.text = message
         }
-        binding = null
     }
 }

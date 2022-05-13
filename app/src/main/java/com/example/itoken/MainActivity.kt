@@ -5,14 +5,12 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.itoken.databinding.ActivityMainBinding
 import com.example.itoken.features.addtoken.presentation.fragment.AddTokenFragment
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -41,9 +39,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
             .navController
         binding?.run {
-            lifecycleScope.launch {
-                usersViewModel.getUser()
-            }
+            usersViewModel.getUser()
             bottomMain.setupWithNavController(controller)
             btnAddToken.setOnClickListener {
                 supportFragmentManager.beginTransaction()
@@ -55,7 +51,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObservers() {
         usersViewModel.currentUser.observe(this) { t ->
-            if (t == null) changeButtonVisibility(true)
+            if (t?.imageUrl == null) changeButtonVisibility(true)
+            else changeButtonVisibility(false)
         }
     }
 

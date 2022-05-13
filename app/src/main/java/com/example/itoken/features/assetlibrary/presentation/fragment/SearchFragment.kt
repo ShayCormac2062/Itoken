@@ -70,7 +70,6 @@ class SearchFragment : Fragment() {
                 adapter = GenreCollectionAdapter().apply {
                     onClick = {
                         category = it
-                        tvPopularTokens.text = "Результаты по запросу: \"${category}\""
                         setupScreen(true)
                     }
                 }
@@ -137,7 +136,8 @@ class SearchFragment : Fragment() {
             slTokens2.startShimmer()
             if (check) {
                 category?.let {
-                    viewModel.getCategoryResponse(category.toString())
+                    tvPopularTokens.text = "Результаты по запросу: \"${it}\""
+                    viewModel.getCategoryResponse(it)
                 } ?: viewModel.getAllAssets()
             }
         }

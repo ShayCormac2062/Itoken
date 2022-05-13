@@ -16,6 +16,7 @@ import com.example.itoken.utils.MainViewModelFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 @Module
 interface ViewModelModule {
@@ -55,6 +56,7 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
+    @Singleton
     @ViewModelKey(UsersViewModel::class)
     fun bindUsersViewModel(
         viewModel: UsersViewModel

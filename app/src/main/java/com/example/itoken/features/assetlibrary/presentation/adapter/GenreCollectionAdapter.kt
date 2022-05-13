@@ -28,7 +28,6 @@ class GenreCollectionAdapter : RecyclerView.Adapter<GenreCollectionAdapter.Genre
             tvCollectionName.text = item.first
             ivGenre.load(item.second)
             collectionCardview.setOnClickListener {
-                it.alpha = 0.5f
                 onClick?.invoke(item.first)
             }
         }

@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
-import com.example.itoken.features.user.domain.usecase.*
+import com.example.itoken.features.user.domain.usecase.user.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,33 +15,43 @@ class UsersViewModel @Inject constructor(
     private val deleteUserUseCase: DeleteUserUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
-): ViewModel() {
+    private val changePhotoUseCase: ChangePhotoUseCase,
+) : ViewModel() {
 
     private var _currentUser: MutableLiveData<UserModel?> = MutableLiveData()
     val currentUser: LiveData<UserModel?> = _currentUser
 
-    fun addUser(user: UserModel) =
-        viewModelScope.launch {
-            addUserUseCase(user)
-        }
+    private var _isUserExists: MutableLiveData<Boolean?> = MutableLiveData()
+    val isUserExists: LiveData<Boolean?> = _isUserExists
 
-    fun registerUser(user: UserModel): Boolean {
-        var result = false
+    fun addUser(user: UserModel) {
         viewModelScope.launch {
-            result = registerUserUseCase(user)
+            _currentUser.value = addUserUseCase(user)
         }
-        return result
+    }
+
+    fun registerUser(user: UserModel) {
+        viewModelScope.launch {
+            _isUserExists.value = registerUserUseCase(user)
+        }
     }
 
     fun signOut() {
         viewModelScope.launch {
             deleteUserUseCase()
+            _currentUser.value = null
         }
     }
 
     fun changeBalance(newBalance: Double?) {
         viewModelScope.launch {
             changeBalanceUseCase(newBalance)
+        }
+    }
+
+    fun changePhoto(url: String) {
+        viewModelScope.launch {
+            changePhotoUseCase(url)
         }
     }
 
@@ -56,7 +65,4 @@ class UsersViewModel @Inject constructor(
         }
     }
 
-    fun closePage() {
-        _currentUser.value = null
-    }
 }

@@ -19,7 +19,7 @@ class CollectionAdapter(private var collectionList: List<CollectionBrief>) :
         fun bind(item: CollectionBrief?) {
             with(binding) {
                 ivCollection.load(item?.bannerImageUrl)
-                ivCreator.load(R.drawable.ai)
+                ivCreator.load(item?.bannerImageUrl)
                 tvCollectionName.text = item?.name
                 tvCreatorName.text = item?.username
                 collectionCardview.setOnClickListener {

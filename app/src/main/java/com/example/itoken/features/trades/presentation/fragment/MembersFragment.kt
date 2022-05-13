@@ -90,7 +90,7 @@ class MembersFragment : BottomSheetDialogFragment() {
                             auctioneer?.stringId,
                             lot
                         )
-                        closeTrade(lot.tokenId)
+                        closeTrade(lot.address)
                     }
                 }
                 makeToast("Ваш токен был продан пользователю \"${auctioneer?.name}\"")

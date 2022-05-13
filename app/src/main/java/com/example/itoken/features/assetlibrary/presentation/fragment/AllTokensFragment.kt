@@ -56,19 +56,7 @@ class AllTokensFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.run {
             initObservers()
-            rvGenres.apply {
-                layoutManager = LinearLayoutManager(context).apply {
-                    orientation = RecyclerView.HORIZONTAL
-                }
-                adapter = GenreCollectionAdapter().apply {
-                    setItemViewCacheSize(10)
-                    onClick = {
-                        findNavController().navigate(R.id.searchFragment).apply {
-                            SearchFragment.category = it
-                        }
-                    }
-                }
-            }
+            initGenreRecyclerView()
             setupScreen()
         }
     }
@@ -86,6 +74,22 @@ class AllTokensFragment : Fragment() {
             if (c != null) {
                 initCollectionRecyclerView(c)
             } else binding?.slCollections?.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initGenreRecyclerView() {
+        binding?.rvGenres?.apply {
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = RecyclerView.HORIZONTAL
+            }
+            adapter = GenreCollectionAdapter().apply {
+                setItemViewCacheSize(10)
+                onClick = {
+                    findNavController().navigate(R.id.searchFragment).apply {
+                        SearchFragment.category = it
+                    }
+                }
+            }
         }
     }
 

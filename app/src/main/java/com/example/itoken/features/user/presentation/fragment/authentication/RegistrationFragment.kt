@@ -14,14 +14,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentRegistrationBinding
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -46,7 +44,19 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
+        initObservers()
         return binding?.root
+    }
+
+    private fun initObservers() {
+        usersViewModel.isUserExists.observe(viewLifecycleOwner) {
+            if (it == true) {
+                findNavController().navigate(R.id.loadingFragment)
+            } else {
+                setupVisibility(false)
+                makeToast("Такой пользователь уже существует")
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,13 +64,6 @@ class RegistrationFragment : Fragment() {
         binding?.run {
             btnRegister.setOnClickListener {
                 if (isNoEmptyFields()) {
-                    pbLoading.visibility = View.VISIBLE
-                    tilNickname.visibility = View.INVISIBLE
-                    tilDescription.visibility = View.INVISIBLE
-                    tilEmail.visibility = View.INVISIBLE
-                    tilPassword.visibility = View.INVISIBLE
-                    tilRepeatPassword.visibility = View.INVISIBLE
-                    btnGetPhoto.visibility = View.INVISIBLE
                     registerUser()
                 } else makeToast("Заполните все поля")
             }
@@ -82,24 +85,32 @@ class RegistrationFragment : Fragment() {
     private fun registerUser() {
         binding?.run {
             if (tietPassword.text.toString() == tietRepeatPassword.text.toString()) {
-                lifecycleScope.launch {
-                    if (usersViewModel.registerUser(
-                            UserModel(
-                                generateString(),
-                                imageUrl,
-                                tietNickname.text.toString(),
-                                tietDescription.text.toString(),
-                                tietPassword.text.toString(),
-                                tietEmail.text.toString(),
-                                arrayListOf(),
-                                1250.00
-                            )
+                setupVisibility(true)
+                usersViewModel.registerUser(
+                        UserModel(
+                            generateString(),
+                            imageUrl,
+                            tietNickname.text.toString(),
+                            tietDescription.text.toString(),
+                            tietPassword.text.toString(),
+                            tietEmail.text.toString(),
+                            arrayListOf(),
+                            1250.00
                         )
-                    ) {
-                        findNavController().navigate(R.id.loadingFragment)
-                    } else makeToast("Такой пользователь уже существует")
-                }
+                    )
             } else makeToast("Пароли должны совпадать")
+        }
+    }
+
+    private fun setupVisibility(isUserNew: Boolean) {
+        binding?.run {
+            pbLoading.visibility = if (isUserNew) View.VISIBLE else View.INVISIBLE
+            tilNickname.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
+            tilDescription.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
+            tilEmail.visibility = if (!isUserNew)View.INVISIBLE else View.VISIBLE
+            tilPassword.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
+            tilRepeatPassword.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
+            btnGetPhoto.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
         }
     }
 
@@ -109,7 +120,7 @@ class RegistrationFragment : Fragment() {
         grantResults: IntArray
     ) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE)  {
+            if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE) {
                 selectImageFromGallery()
             }
         } else {
@@ -152,8 +163,7 @@ class RegistrationFragment : Fragment() {
                     tietDescription.text.toString() != "" &&
                     tietEmail.text.toString() != "" &&
                     tietPassword.text.toString() != "" &&
-                    tietRepeatPassword.text.toString() != "" &&
-                    btnGetPhoto.isActivated
+                    tietRepeatPassword.text.toString() != ""
         } == true
     }
 

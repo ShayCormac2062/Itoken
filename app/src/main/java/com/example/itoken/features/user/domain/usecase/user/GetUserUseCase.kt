@@ -1,4 +1,4 @@
-package com.example.itoken.features.user.domain.usecase
+package com.example.itoken.features.user.domain.usecase.user
 
 import com.example.itoken.features.user.domain.repository.UsersRepository
 import javax.inject.Inject

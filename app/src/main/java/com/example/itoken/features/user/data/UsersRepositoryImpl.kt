@@ -28,69 +28,75 @@ class UsersRepositoryImpl @Inject constructor(
         return withContext(scope.IO) {
             isUserExists(firebase.child("users"), user)
             if (currentUser == null) {
-                storage.getReference("${user.stringId}.jpg").apply {
-                    putFile(Uri.parse(user.imageUrl)).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            downloadUrl.addOnSuccessListener { url ->
-                                user.imageUrl = url.toString()
+                if (user.imageUrl?.isNotEmpty() == true) {
+                    storage.getReference("${user.stringId}.jpg").apply {
+                        putFile(Uri.parse(user.imageUrl)).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                downloadUrl.addOnSuccessListener { url ->
+                                    user.imageUrl = url.toString()
+                                }
                             }
-                        }
-                    }.await()
+                        }.await()
+                    }
                 }
-                firebase.child("users").child("${user.stringId}").push().setValue(user)
+                firebase.child("users").child("${user.stringId}").setValue(user)
                 userDatabase.add(user.toUser())
                 true
             } else false
         }
     }
 
-    override suspend fun addUser(user: UserModel) {
-        withContext(scope.IO) {
-            isUserExists(firebase.child("users"), user)
-            if (currentUser != null) {
-                currentUser?.toUser()?.let {
-                    userDatabase.add(it)
-                }
+    override suspend fun addUser(user: UserModel): UserModel {
+        currentUser = null
+        isUserExists(firebase.child("users"), user)
+        if (currentUser != null) {
+            currentUser?.toUser()?.let {
+                userDatabase.add(it)
             }
+            return getUserDatabase.getUser()?.toUserModel() ?: emptyUser()
         }
+        return emptyUser()
     }
 
     override suspend fun signOut() {
-        withContext(scope.IO) {
-            userDatabase.signOut()
-        }
+        userDatabase.signOut()
     }
 
     override suspend fun changeBalance(newBalance: Double?) {
-        withContext(scope.Main) {
-            userDatabase.changeBalance(newBalance)
-            firebase.child("users")
-                .child(getUser()?.stringId.toString())
-                .child("balance")
-                .setValue(newBalance)
-        }
+        userDatabase.changeBalance(newBalance)
+        firebase.child("users")
+            .child(getUser()?.stringId.toString())
+            .child("balance")
+            .setValue(newBalance)
     }
 
-    override suspend fun getUser(): UserModel? {
-        return withContext(scope.Main) {
-            getUserDatabase.getUser()?.toUserModel()
-        }
+    override suspend fun changePhoto(newPhoto: String?) {
+        userDatabase.changePhoto(newPhoto)
+        firebase.child("users")
+            .child(getUser()?.stringId.toString())
+            .child("imageUrl")
+            .setValue(newPhoto)
     }
 
-    private fun isUserExists(ref: DatabaseReference, user: UserModel) {
-        ref.get().addOnSuccessListener {
-            for (dto in it.children) {
-                val newUser = retrieveUser(dto)
-                if ((newUser.nickname == user.nickname ||
-                            newUser.email == user.email)
-                    && newUser.password == user.password
-                ) {
-                    currentUser = newUser
-                    break
+    override suspend fun getUser(): UserModel? = getUserDatabase.getUser()?.toUserModel()
+
+    private suspend fun isUserExists(ref: DatabaseReference, user: UserModel) {
+        with(ref.get()) {
+            addOnSuccessListener {
+                for (dto in it.children) {
+                    val newUser = retrieveUser(dto)
+                    if ((newUser.nickname == user.nickname ||
+                                newUser.email == user.email)
+                        && newUser.password == user.password
+                    ) {
+                        currentUser = newUser
+                        break
+                    }
                 }
+            }.await()
+            addOnFailureListener {
+                Log.e("IN_USER_REPOSITORY_IMPL", it.message.toString())
             }
-        }.addOnFailureListener {
-            Log.e("IN_USER_REPOSITORY_IMPL", it.message.toString())
         }
     }
 
@@ -101,9 +107,19 @@ class UsersRepositoryImpl @Inject constructor(
         dto.child("description").value as String?,
         dto.child("password").value as String?,
         dto.child("email").value as String?,
-//                    dto.child("bought_assets").value as List<ItemAsset>?,
         null,
         (dto.child("balance").value as Long).toDouble()
+    )
+
+    private fun emptyUser(): UserModel = UserModel(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
     )
 
 }

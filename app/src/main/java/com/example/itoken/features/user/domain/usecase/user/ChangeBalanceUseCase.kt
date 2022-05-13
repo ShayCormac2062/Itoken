@@ -1,15 +1,14 @@
-package com.example.itoken.features.user.domain.usecase
+package com.example.itoken.features.user.domain.usecase.user
 
 import com.example.itoken.features.user.domain.repository.UsersRepository
 import com.example.itoken.utils.DispatcherProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DeleteUserUseCase @Inject constructor(
+class ChangeBalanceUseCase @Inject constructor(
     private val repository: UsersRepository
 ) {
 
-    suspend operator fun invoke() = repository.signOut()
-
+    suspend operator fun invoke(newBalance: Double?) = repository.changeBalance(newBalance)
 
 }

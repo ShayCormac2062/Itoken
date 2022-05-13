@@ -60,6 +60,7 @@ class LoginFragment : Fragment() {
             }
             btnEnter.setOnClickListener {
                 if (tietName.text.toString() != "" && tietPassword.text.toString() != "") {
+                    setupElementsVisibility(false)
                     enter()
                 } else makeToast("Введите все нужные данные")
             }
@@ -76,10 +77,13 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.loadingFragment)
         }
         usersViewModel.currentUser.observe(viewLifecycleOwner) { um ->
-            if (um != null) {
+            if (um?.imageUrl != null) {
                 currentUser = um
                 assetsViewModel.getAll()
-            } else makeToast("Ошибка в введённых данных. Проверьте их и повторите попытку")
+            } else if (um != null) {
+                setupElementsVisibility(true)
+                makeToast("Ошибка в введённых данных. Проверьте их и повторите попытку")
+            }
         }
     }
 
@@ -104,7 +108,17 @@ class LoginFragment : Fragment() {
                     null
                 )
             )
-            usersViewModel.getUser()
+        }
+    }
+
+    private fun setupElementsVisibility(isUserGot: Boolean) {
+        binding?.run {
+            pbLoading.visibility = if (isUserGot) View.INVISIBLE else View.VISIBLE
+            tilName.visibility = if (!isUserGot) View.INVISIBLE else View.VISIBLE
+            tilPassword.visibility = if (!isUserGot) View.INVISIBLE else View.VISIBLE
+            btnEnter.visibility = if (!isUserGot) View.INVISIBLE else View.VISIBLE
+            tvNoAccount.visibility = if (!isUserGot) View.INVISIBLE else View.VISIBLE
+            tvRegister.visibility = if (!isUserGot) View.INVISIBLE else View.VISIBLE
         }
     }
 
