@@ -11,12 +11,12 @@ import com.example.itoken.features.assetlibrary.data.repository.AssetRepositoryI
 import com.example.itoken.features.assetlibrary.data.retrofit.APIService
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
 import com.example.itoken.common.traderepository.CreateTradeRepositoryImpl
-import com.example.itoken.features.trades.data.TradeRepositoryImpl
+import com.example.itoken.features.trades.data.repository.TradeRepositoryImpl
 import com.example.itoken.common.traderepository.CreateTradeRepository
 import com.example.itoken.features.assetlibrary.data.repository.CollectionRepositoryImpl
 import com.example.itoken.features.assetlibrary.domain.repository.CollectionRepository
 import com.example.itoken.features.assetlibrary.domain.usecase.*
-import com.example.itoken.features.trades.data.TransactionRepositoryImpl
+import com.example.itoken.features.trades.data.repository.TransactionRepositoryImpl
 import com.example.itoken.features.trades.domain.repository.TradeRepository
 import com.example.itoken.features.trades.domain.repository.TransactionRepository
 import com.example.itoken.features.trades.domain.usecase.*
@@ -51,8 +51,9 @@ class AppModule {
     fun provideAssetsRepository(
         assetsDatabase: AssetsDao,
         addAssetDatabase: AddAssetDao,
-        scope: DispatcherProvider
-    ): AssetsRepository = AssetsRepositoryImpl(assetsDatabase, addAssetDatabase, scope)
+        scope: DispatcherProvider,
+        ref: DatabaseReference
+    ): AssetsRepository = AssetsRepositoryImpl(assetsDatabase, addAssetDatabase, scope, ref)
 
     @Provides
     fun provideUsersRepository(
@@ -66,7 +67,8 @@ class AppModule {
     @Provides
     fun provideTransactionRepository(
         firebase: DatabaseReference,
-    ): TransactionRepository = TransactionRepositoryImpl(firebase)
+        db: GetUserDao
+    ): TransactionRepository = TransactionRepositoryImpl(firebase, db)
 
     @Provides
     fun provideCollectionRepository(

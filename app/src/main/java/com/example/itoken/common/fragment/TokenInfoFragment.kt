@@ -55,16 +55,7 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
     private fun initObservers() {
         usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             if (user != null) {
-                currentUser = user
-                isUserAuthorized = true
-                if (user.nickname == asset.creatorName) {
-                    isUserCreator = true
-                }
-                currentUser?.balance?.let { balance ->
-                    asset.price?.let { price ->
-                        isUserHasEnoughMoney = balance.toInt() >= price.toDouble()
-                    }
-                }
+                setupUser(user)
             }
             assetViewModel.getAll()
         }
@@ -79,6 +70,19 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
                     isUserAuthorized,
                     isUserBoughtThisAsset
                 )
+            }
+        }
+    }
+
+    private fun setupUser(user: UserModel) {
+        currentUser = user
+        isUserAuthorized = true
+        if (user.nickname == asset.creatorName) {
+            isUserCreator = true
+        }
+        currentUser?.balance?.let { balance ->
+            asset.price?.let { price ->
+                isUserHasEnoughMoney = balance.toInt() >= price.toDouble()
             }
         }
     }

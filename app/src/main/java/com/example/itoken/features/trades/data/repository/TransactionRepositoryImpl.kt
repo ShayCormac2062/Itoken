@@ -1,5 +1,6 @@
-package com.example.itoken.features.trades.data
+package com.example.itoken.features.trades.data.repository
 
+import com.example.itoken.common.db.dao.GetUserDao
 import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.Lot
 import com.example.itoken.features.trades.domain.repository.TransactionRepository
@@ -9,9 +10,11 @@ import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
     private val firebase: DatabaseReference,
+    private val getUserDatabase: GetUserDao
 ): TransactionRepository {
 
     override suspend fun sendTokenToUser(userId: String?, trade: Lot) {
+        val currentUser = getUserDatabase.getUser()
         firebase.child("users")
             .child(userId.toString())
             .child("bought_assets")
@@ -19,6 +22,7 @@ class TransactionRepositoryImpl @Inject constructor(
             .setValue(trade.apply {
                 ownerName = "Вы"
             }).await()
+        getUserDatabase.changeBalance(currentUser?.balance?.plus(trade.price?.toDouble() ?: 0.0))
     }
 
     override suspend fun closeTrade(tradeId: String?) {

@@ -1,4 +1,4 @@
-package com.example.itoken.features.trades.data
+package com.example.itoken.features.trades.data.repository
 
 import com.example.itoken.features.trades.data.entity.TradableAsset
 import com.example.itoken.features.trades.data.entity.Trade

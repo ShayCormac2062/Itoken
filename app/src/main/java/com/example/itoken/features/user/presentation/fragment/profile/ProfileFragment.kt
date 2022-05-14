@@ -86,9 +86,9 @@ class ProfileFragment : BottomSheetDialogFragment() {
                     "Вы уверены, что хотите выйти?",
                     "Вы вышли из системы",
                     click = {
-                        usersViewModel.signOut()
                         activity?.findNavController(R.id.fragmentContainerView)
-                            ?.navigate(R.id.loadingFragment)
+                            ?.navigate(R.id.loginFragment)
+                        usersViewModel.signOut()
                     }
                 )
             }

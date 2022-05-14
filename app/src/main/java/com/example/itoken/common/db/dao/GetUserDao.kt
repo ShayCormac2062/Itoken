@@ -8,4 +8,7 @@ import com.example.itoken.common.db.model.User
 interface GetUserDao {
     @Query("SELECT * from users")
     suspend fun getUser(): User?
+
+    @Query("UPDATE users SET balance=:newBalance")
+    suspend fun changeBalance(newBalance: Double?)
 }
