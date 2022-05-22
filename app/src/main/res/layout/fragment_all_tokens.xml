@@ -14,7 +14,7 @@
                     android:id="@+id/tv_fragment_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Главная"
+                    android:text="@string/main_page"
                     android:gravity="center"
                     android:textSize="34sp"
                     app:layout_constraintBottom_toTopOf="@+id/rv_genres"
@@ -56,7 +56,7 @@
                     style="@style/AllTokensFragmentTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Библиотека токенов"
+                    android:text="@string/token_library"
                     app:layout_constraintTop_toBottomOf="@+id/rv_genres" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -93,7 +93,7 @@
                     style="@style/AllTokensFragmentTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Выгодные предложения"
+                    android:text="@string/for_sale"
                     app:layout_constraintTop_toBottomOf="@+id/rv_tokens" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -130,7 +130,7 @@
                     style="@style/AllTokensFragmentTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Трендовые коллекции"
+                    android:text="@string/cool_collections"
                     app:layout_constraintTop_toBottomOf="@+id/rv_cheap_tokens" />
 
                 <androidx.recyclerview.widget.RecyclerView

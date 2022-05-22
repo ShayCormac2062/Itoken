@@ -17,7 +17,7 @@
             android:layout_marginEnd="12dp"
             android:textSize="15sp"
             android:gravity="center"
-            android:text="@string/notif_ending_create_token"
+            android:text="@string/ending_create_token"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button

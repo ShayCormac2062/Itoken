@@ -38,7 +38,7 @@ class TokenView<M : BaseAssetBrief>(
                 setOnClickListener {
                     onClick.invoke(asset, 0)
                 }
-                tvTokenName.text = context.getString(R.string.see_all_tokens_notif)
+                tvTokenName.text = context.getString(R.string.see_all_tokens)
             }
         }
     }

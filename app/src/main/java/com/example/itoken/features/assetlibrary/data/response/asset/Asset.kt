@@ -1,48 +1,69 @@
 package com.example.itoken.features.assetlibrary.data.response.asset
 
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
+import com.google.gson.annotations.SerializedName
 
 data class Asset(
-    val animation_original_url: String?,
+    @SerializedName("animation_original_url")
+    val animationOriginalUrl: String?,
+    @SerializedName("animation_url")
     val animation_url: String?,
-    val asset_contract: AssetContract?,
-    val background_color: Any?,
+    @SerializedName("asset_contract")
+    val assetContract: AssetContract?,
+    @SerializedName("background_color")
+    val backgroundColor: Any?,
     val collection: Collection?,
     val creator: Creator?,
     val decimals: Int?,
     val description: String?,
-    val external_link: String?,
+    @SerializedName("external_link")
+    val externalLink: String?,
     val id: Int?,
-    val image_original_url: String?,
-    val image_preview_url: String?,
-    val image_thumbnail_url: String?,
-    val image_url: String?,
-    val is_nsfw: Boolean?,
-    val is_presale: Boolean?,
-    val last_sale: Any?,
-    val listing_date: Any?,
+    @SerializedName("image_original_url")
+    val imageOriginalUrl: String?,
+    @SerializedName("image_preview_url")
+    val imagePreviewUrl: String?,
+    @SerializedName("image_thumbnail_url")
+    val imageThumbnailUrl: String?,
+    @SerializedName("image_url")
+    val imageUrl: String?,
+    @SerializedName("is_nsfw")
+    val isNsfw: Boolean?,
+    @SerializedName("is_presale")
+    val isPresale: Boolean?,
+    @SerializedName("last_sale")
+    val lastSale: Any?,
+    @SerializedName("listing_date")
+    val listingDate: Any?,
     var name: String?,
-    val num_sales: Int?,
+    @SerializedName("num_sales")
+    val numSales: Int?,
     val owner: Owner?,
     val permalink: String?,
-    val sell_orders: Any?,
-    var token_id: String?,
-    val token_metadata: Any?,
-    val top_bid: Any?,
+    @SerializedName("sell_orders")
+    val sellOrders: Any?,
+    @SerializedName("token_id")
+    var tokenId: String?,
+    @SerializedName("token_metadata")
+    val tokenMetadata: Any?,
+    @SerializedName("top_bid")
+    val topBid: Any?,
     val traits: List<Trait>?,
-    val transfer_fee: Any?,
-    val transfer_fee_payment_token: Any?
+    @SerializedName("transfer_fee")
+    val transferFee: Any?,
+    @SerializedName("transfer_fee_payment_token")
+    val transferFeePaymentToken: Any?
 ) {
     fun toInfoAsset() = InfoAsset(
-            token_id,
-            image_preview_url,
-            image_url,
+            tokenId,
+            imagePreviewUrl,
+            imageUrl,
             creator?.user?.username,
             owner?.user?.username,
             name,
-            asset_contract?.seller_fee_basis_points.toString().toLong(),
+            assetContract?.sellerFeeBasisPoints.toString().toLong(),
             (0..599).random().toLong(),
             description ?: collection?.description,
-            asset_contract?.address
+            assetContract?.address
         )
 }

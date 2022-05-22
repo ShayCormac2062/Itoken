@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +16,7 @@ import com.example.itoken.databinding.FragmentLoginBinding
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
+import com.example.itoken.utils.CommonUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,7 +62,10 @@ class LoginFragment : Fragment() {
                 if (tietName.text.toString() != "" && tietPassword.text.toString() != "") {
                     setupElementsVisibility(false)
                     enter()
-                } else makeToast("Введите все нужные данные")
+                } else CommonUtils.makeToast(
+                    context,
+                    getString(R.string.empty_fields)
+                )
             }
         }
     }
@@ -82,7 +85,10 @@ class LoginFragment : Fragment() {
                 assetsViewModel.getAll()
             } else if (um != null) {
                 setupElementsVisibility(true)
-                makeToast("Ошибка в введённых данных. Проверьте их и повторите попытку")
+                CommonUtils.makeToast(
+                    context,
+                    getString(R.string.wrong_fields)
+                )
             }
         }
     }
@@ -122,9 +128,4 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun makeToast(message: String) = Toast.makeText(
-        context,
-        message,
-        Toast.LENGTH_SHORT
-    ).show()
 }

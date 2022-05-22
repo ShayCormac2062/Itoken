@@ -8,23 +8,23 @@
     <fragment
         android:id="@+id/allTokensFragment"
         android:name="com.example.itoken.features.assetlibrary.presentation.fragment.AllTokensFragment"
-        android:label="Главная"
+        android:label="@string/main_page"
         tools:layout="@layout/fragment_all_tokens" />
     <fragment
         android:id="@+id/tradeFragment"
         android:name="com.example.itoken.features.trades.presentation.fragment.TradeFragment"
-        android:label="Продажи"
+        android:label="@string/auction"
         tools:layout="@layout/fragment_trade" >
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.itoken.features.assetlibrary.presentation.fragment.SearchFragment"
-        android:label="Поиск"
+        android:label="@string/search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.itoken.features.user.presentation.fragment.profile.ProfileFragment"
-        android:label="Профиль"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile">
     </fragment>
     <fragment
@@ -59,7 +59,7 @@
         tools:layout="@layout/fragment_loading" />
     <fragment
         android:id="@+id/canvasFragment"
-        android:name="com.example.itoken.features.addtoken.presentation.fragment.CanvasFragment"
+        android:name="com.example.itoken.features.addtoken.presentation.canvas.Linen"
         android:label="fragment_canvas"
         tools:layout="@layout/fragment_canvas" />
 </navigation>

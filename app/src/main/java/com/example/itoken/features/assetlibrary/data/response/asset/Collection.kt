@@ -1,35 +1,63 @@
 package com.example.itoken.features.assetlibrary.data.response.asset
 
+import com.google.gson.annotations.SerializedName
+
 data class Collection(
-    val banner_image_url: String,
-    val chat_url: Any,
-    val created_date: String,
-    val default_to_fiat: Boolean,
+    @SerializedName("banner_image_url")
+    val bannerImageUrl: String,
+    @SerializedName("chat_url")
+    val chatUrl: Any,
+    @SerializedName("created_date")
+    val createdDate: String,
+    @SerializedName("default_to_fiat")
+    val defaultToFiat: Boolean,
     val description: String,
-    val dev_buyer_fee_basis_points: String,
-    val dev_seller_fee_basis_points: String,
-    val discord_url: String,
-    val display_data: DisplayData,
-    val external_url: String,
+    @SerializedName("dev_buyer_fee_basis_points")
+    val devBuyerFeeBasisPoints: String,
+    @SerializedName("dev_seller_fee_basis_points")
+    val devSellerFeeBasisPoints: String,
+    @SerializedName("discord_url")
+    val discordUrl: String,
+    @SerializedName("display_data")
+    val displayData: DisplayData,
+    @SerializedName("external_url")
+    val externalUrl: String,
     val featured: Boolean,
-    val featured_image_url: Any,
+    @SerializedName("featured_image_url")
+    val featuredImageUrl: Any,
     val hidden: Boolean,
-    val image_url: String,
-    val instagram_username: String,
-    val is_nsfw: Boolean,
-    val is_subject_to_whitelist: Boolean,
-    val large_image_url: Any,
-    val medium_username: Any,
+    @SerializedName("image_url")
+    val imageUrl: String,
+    @SerializedName("instagram_username")
+    val instagramUsername: String,
+    @SerializedName("is_nsfw")
+    val isNsfw: Boolean,
+    @SerializedName("is_subject_to_whitelist")
+    val isSubjectToWhitelist: Boolean,
+    @SerializedName("large_image_url")
+    val largeImageUrl: Any,
+    @SerializedName("medium_username")
+    val mediumUsername: Any,
     val name: String,
-    val only_proxied_transfers: Boolean,
-    val opensea_buyer_fee_basis_points: String,
-    val opensea_seller_fee_basis_points: String,
-    val payout_address: Any,
-    val require_email: Boolean,
-    val safelist_request_status: String,
-    val short_description: Any,
+    @SerializedName("only_proxied_transfers")
+    val onlyProxiedTransfers: Boolean,
+    @SerializedName("opensea_buyer_fee_basis_points")
+    val openSeaBuyerFeeBasisPoints: String,
+    @SerializedName("opensea_seller_fee_basis_points")
+    val openSeaSellerFeeBasisPoints: String,
+    @SerializedName("payout_address")
+    val payoutAddress: Any,
+    @SerializedName("require_email")
+    val requireEmail: Boolean,
+    @SerializedName("safelist_request_status")
+    val safeListRequestStatus: String,
+    @SerializedName("short_description")
+    val shortDescription: Any,
     val slug: String,
-    val telegram_url: Any,
-    val twitter_username: Any,
-    val wiki_url: Any
+    @SerializedName("telegram_url")
+    val telegramUrl: Any,
+    @SerializedName("twitter_username")
+    val twitterUsername: Any,
+    @SerializedName("wiki_url")
+    val wikiUrl: Any
 )

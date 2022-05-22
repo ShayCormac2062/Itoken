@@ -15,7 +15,12 @@ import com.example.itoken.features.trades.data.repository.TradeRepositoryImpl
 import com.example.itoken.common.traderepository.CreateTradeRepository
 import com.example.itoken.features.assetlibrary.data.repository.CollectionRepositoryImpl
 import com.example.itoken.features.assetlibrary.domain.repository.CollectionRepository
-import com.example.itoken.features.assetlibrary.domain.usecase.*
+import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsBriefUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsCheapUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.library.GetCollectionsUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsByCategoryUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsBySearchUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsUseCase
 import com.example.itoken.features.trades.data.repository.TransactionRepositoryImpl
 import com.example.itoken.features.trades.domain.repository.TradeRepository
 import com.example.itoken.features.trades.domain.repository.TransactionRepository
@@ -43,9 +48,9 @@ class AppModule {
     @Provides
     fun provideAddTokenRepository(
         addAssetDatabase: AddAssetDao,
-        firebase: DatabaseReference,
+        storage: DatabaseReference,
         scope: DispatcherProvider
-    ): AddTokenRepository = AddTokenRepositoryImpl(addAssetDatabase, firebase, scope)
+    ): AddTokenRepository = AddTokenRepositoryImpl(addAssetDatabase, storage, scope)
 
     @Provides
     fun provideAssetsRepository(
@@ -83,8 +88,7 @@ class AppModule {
     @Provides
     fun provideGetAssetsUseCase(
         repository: AssetRepository,
-        scope: DispatcherProvider
-    ): GetAssetsUseCase = GetAssetsUseCase(repository, scope)
+    ): GetAssetsUseCase = GetAssetsUseCase(repository)
 
     @Provides
     fun provideAssetRepository(
@@ -211,5 +215,10 @@ class AppModule {
     fun provideGetCollectionsUseCase(
         repository: CollectionRepository
     ): GetCollectionsUseCase = GetCollectionsUseCase(repository)
+
+    @Provides
+    fun provideTransferMoneyToBarkerUseCase(
+        repository: TransactionRepository
+    ): TransferMoneyToBarkerUseCase = TransferMoneyToBarkerUseCase(repository)
 
 }

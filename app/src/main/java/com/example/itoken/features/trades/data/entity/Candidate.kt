@@ -7,11 +7,4 @@ data class Candidate(
     val name: String?,
     var price: Long?,
     var imageUrl: String?,
-) {
-    fun toAuctioneer() = Auctioneer(
-        stringId,
-        name,
-        price,
-        imageUrl
-    )
-}
+)

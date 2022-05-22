@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.core.widget.NestedScrollView
 import coil.load
+import com.example.itoken.R
 import com.example.itoken.databinding.FragmentCollectionInfoBinding
 import com.example.itoken.features.assetlibrary.domain.model.InfoCollection
 
@@ -21,7 +22,7 @@ class CollectionInfoView(
             tvCreatorName.text = collection.username
             tvCollectionName.text = collection.name
             tvDescription.text = collection.description
-            tvPrice.text = "${collection.averagePrice?.toString()} ICrystal"
+            tvPrice.text = String.format(context.getString(R.string.price_amount_for_collection), collection.averagePrice ?: "0")
             tvDateValue.text = collection.createdDate?.substring(0, 10)
             tvCountValue.text = collection.count?.toString()
         }

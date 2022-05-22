@@ -10,5 +10,5 @@ class TypeConverter {
     fun fromString(value: String) = Gson().fromJson(value, Array<DatabaseAsset>::class.java).toList()
 
     @TypeConverter
-    fun fromList(list: List<DatabaseAsset>?) = Gson().toJson(list)
+    fun fromList(list: List<DatabaseAsset>?) = Gson().toJson(list) ?: ""
 }

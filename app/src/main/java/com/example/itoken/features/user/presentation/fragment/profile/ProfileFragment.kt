@@ -1,22 +1,16 @@
 package com.example.itoken.features.user.presentation.fragment.profile
 
-import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,15 +19,14 @@ import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentProfileBinding
-import com.example.itoken.databinding.ViewNotificationBinding
 import com.example.itoken.features.user.domain.model.ItemAsset
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.adapter.TokenAdapter
 import com.example.itoken.features.user.presentation.model.ItemAssetBrief
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
+import com.example.itoken.utils.CommonUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProfileFragment : BottomSheetDialogFragment() {
@@ -49,7 +42,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
     private val usersViewModel: UsersViewModel by viewModels {
         factory
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.appComponent.inject(this)
@@ -69,23 +61,19 @@ class ProfileFragment : BottomSheetDialogFragment() {
         initObservers()
         binding?.run {
             ivCreatorAvatar.setOnClickListener {
-                showDialog(
-                    "Вы уверены, что хотите изменить фото профиля?",
-                    "Выберите фото из галереи",
-                    click = {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                                selectImageFromGallery()
-                            }
-                        }
+                CommonUtils.showDialog(
+                    context,
+                    getString(R.string.change_photo_question),
+                    onClickEvent = {
+                        selectImageFromGallery()
                     }
                 )
             }
             btnSignOut.setOnClickListener {
-                showDialog(
-                    "Вы уверены, что хотите выйти?",
-                    "Вы вышли из системы",
-                    click = {
+                CommonUtils.showDialog(
+                    context,
+                    getString(R.string.sign_out),
+                    onClickEvent = {
                         activity?.findNavController(R.id.fragmentContainerView)
                             ?.navigate(R.id.loginFragment)
                         usersViewModel.signOut()
@@ -128,10 +116,14 @@ class ProfileFragment : BottomSheetDialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 100) {
-                val url = data?.data.toString()
-                binding?.ivCreatorAvatar?.load(url)
-                usersViewModel.changePhoto(url)
-                makeToast("Фото было изменено")
+                val uri = data?.data.toString()
+                binding?.ivCreatorAvatar?.load(uri)
+                binding?.imageView?.load(uri)
+                usersViewModel.changePhoto(uri)
+                CommonUtils.makeToast(
+                    context,
+                    getString(R.string.photo_changed)
+                )
             }
         }
     }
@@ -140,26 +132,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
         assetViewModel.closePage()
         binding = null
-    }
-
-    private fun selectImageFromGallery() {
-        val i = Intent(Intent.ACTION_PICK)
-        i.type = "image/*"
-        startActivityForResult(i, 100)
-    }
-
-    private fun checkPermission(permission: String): Boolean {
-        return if (context?.let { it1 ->
-                ContextCompat.checkSelfPermission(
-                    it1,
-                    permission
-                )
-            } == PackageManager.PERMISSION_DENIED
-        ) {
-            val permissions = arrayOf(permission)
-            requestPermissions(permissions, 100)
-            false
-        } else true
     }
 
     private fun clickCard(rv: RecyclerView, iv: ImageView, isActivated: Boolean, point: Int) {
@@ -171,7 +143,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
             when (point) {
                 1 -> assetViewModel.getCollected(binding?.tvCreatorName?.text.toString())
                 2 -> assetViewModel.getCreated(binding?.tvCreatorName?.text.toString())
-                else -> assetViewModel.getTraded(binding?.tvCreatorName?.text.toString())
+                else -> assetViewModel.getTraded(
+                    binding?.tvCreatorName?.text.toString(),
+                    myUser?.stringId
+                )
             }
         }
         rv.startAnimation(
@@ -195,13 +170,22 @@ class ProfileFragment : BottomSheetDialogFragment() {
                     initTokensRecyclerView(rvTraded, t)
                 }
                 collectedAssetListAmount.observe(viewLifecycleOwner) {
-                    binding?.tvCollected?.text = "Куплено: ${it}"
+                    binding?.tvCollected?.text = String.format(
+                        getString(R.string.bought_amount),
+                        it
+                    )
                 }
                 createdAssetListAmount.observe(viewLifecycleOwner) {
-                    binding?.tvCreated?.text = "Создано: ${it}"
+                    binding?.tvCreated?.text = String.format(
+                        getString(R.string.created_amount),
+                        it
+                    )
                 }
                 tradedAssetListAmount.observe(viewLifecycleOwner) {
-                    binding?.tvTraded?.text = "Аукционы: ${it}"
+                    binding?.tvTraded?.text = String.format(
+                        getString(R.string.traded_amount),
+                        it
+                    )
                 }
             }
             with(usersViewModel) {
@@ -215,16 +199,23 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     private fun setupScreen(user: UserModel?) {
         binding?.run {
-            imageView.load(user?.imageUrl)
-            ivCreatorAvatar.load(user?.imageUrl)
+            imageView.load(
+                Uri.parse(
+                    user?.imageUrl
+                )
+            )
+            ivCreatorAvatar.load(Uri.parse(user?.imageUrl))
             tvDescription.text = user?.description
             tvCreatorAddress.text = user?.stringId
             tvCreatorName.text = user?.nickname
-            tvCrystalAmount.text = "${user?.balance?.toInt()} ICrystal"
+            tvCrystalAmount.text = String.format(
+                getString(R.string.balance_amount),
+                user?.balance?.toInt()
+            )
             with(assetViewModel) {
                 getCollectedAmount(user?.nickname.toString())
                 getCreatedAmount(user?.nickname.toString())
-                getTradedAmount(user?.nickname.toString())
+                getTradedAmount(user?.nickname.toString(), user?.stringId)
             }
         }
     }
@@ -233,14 +224,14 @@ class ProfileFragment : BottomSheetDialogFragment() {
         rv: RecyclerView,
         list: List<ItemAsset>?
     ) {
+        val briefList = arrayListOf<ItemAssetBrief>()
+        list?.forEach(action = {
+            briefList.add(it.toItemAssetBrief())
+        })
         rv.apply {
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = RecyclerView.HORIZONTAL
             }
-            val briefList = arrayListOf<ItemAssetBrief>()
-            list?.forEach(action = {
-                briefList.add(it.toItemAssetBrief())
-            })
             adapter = TokenAdapter(briefList).apply {
                 onClick = { asset, likes ->
                     swapTokenInfoBottomSheet(
@@ -263,32 +254,14 @@ class ProfileFragment : BottomSheetDialogFragment() {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {
                 arguments = bundle
-            }, "SHIT")
+            }, "ASSET")
             .commit()
     }
 
-    private fun makeToast(message: String) = Toast.makeText(
-        context,
-        message,
-        Toast.LENGTH_SHORT
-    ).show()
-
-    private fun showDialog(message: String, notifForToast: String, click: (() -> Unit)) {
-        val bindingOfDialog: ViewNotificationBinding
-        val alerts = AlertDialog.Builder(context).apply {
-            bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
-            setView(bindingOfDialog.root)
-        }.show()
-        with(bindingOfDialog) {
-            btnNo.setOnClickListener {
-                alerts.dismiss()
-            }
-            btnYes.setOnClickListener {
-                click.invoke()
-                makeToast(notifForToast)
-                alerts.dismiss()
-            }
-            tvNotification.text = message
-        }
+    private fun selectImageFromGallery() {
+        val i = Intent(Intent.ACTION_PICK)
+        i.type = "image/*"
+        startActivityForResult(i, 100)
     }
+
 }

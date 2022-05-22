@@ -1,4 +1,4 @@
-package com.example.itoken.features.assetlibrary.domain.usecase
+package com.example.itoken.features.assetlibrary.domain.usecase.library
 
 import com.example.itoken.features.assetlibrary.domain.repository.AssetRepository
 import javax.inject.Inject

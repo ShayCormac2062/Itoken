@@ -33,7 +33,11 @@ class MembersAdapter(private val members: List<Auctioneer>?, private val isUserO
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder =
         MemberViewHolder(
-            ViewMemberCardviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewMemberCardviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
 
     override fun onBindViewHolder(holder: MemberViewHolder, position: Int) =

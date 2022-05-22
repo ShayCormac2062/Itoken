@@ -61,7 +61,6 @@ class SearchFragment : Fragment() {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     return true
                 }
-
             })
             rvGenres.apply {
                 layoutManager = LinearLayoutManager(context).apply {
@@ -81,7 +80,6 @@ class SearchFragment : Fragment() {
         with (viewModel) {
             allAssetList.observe(viewLifecycleOwner) { list ->
                 if (list?.isNotEmpty() == true) {
-                    binding?.tvPopularTokens?.text = "Популярные токены"
                     initRecycler(list)
                 } else if (list != null) {
                     findNavController().navigate(R.id.noConnectionFragment).apply {
@@ -136,7 +134,8 @@ class SearchFragment : Fragment() {
             slTokens2.startShimmer()
             if (check) {
                 category?.let {
-                    tvPopularTokens.text = "Результаты по запросу: \"${it}\""
+                    tvPopularTokens.text =
+                        String.format(getString(R.string.search_ready), it)
                     viewModel.getCategoryResponse(it)
                 } ?: viewModel.getAllAssets()
             }
@@ -161,7 +160,7 @@ class SearchFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {
                 arguments = bundle
-            }, "SHIT")
+            }, "ASSET")
             .commit()
     }
 

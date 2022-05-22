@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsByCategoryUseCase
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBySearchUseCase
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsByCategoryUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsBySearchUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

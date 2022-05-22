@@ -1,6 +1,6 @@
 package com.example.itoken.features.trades.data.repository
 
-import com.example.itoken.features.trades.data.entity.TradableAsset
+import com.example.itoken.features.trades.data.entity.TradingAsset
 import com.example.itoken.features.trades.data.entity.Trade
 import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.TradeModel
@@ -40,7 +40,7 @@ class TradeRepositoryImpl @Inject constructor(
     private fun retrieveAsset(dto: DataSnapshot?): TradeModel =
         Trade(
             dto?.child("id")?.value as Long,
-            TradableAsset(
+            TradingAsset(
                 dto.child("token").child("tokenId").value as String?,
                 dto.child("token").child("imagePreviewUrl").value as String?,
                 dto.child("token").child("imageUrl").value as String?,

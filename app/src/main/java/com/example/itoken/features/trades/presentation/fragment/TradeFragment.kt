@@ -46,16 +46,19 @@ class TradeFragment : Fragment() {
         initObservers()
         binding?.run {
             btnCurrentTrades.setOnClickListener {
-                viewModel.update()
-                loading()
+                setupScreen()
                 viewModel.getActiveTrades()
             }
             btnTradesHistory.setOnClickListener {
-                viewModel.update()
-                loading()
+                setupScreen()
                 viewModel.getAllTrades()
             }
         }
+    }
+
+    private fun setupScreen() {
+        viewModel.update()
+        loading()
     }
 
     private fun loading() {

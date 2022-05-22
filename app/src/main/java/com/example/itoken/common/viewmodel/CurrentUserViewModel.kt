@@ -30,7 +30,7 @@ class CurrentUserViewModel @Inject constructor(
 
     fun changeBalance(newBalance: Double?) {
         viewModelScope.launch {
-            val s = changeBalanceUseCase(newBalance)
+            changeBalanceUseCase(newBalance)
         }
     }
 }

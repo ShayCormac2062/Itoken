@@ -3,35 +3,31 @@ package com.example.itoken.features.addtoken.presentation.fragment
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentAddTokenBinding
-import com.example.itoken.databinding.ViewNotificationBinding
+import com.example.itoken.databinding.FragmentCanvasBinding
 import com.example.itoken.features.addtoken.domain.model.AssetModel
 import com.example.itoken.features.addtoken.presentation.viewmodel.AddTokenViewModel
-import com.example.itoken.features.user.domain.model.UserModel
+import com.example.itoken.utils.CommonUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class AddTokenFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentAddTokenBinding? = null
-    private lateinit var url: String
-    private var currentUser: UserModel? = null
+    private var url: String? = null
+    private var name: String? = null
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -62,58 +58,33 @@ class AddTokenFragment : BottomSheetDialogFragment() {
                 usersViewModel.getUser()
             }
             btnGoToGallery.setOnClickListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    selectImageFromGallery()
-                }
+                selectImageFromGallery()
             }
             btnGoToCanvas.setOnClickListener {
                 paintToken()
             }
             btnCreateToken.setOnClickListener {
-                if (btnGoToCanvas.isActivated || btnGoToGallery.isActivated) {
-                    if (tietName.text.toString() != "") {
-                        if (tietPrise.text.toString() != "") {
-                            showNotification()
-                        } else makeToast(getString(R.string.no_price_notif))
-                    } else makeToast(getString(R.string.no_name_notif))
-                } else makeToast(getString(R.string.no_photo_notif))
+                with(CommonUtils) {
+                    if (btnGoToCanvas.isActivated || btnGoToGallery.isActivated) {
+                        if (tietName.text.toString() != "") {
+                            if (tietPrise.text.toString() != "") {
+                                showDialog(
+                                    context,
+                                    getString(R.string.ending_create_token),
+                                    onClickEvent = {
+                                        createToken()
+                                    })
+                            } else makeToast(context, getString(R.string.no_price))
+                        } else makeToast(context, getString(R.string.no_name))
+                    } else makeToast(context, getString(R.string.no_photo))
+                }
             }
         }
     }
 
-    private fun initObservers() {
-        usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-            currentUser = user
-        }
-    }
-
-    private fun paintToken() {
-        dismiss()
-        findNavController().navigate(R.id.canvasFragment)
-    }
-
-    private fun makeToast(text: String) = Toast.makeText(
-        context,
-        text,
-        Toast.LENGTH_SHORT
-    ).show()
-
-    private fun showNotification() {
-        val bindingOfDialog: ViewNotificationBinding
-        val alerts = AlertDialog.Builder(context).apply {
-            bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
-            setView(bindingOfDialog.root)
-        }.show()
-        with(bindingOfDialog) {
-            btnNo.setOnClickListener {
-                alerts.dismiss()
-            }
-            btnYes.setOnClickListener {
-                createToken()
-                alerts.dismiss()
-            }
-            tvNotification.text = context?.getString(R.string.notif_ending_create_token)
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -128,10 +99,19 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-        currentUser = null
+    private fun initObservers() {
+        usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            name = user?.nickname
+        }
+    }
+
+    private fun paintToken() {
+        val bindingOfDialog: FragmentCanvasBinding
+        val alerts = AlertDialog.Builder(context).apply {
+            bindingOfDialog = FragmentCanvasBinding.inflate(LayoutInflater.from(context))
+            setView(bindingOfDialog.root)
+        }.show()
+        bindingOfDialog.canvas.init(activity?.contentResolver, alerts)
     }
 
     private fun createToken() {
@@ -141,7 +121,7 @@ class AddTokenFragment : BottomSheetDialogFragment() {
                     "0",
                     url,
                     url,
-                    currentUser?.nickname,
+                    name,
                     "",
                     tietName.text.toString(),
                     tietPrise.text.toString().toLong(),
@@ -150,11 +130,11 @@ class AddTokenFragment : BottomSheetDialogFragment() {
                     "0x${(10000000..99999999).random()}"
                 )
                 viewModel.add(newToken)
-                makeToast(getString(R.string.add_token_susccessful))
-                onDestroyView()
+                CommonUtils.makeToast(context, getString(R.string.add_token_successful))
+                dismiss()
             }
         } catch (e: Exception) {
-            makeToast("Ваш токен слишком дорогой, занизьте цену")
+            CommonUtils.makeToast(context, getString(R.string.too_expensive_token))
         }
     }
 
@@ -163,5 +143,6 @@ class AddTokenFragment : BottomSheetDialogFragment() {
         i.type = "image/*"
         startActivityForResult(i, 100)
     }
+
 }
 

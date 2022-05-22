@@ -153,14 +153,14 @@ class AllTokensFragment : Fragment() {
         shimmer: ShimmerFrameLayout,
         list: List<InfoAsset>?
     ) {
+        val briefList = arrayListOf<AssetBrief>()
+        list?.forEach(action = {
+            briefList.add(it.toAssetBrief())
+        })
         rv.apply {
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = RecyclerView.HORIZONTAL
             }
-            val briefList = arrayListOf<AssetBrief>()
-            list?.forEach(action = {
-                briefList.add(it.toAssetBrief())
-            })
             adapter = TokenAdapter(briefList).apply {
                 onClick = { asset, likes ->
                     swapTokenInfoBottomSheet(
@@ -196,7 +196,7 @@ class AllTokensFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .add(TokenInfoFragment().apply {
                 arguments = bundle
-            }, "SHIT")
+            }, "ASSET")
             .commit()
     }
 

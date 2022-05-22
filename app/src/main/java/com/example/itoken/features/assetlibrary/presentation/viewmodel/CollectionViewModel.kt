@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itoken.features.assetlibrary.domain.model.InfoCollection
-import com.example.itoken.features.assetlibrary.domain.usecase.GetCollectionsUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.library.GetCollectionsUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

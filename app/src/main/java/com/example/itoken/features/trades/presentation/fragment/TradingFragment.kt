@@ -76,7 +76,10 @@ class TradingFragment : Fragment() {
             ivTokenPicture.load(Uri.parse(trade?.token?.imageUrl))
             tvTokenName.text = trade?.token?.tokenName
             tvCreatorName.text = trade?.author
-            tvPrice.text = "Минимальная цена: ${trade?.price ?: 0} ICrystal"
+            tvPrice.text = String.format(
+                getString(R.string.minimal_price),
+                trade?.price
+            )
             if (trade?.isActive == true) {
                 btnShowMembers.visibility = View.VISIBLE
             }
@@ -91,7 +94,7 @@ class TradingFragment : Fragment() {
         childFragmentManager.beginTransaction()
             .add(MembersFragment().apply {
                 arguments = bundle
-            }, "SHIT")
+            }, "MEMBERS")
             .commit()
     }
 }

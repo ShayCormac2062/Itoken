@@ -60,17 +60,21 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
             assetViewModel.getAll()
         }
         assetViewModel.allAssetList.observe(viewLifecycleOwner) { list ->
-            if (list?.contains(asset) == true) {
+            if (list?.contains(asset) == true || asset.ownerName == "Вы") {
                 isUserBoughtThisAsset = true
             }
-            binding?.run {
-                tokenInfoContainer.init(
-                    asset,
-                    asset.likes?.toInt() ?: arguments?.getInt("likes") as Int,
-                    isUserAuthorized,
-                    isUserBoughtThisAsset
-                )
-            }
+            initTokenInfo()
+        }
+    }
+
+    private fun initTokenInfo() {
+        binding?.run {
+            tokenInfoContainer.init(
+                asset,
+                asset.likes?.toInt() ?: arguments?.getInt("likes") as Int,
+                isUserAuthorized,
+                isUserBoughtThisAsset
+            )
         }
     }
 

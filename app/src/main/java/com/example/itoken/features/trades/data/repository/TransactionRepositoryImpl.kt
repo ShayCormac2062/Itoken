@@ -14,7 +14,6 @@ class TransactionRepositoryImpl @Inject constructor(
 ): TransactionRepository {
 
     override suspend fun sendTokenToUser(userId: String?, trade: Lot) {
-        val currentUser = getUserDatabase.getUser()
         firebase.child("users")
             .child(userId.toString())
             .child("bought_assets")
@@ -22,7 +21,17 @@ class TransactionRepositoryImpl @Inject constructor(
             .setValue(trade.apply {
                 ownerName = "Вы"
             }).await()
-        getUserDatabase.changeBalance(currentUser?.balance?.plus(trade.price?.toDouble() ?: 0.0))
+    }
+
+    override suspend fun transferMoneyToBarker(userId: String?, mark: Double?) {
+        val newBalance = getUserDatabase.getUser()?.balance?.plus(mark ?: 0.0)
+        getUserDatabase.changeBalance(
+            newBalance
+        )
+        firebase.child("users")
+            .child(userId.toString())
+            .child("balance")
+            .setValue(newBalance)
     }
 
     override suspend fun closeTrade(tradeId: String?) {

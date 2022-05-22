@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:text="Создайте новый токен!"
+            android:text="@string/create_token"
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
             style="@style/AllTokensFragmentTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выберите картинку*"
+            android:text="@string/choose_image"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_create_token" />
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:outlineSpotShadowColor="@color/black" />
+                />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -56,7 +56,7 @@
             style="@style/AllAppButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нарисовать токен"
+            android:text="@string/paint_token"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_go_to_gallery"
             app:layout_constraintTop_toBottomOf="@+id/cardview_for_picture" />
@@ -66,7 +66,7 @@
             style="@style/AllAppButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Галерея"
+            android:text="@string/galery"
             app:layout_constraintEnd_toStartOf="@+id/btn_go_to_canvas"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview_for_picture" />
@@ -76,7 +76,7 @@
             style="@style/AllTokensFragmentTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Дайте имя токену*"
+            android:text="@string/give_name"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/btn_go_to_gallery" />
 
@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Название"
+            android:hint="@string/name"
             android:textColorHint="@color/red_dark"
             app:boxStrokeColor="@color/red_dark"
             app:boxStrokeWidth="1dp"
@@ -107,7 +107,7 @@
             style="@style/AllTokensFragmentTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Дайте описание токену"
+            android:text="@string/give_description"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/til_name" />
 
@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Описание"
+            android:hint="@string/description"
             android:textColorHint="@color/red_dark"
             app:boxStrokeColor="@color/red_dark"
             app:boxStrokeWidth="1dp"
@@ -138,7 +138,7 @@
             style="@style/AllTokensFragmentTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Стоимость токена*"
+            android:text="@string/give_price"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_description" />
@@ -149,7 +149,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Цена"
+            android:hint="@string/price"
             android:textColorHint="@color/red_dark"
             app:boxStrokeColor="@color/red_dark"
             app:boxStrokeWidth="1dp"
@@ -173,7 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:text="Создать токен"
+            android:text="@string/create_token_complete"
             app:icon="@drawable/create"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

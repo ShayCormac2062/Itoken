@@ -3,10 +3,8 @@ package com.example.itoken.features.addtoken.presentation.canvas
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
-import com.example.itoken.App
 import kotlin.math.abs
 
 class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -31,7 +29,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var blur: Boolean = false
     private var mEmboss: MaskFilter = EmbossMaskFilter(floatArrayOf(1f, 1f, 1f), 0.4f, 6f, 3.5f)
     private var mBlur: MaskFilter = BlurMaskFilter(5f, BlurMaskFilter.Blur.NORMAL)
-    var mBitmap: Bitmap? = null
+    private var mBitmap: Bitmap? = null
     private var mCanvas: Canvas? = null
     private val mBitmapPaint: Paint = Paint(Paint.DITHER_FLAG)
 
@@ -40,11 +38,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         mCanvas = mBitmap?.let {Canvas(it)}
         currentColor = DEFAULT_COLOR
         strokeWidth = BRUSH_SIZE
-    }
-
-    fun normal() {
-        emboss = false
-        blur = false
     }
 
     fun sizeNormal() {
@@ -85,22 +78,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun colorBlack() {
         currentColor = Color.BLACK
-    }
-
-    fun emboss() {
-        emboss = true
-        blur = false
-    }
-
-    fun blur() {
-        emboss = false
-        blur = true
-    }
-
-    fun clear() {
-        paths.clear()
-        normal()
-        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -164,7 +141,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     companion object {
         var BRUSH_SIZE = 20
         const val DEFAULT_COLOR = Color.BLACK
-        const val DEFAULT_BG_COLOR = Color.WHITE
         private const val TOUCH_TOLERANCE = 1f
     }
 

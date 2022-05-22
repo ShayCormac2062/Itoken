@@ -27,7 +27,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="Участники"
+        android:text="@string/members"
         app:layout_constraintTop_toTopOf="@id/divider" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,34 +43,11 @@
         style="@style/AllAppButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Дать цену"
+        android:text="@string/give_a_mark"
         android:visibility="gone"
         app:icon="@drawable/trade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_no_members"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/people"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/tv_no_members"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_members"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/tv_no_members"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="В настоящий момент желающих нет. Станьте первым!"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_give_a_mark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_no_members" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

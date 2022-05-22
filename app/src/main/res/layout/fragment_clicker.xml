@@ -13,7 +13,7 @@
         style="@style/AllAppButtonStyle"
         app:cornerRadius="30dp"
         android:layout_marginStart="12dp"
-        android:text="Назад"
+        android:text="@string/back"
         android:textSize="9sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -23,7 +23,7 @@
         style="@style/AllTokensFragmentTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EasyCrystal"
+        android:text="@string/easycrystal"
         app:layout_constraintBottom_toBottomOf="@+id/btn_end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,6 @@
         android:id="@+id/tv_user_crystals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/btn_end"
         style="@style/AllTokensFragmentTextStyle"/>

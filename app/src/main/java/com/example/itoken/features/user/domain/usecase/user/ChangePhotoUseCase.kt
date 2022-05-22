@@ -7,6 +7,7 @@ class ChangePhotoUseCase @Inject constructor(
     private val repository: UsersRepository
 ) {
 
-    suspend operator fun invoke(newPhoto: String?) = repository.changePhoto(newPhoto)
+    suspend operator fun invoke(newPhoto: String?) =
+        repository.changePhoto(newPhoto)
 
 }

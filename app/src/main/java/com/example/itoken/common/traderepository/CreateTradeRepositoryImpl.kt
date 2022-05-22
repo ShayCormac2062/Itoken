@@ -25,7 +25,7 @@ class CreateTradeRepositoryImpl @Inject constructor(
                                 .setValue(
                                     Trade(
                                         (0..9999999).random().toLong(),
-                                        trade.toTradableAsset(),
+                                        trade.toTradingAsset(),
                                         trade.creatorName,
                                         trade.price,
                                         true,

@@ -1,16 +1,11 @@
 package com.example.itoken.features.user.presentation.fragment.authentication
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +15,7 @@ import com.example.itoken.R
 import com.example.itoken.databinding.FragmentRegistrationBinding
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
+import com.example.itoken.utils.CommonUtils
 import java.util.*
 import javax.inject.Inject
 
@@ -54,7 +50,7 @@ class RegistrationFragment : Fragment() {
                 findNavController().navigate(R.id.loadingFragment)
             } else {
                 setupVisibility(false)
-                makeToast("Такой пользователь уже существует")
+                CommonUtils.makeToast(context, getString(R.string.user_exists))
             }
         }
     }
@@ -65,14 +61,20 @@ class RegistrationFragment : Fragment() {
             btnRegister.setOnClickListener {
                 if (isNoEmptyFields()) {
                     registerUser()
-                } else makeToast("Заполните все поля")
+                } else CommonUtils.makeToast(context, getString(R.string.empty_fields))
             }
             btnGetPhoto.setOnClickListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        selectImageFromGallery()
-                    }
-                }
+                selectImageFromGallery()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 100) {
+                imageUrl = data?.data.toString()
+                binding?.btnGetPhoto?.isActivated = true
+                binding?.btnGetPhoto?.text = getString(R.string.photo_selected)
             }
         }
     }
@@ -98,49 +100,19 @@ class RegistrationFragment : Fragment() {
                             1250.00
                         )
                     )
-            } else makeToast("Пароли должны совпадать")
+            } else CommonUtils.makeToast(context, getString(R.string.not_same_passwords))
         }
     }
 
     private fun setupVisibility(isUserNew: Boolean) {
         binding?.run {
             pbLoading.visibility = if (isUserNew) View.VISIBLE else View.INVISIBLE
-            tilNickname.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
-            tilDescription.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
-            tilEmail.visibility = if (!isUserNew)View.INVISIBLE else View.VISIBLE
-            tilPassword.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
-            tilRepeatPassword.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
-            btnGetPhoto.visibility = if (!isUserNew) View.INVISIBLE else View.VISIBLE
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE) {
-                selectImageFromGallery()
-            }
-        } else {
-            Toast.makeText(
-                context,
-                if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE) {
-                    "Доступ к фотографиям запрещён"
-                } else "",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 100) {
-                imageUrl = data?.data.toString()
-                binding?.btnGetPhoto?.isActivated = true
-                binding?.btnGetPhoto?.text = "Фото выбрано"
-            }
+            tilNickname.visibility = if (isUserNew) View.INVISIBLE else View.VISIBLE
+            tilDescription.visibility = if (isUserNew) View.INVISIBLE else View.VISIBLE
+            tilEmail.visibility = if (isUserNew)View.INVISIBLE else View.VISIBLE
+            tilPassword.visibility = if (isUserNew) View.INVISIBLE else View.VISIBLE
+            tilRepeatPassword.visibility = if (isUserNew) View.INVISIBLE else View.VISIBLE
+            btnGetPhoto.visibility = if (isUserNew) View.INVISIBLE else View.VISIBLE
         }
     }
 
@@ -167,30 +139,10 @@ class RegistrationFragment : Fragment() {
         } == true
     }
 
-    private fun checkPermission(permission: String): Boolean {
-        return if (context?.let { it1 ->
-                ContextCompat.checkSelfPermission(
-                    it1,
-                    permission
-                )
-            } == PackageManager.PERMISSION_DENIED
-        ) {
-            val permissions = arrayOf(permission)
-            requestPermissions(permissions, 100)
-            false
-        } else true
-    }
-
     private fun selectImageFromGallery() {
         val i = Intent(Intent.ACTION_PICK)
         i.type = "image/*"
         startActivityForResult(i, 100)
     }
-
-    private fun makeToast(message: String) = Toast.makeText(
-        context,
-        message,
-        Toast.LENGTH_SHORT
-    ).show()
 
 }

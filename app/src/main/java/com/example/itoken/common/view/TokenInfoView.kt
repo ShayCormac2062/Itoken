@@ -1,20 +1,17 @@
 package com.example.itoken.common.view
 
-import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import coil.load
 import com.example.itoken.R
 import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentTokenInfoBinding
-import com.example.itoken.databinding.ViewNotificationBinding
+import com.example.itoken.utils.CommonUtils
 
 class TokenInfoView<M : BaseAsset>(
     context: Context,
@@ -23,7 +20,7 @@ class TokenInfoView<M : BaseAsset>(
 
     private val binding by lazy { FragmentTokenInfoBinding.bind(this) }
     private lateinit var currentAsset: M
-
+//TODO вернуть всё обратно с ctivityResultAPI на onActivityResult
     fun init(
         asset: M,
         likes: Int,
@@ -36,10 +33,10 @@ class TokenInfoView<M : BaseAsset>(
             ivToken.load(Uri.parse(asset.imageUrl))
             tvCreatorName.text = if (!asset.creatorName.isNullOrEmpty()) asset.creatorName else "Автор не известен"
             tvTokenName.text = if (!asset.tokenName.isNullOrEmpty()) asset.tokenName else "Название не указано"
-            tvPrice.text = "Цена: ${asset.price} ICrystal"
-            tvFavourite.text = "Оценок: $likes"
-            tvCollected.text = "Владельцев: ${countOwners()}"
-            tvCreated.text = "Создателей: ${if (!asset.creatorName.isNullOrEmpty()) 1 else 0}"
+            tvPrice.text = String.format(context.getString(R.string.price_amount), asset.price)
+            tvFavourite.text = String.format(context.getString(R.string.favorites_amount), likes)
+            tvCollected.text = String.format(context.getString(R.string.owners_amount), countOwners())
+            tvCreated.text = String.format(context.getString(R.string.creators_amount), if (!asset.creatorName.isNullOrEmpty()) 1 else 0)
             tvDescription.text = asset.description
             tvContractAddressValue.text = asset.address
             tvTokenIdValue.text = asset.tokenId
@@ -57,10 +54,13 @@ class TokenInfoView<M : BaseAsset>(
                     with(btnCreateTrade) {
                         visibility = View.VISIBLE
                         setOnClickListener {
-                            showDialog(
-                                "Вы уверены, что хотите продать токен на аукционе? Продолжить?",
-                                "Ваш токен отправлен системе продаж",
-                                true
+                            CommonUtils.showDialog(
+                                context,
+                                context.getString(R.string.send_token),
+                                onClickEvent = {
+                                    TokenInfoFragment.isNeedToTrade = true
+                                    CommonUtils.makeToast(context, context?.getString(R.string.send_token_confirm))
+                                }
                             )
                         }
                     }
@@ -70,13 +70,15 @@ class TokenInfoView<M : BaseAsset>(
                     visibility = View.VISIBLE
                     setOnClickListener {
                         if (TokenInfoFragment.isUserHasEnoughMoney) {
-                            showDialog(
-                                "Вы уверены, что хотите купить токен? С вас будет списано " +
-                                    "${currentAsset.price} ICrystal. Продолжить?",
-                                "Токен был успешно добавлен в библиотеку",
-                                false
+                            CommonUtils.showDialog(
+                                context,
+                                String.format(context.getString(R.string.buy_token), asset.price),
+                                onClickEvent = {
+                                    TokenInfoFragment.isNeedToCollect = true
+                                    CommonUtils.makeToast(context, context?.getString(R.string.buy_token_confirm))
+                                }
                             )
-                        } else makeToast("Недостаточно средств на покупку токена!")
+                        } else CommonUtils.makeToast(context, context.getString(R.string.buy_token_deny))
                     }
                 }
             }
@@ -85,41 +87,18 @@ class TokenInfoView<M : BaseAsset>(
 
     private fun countOwners(): Int {
         return if (
-            currentAsset.creatorName.toString().isNotEmpty() ||
-            currentAsset.ownerName.toString().isNotEmpty()
+            currentAsset.creatorName.toString().isNotEmpty() &&
+            (currentAsset.ownerName.toString().isNotEmpty() &&
+                    currentAsset.ownerName.toString() != "NullAddress"
+                    )
         ) 2
         else if (
-            currentAsset.creatorName.toString().isNotEmpty() &&
-            currentAsset.ownerName.toString().isNotEmpty()
+            currentAsset.creatorName.toString().isNotEmpty() ||
+            (currentAsset.ownerName.toString().isNotEmpty() &&
+                    currentAsset.ownerName.toString() != "NullAddress"
+                    )
         ) 1
         else 0
-    }
-
-    private fun makeToast(s: String) =
-        Toast.makeText(
-            context,
-            s,
-            Toast.LENGTH_SHORT
-        ).show()
-
-    private fun showDialog(message: String, notifForToast: String, isForTrade: Boolean) {
-        val bindingOfDialog: ViewNotificationBinding
-        val alerts = AlertDialog.Builder(context).apply {
-            bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
-            setView(bindingOfDialog.root)
-        }.show()
-        with(bindingOfDialog) {
-            btnNo.setOnClickListener {
-                alerts.dismiss()
-            }
-            btnYes.setOnClickListener {
-                if (!isForTrade) TokenInfoFragment.isNeedToCollect = true
-                else TokenInfoFragment.isNeedToTrade = true
-                makeToast(notifForToast)
-                alerts.dismiss()
-            }
-            tvNotification.text = message
-        }
     }
 
     private fun onDetailClick(isEnabled: Boolean) {

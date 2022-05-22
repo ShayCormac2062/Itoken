@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
+import com.example.itoken.R
 import com.example.itoken.common.db.model.User
 import com.example.itoken.databinding.FragmentMembersBinding
 import com.example.itoken.databinding.ViewChooseMarkBinding
-import com.example.itoken.databinding.ViewNotificationBinding
 import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.trades.presentation.adapter.MembersAdapter
 import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
+import com.example.itoken.utils.CommonUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -65,40 +65,29 @@ class MembersFragment : BottomSheetDialogFragment() {
                     orientation = RecyclerView.VERTICAL
                 }
                 adapter = MembersAdapter(trade?.candidates, trade?.author == user?.nickname).apply {
-                    onClick = {
-                        createSendTokenDialog(it)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun createSendTokenDialog(auctioneer: Auctioneer?) {
-        val bindingOfDialog: ViewNotificationBinding
-        val alerts = AlertDialog.Builder(context).apply {
-            bindingOfDialog = ViewNotificationBinding.inflate(LayoutInflater.from(context))
-            setView(bindingOfDialog.root)
-        }.show()
-        with(bindingOfDialog) {
-            btnNo.setOnClickListener {
-                alerts.dismiss()
-            }
-            btnYes.setOnClickListener {
-                trade?.token?.let { lot ->
-                    with(transactionViewModel) {
-                        sendTokenToUser(
-                            auctioneer?.stringId,
-                            lot
+                    onClick = { auctioneer ->
+                        CommonUtils.showDialog(
+                            context,
+                            String.format(
+                                getString(R.string.send_token_to_user_question),
+                                auctioneer?.name
+                            ),
+                            onClickEvent = {
+                                trade?.token?.let { lot ->
+                                    with(transactionViewModel) {
+                                        sendTokenToUser(
+                                            auctioneer?.stringId,
+                                            lot
+                                        )
+                                        closeTrade(lot.address)
+                                        transferMoneyToBarker(user?.stringId, auctioneer?.price?.toDouble())
+                                    }
+                                }
+                            }
                         )
-                        closeTrade(lot.address)
                     }
                 }
-                makeToast("Ваш токен был продан пользователю \"${auctioneer?.name}\"")
-                alerts.dismiss()
-                dismiss()
             }
-            tvNotification.text =
-                "Вы точно хотите продать токен пользователю \"${auctioneer?.name}\""
         }
     }
 
@@ -109,7 +98,10 @@ class MembersFragment : BottomSheetDialogFragment() {
             setView(bindingOfDialog.root)
         }.show()
         with(bindingOfDialog) {
-            tvBalance.text = "На вашем счету: ${user?.balance?.toInt()} ICrystal"
+            tvBalance.text = String.format(
+                getString(R.string.current_balance),
+                user?.balance?.toInt()
+            )
             btnNo.setOnClickListener {
                 alerts.dismiss()
             }
@@ -125,19 +117,22 @@ class MembersFragment : BottomSheetDialogFragment() {
                         tietMark.text.toString().toLong(),
                         user?.imageUrl
                     )
-                    transactionViewModel.changeMembersList(trade?.token?.address, newAuctioneer)
-                    makeToast("Ваша ставка принята!")
+                    transactionViewModel.changeMembersList(
+                        trade?.token?.address,
+                        newAuctioneer
+                    )
+                    CommonUtils.makeToast(
+                        context,
+                        getString(R.string.mark_was_given)
+                    )
                     dismiss()
                     alerts.dismiss()
-                } else makeToast("Введите сумму, которая есть на вашем счету!")
+                } else CommonUtils.makeToast(
+                    context,
+                    getString(R.string.bad_mark)
+                )
             }
         }
     }
-
-    private fun makeToast(text: String) = Toast.makeText(
-        context,
-        text,
-        Toast.LENGTH_SHORT
-    ).show()
 
 }

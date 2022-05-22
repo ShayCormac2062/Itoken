@@ -4,17 +4,17 @@
     <item
         android:id="@+id/allTokensFragment"
         android:icon="@drawable/home"
-        android:title="Главная" />
+        android:title="@string/main_page" />
     <item
         android:id="@+id/tradeFragment"
         android:icon="@drawable/trade"
-        android:title="Продажи" />
+        android:title="@string/auction" />
     <item
         android:id="@+id/searchFragment"
         android:icon="@drawable/search"
-        android:title="Поиск" />
+        android:title="@string/search" />
     <item
         android:id="@+id/loadingFragment"
         android:icon="@drawable/profile"
-        android:title="Профиль" />
+        android:title="@string/profile" />
 </menu>

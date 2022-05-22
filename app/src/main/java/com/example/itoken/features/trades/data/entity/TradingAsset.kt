@@ -2,7 +2,7 @@ package com.example.itoken.features.trades.data.entity
 
 import com.example.itoken.features.trades.domain.model.Lot
 
-data class TradableAsset(
+data class TradingAsset(
     var tokenId: String?,
     var imagePreviewUrl: String?,
     var imageUrl: String?,

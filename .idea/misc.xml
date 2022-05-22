@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_trading_cards.xml" value="0.102" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_utility.xml" value="0.102" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable-v24/gradient_virtual_worlds.xml" value="0.102" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/arrow_down.xml" value="0.108" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/black.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/blue.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/collection.xml" value="0.109" />
@@ -52,13 +53,13 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_color.xml" value="0.5" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_congratulation.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_genre_cardview.xml" value="0.5" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_member_cardview.xml" value="0.14" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_member_cardview.xml" value="0.17507723995880536" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_notification.xml" value="0.22" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_cardview.xml" value="0.33" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_info.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_trade_cardview.xml" value="0.14629629629629629" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_trending_collection_cardview.xml" value="0.25" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/menu/main_menu.xml" value="0.15925925925925927" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/menu/main_menu.xml" value="0.5" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/xml/file_paths.xml" value="0.20416666666666666" />
       </map>
     </option>

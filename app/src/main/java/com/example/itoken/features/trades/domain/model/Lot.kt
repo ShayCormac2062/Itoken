@@ -1,7 +1,7 @@
 package com.example.itoken.features.trades.domain.model
 
 import com.example.itoken.common.entity.BaseAsset
-import com.example.itoken.features.trades.data.entity.TradableAsset
+import com.example.itoken.features.trades.data.entity.TradingAsset
 import java.io.Serializable
 
 data class Lot(
@@ -26,9 +26,9 @@ data class Lot(
     likes,
     description,
     address
-) {
+), Serializable {
 
-    fun toTradableAsset() = TradableAsset(
+    fun toTradingAsset() = TradingAsset(
         tokenId,
         imagePreviewUrl,
         imageUrl,

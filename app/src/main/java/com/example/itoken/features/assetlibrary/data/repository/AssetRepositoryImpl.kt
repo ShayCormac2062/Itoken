@@ -78,11 +78,11 @@ class AssetRepositoryImpl @Inject constructor(
     private fun setup(asset: Asset): Asset {
         return asset.apply {
             try {
-                asset_contract?.address = StringBuilder()
-                    .append(asset_contract?.address?.substring(14, 28))
+                assetContract?.address = StringBuilder()
+                    .append(assetContract?.address?.substring(14, 28))
                     .append("...").toString()
             } catch (e: Exception) {}
-            token_id = token_id?.let {
+            tokenId = tokenId?.let {
                 if (it.length > 10) it.substring(0, 9)
                 else it
             }.toString()

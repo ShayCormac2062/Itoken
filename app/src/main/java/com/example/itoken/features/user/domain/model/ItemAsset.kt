@@ -28,6 +28,7 @@ data class ItemAsset(
     description,
     address
 ), Serializable {
+
     fun toItemAssetBrief() = ItemAssetBrief(
         tokenId,
         imageUrl,
@@ -60,4 +61,5 @@ data class ItemAsset(
         description,
         address
     )
+
 }

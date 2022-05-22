@@ -21,7 +21,7 @@
         android:id="@+id/tv_welcome_to_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Регистрация на IToken"
+        android:text="@string/registration_on"
         style="@style/AllAppButtonStyle"
         android:textSize="30sp"
         android:gravity="center"
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_welcome_to_app"
         app:layout_constraintBottom_toTopOf="@+id/til_description"
-        android:hint="Введите свой никнейм"
+        android:hint="@string/enter_nickname"
         app:boxStrokeColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_nickname"
         app:layout_constraintBottom_toTopOf="@+id/til_email"
-        android:hint="Расскажите о себе"
+        android:hint="@string/enter_description"
         app:boxStrokeColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_description"
         app:layout_constraintBottom_toTopOf="@+id/til_password"
-        android:hint="Введите свой Email"
+        android:hint="@string/enter_email"
         app:boxStrokeColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -96,13 +96,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_email"
         app:layout_constraintBottom_toTopOf="@+id/til_repeat_password"
-        android:hint="Введите пароль"
+        android:hint="@string/enter_password"
         app:boxStrokeColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_password"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,13 +116,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_password"
         app:layout_constraintBottom_toTopOf="@+id/btn_register"
-        android:hint="Повторите пароль"
+        android:hint="@string/repeat_password"
         app:boxStrokeColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_repeat_password"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +134,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="48dp"
-        android:text="Добавить фото профиля"
+        android:text="@string/enter_photo"
         app:layout_constraintBottom_toTopOf="@id/btn_register"
         app:layout_constraintTop_toBottomOf="@+id/til_repeat_password" />
 
@@ -144,7 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="48dp"
-        android:text="Зарегестрироваться"
+        android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_get_photo" />
 

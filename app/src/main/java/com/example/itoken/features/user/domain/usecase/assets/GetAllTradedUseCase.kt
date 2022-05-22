@@ -7,5 +7,7 @@ class GetAllTradedUseCase @Inject constructor(
     private val repository: AssetsRepository
 ) {
 
-    suspend operator fun invoke(name: String) = repository.getAllTraded(name)
+    suspend operator fun invoke(name: String, userId: String?) =
+        repository.getAllTraded(name, userId)
+
 }

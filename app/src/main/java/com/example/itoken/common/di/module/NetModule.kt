@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 @Module
 class NetModule {
 
-    private val PARSE_ROOT = "https://raw.githubusercontent.com/ShayCormac2062/MyNFTApi/"
+    private val root = "https://raw.githubusercontent.com/ShayCormac2062/MyNFTApi/"
 
     @Provides
     fun provideOkHttp(): OkHttpClient =
@@ -31,7 +31,7 @@ class NetModule {
     ): Retrofit =
         Retrofit.Builder()
             .client(okHttp)
-            .baseUrl(PARSE_ROOT)
+            .baseUrl(root)
             .addConverterFactory(gsonConverterFactory)
             .build()
 

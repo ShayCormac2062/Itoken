@@ -15,7 +15,14 @@ class TokenAdapter(private val tokenList: List<ItemAssetBrief>?) :
         private val binding: ViewTokenCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemAssetBrief?) {
-            item?.let { onClick?.let { it1 -> binding.collectionCardview.init(it, it1, false) } }
+            item?.let {
+                onClick?.let { it1 ->
+                    binding.collectionCardview.init(
+                        it,
+                        it1,
+                        false)
+                }
+            }
         }
     }
 

@@ -7,12 +7,14 @@ import com.example.itoken.features.trades.domain.model.Lot
 import com.example.itoken.features.trades.domain.usecase.ChangeMemberListUseCase
 import com.example.itoken.features.trades.domain.usecase.CloseTradeUseCase
 import com.example.itoken.features.trades.domain.usecase.SendTokenToUserUseCase
+import com.example.itoken.features.trades.domain.usecase.TransferMoneyToBarkerUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TransactionViewModel @Inject constructor(
     private val sendTokenToUserUseCase: SendTokenToUserUseCase,
     private val closeTradeUseCase: CloseTradeUseCase,
+    private val transferMoneyToBarkerUseCase: TransferMoneyToBarkerUseCase,
     private val changeMemberListUseCase: ChangeMemberListUseCase,
 ) : ViewModel() {
 
@@ -31,6 +33,12 @@ class TransactionViewModel @Inject constructor(
     fun changeMembersList(tradeId: String?, member: Auctioneer?) {
         viewModelScope.launch {
             changeMemberListUseCase(tradeId, member)
+        }
+    }
+
+    fun transferMoneyToBarker(tradeId: String?, mark: Double?) {
+        viewModelScope.launch {
+            transferMoneyToBarkerUseCase(tradeId, mark)
         }
     }
 

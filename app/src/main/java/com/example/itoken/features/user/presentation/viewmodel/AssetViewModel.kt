@@ -38,9 +38,6 @@ class AssetViewModel @Inject constructor(
     private var _tradedAssetListAmount: MutableLiveData<Int> = MutableLiveData()
     val tradedAssetListAmount: LiveData<Int> = _tradedAssetListAmount
 
-    private var _allAssetListAmount: MutableLiveData<Int> = MutableLiveData()
-    val allAssetListAmount: LiveData<Int> = _allAssetListAmount
-
     fun getCollected(name: String) {
         viewModelScope.launch {
             try {
@@ -89,11 +86,11 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    fun getTraded(name: String) {
+    fun getTraded(name: String, userId: String?) {
         viewModelScope.launch {
             try {
                 val assetList = arrayListOf<ItemAsset>()
-                getAllTradedUseCase(name).forEach(action = {
+                getAllTradedUseCase(name, userId).forEach(action = {
                     assetList.add(it)
                 })
                 _tradedAssetList.value = assetList
@@ -103,10 +100,10 @@ class AssetViewModel @Inject constructor(
         }
     }
 
-    fun getTradedAmount(name: String) {
+    fun getTradedAmount(name: String, userId: String?) {
         viewModelScope.launch {
             try {
-                _tradedAssetListAmount.value = getAllTradedUseCase(name).size
+                _tradedAssetListAmount.value = getAllTradedUseCase(name, userId).size
             } catch (ex: Exception) {
                 _collectedAssetListAmount.value = 0
             }
@@ -141,6 +138,5 @@ class AssetViewModel @Inject constructor(
         _createdAssetListAmount.value = 0
         _tradedAssetListAmount.value = 0
         _allAssetList.value = null
-        _allAssetListAmount.value = 0
     }
 }

@@ -28,7 +28,7 @@ class AssetsRepositoryImpl @Inject constructor(
         return result
     }
 
-    override suspend fun getAllCollected(name: String) : List<ItemAsset> {
+    override suspend fun getAllCollected(name: String): List<ItemAsset> {
         val result = arrayListOf<ItemAsset>()
         withContext(scope.IO) {
             for (asset in assetsDatabase.getAllCollected(name)) {
@@ -38,10 +38,10 @@ class AssetsRepositoryImpl @Inject constructor(
         return result
     }
 
-    override suspend fun getAllTraded(name: String) : List<ItemAsset> {
+    override suspend fun getAllTraded(name: String, userId: String?): List<ItemAsset> {
         val result = arrayListOf<ItemAsset>()
         withContext(scope.IO) {
-            val usersFromFirebase = retrieveTrades()
+            val usersFromFirebase = retrieveTrades(userId)
             for (asset in assetsDatabase.getAllTraded(name)) {
                 result.add(asset.toItemAsset())
             }
@@ -52,16 +52,17 @@ class AssetsRepositoryImpl @Inject constructor(
         return result
     }
 
-    private suspend fun retrieveTrades(): List<ItemAsset> {
+    private suspend fun retrieveTrades(userId: String?): List<ItemAsset> {
         val result = arrayListOf<ItemAsset>()
         val snapshot = ref.get().await()
         try {
-            for (dto in snapshot.child("users").children) {
-                for (asset in dto.child("bought_assets").children) {
+            userId?.let {
+                val snapShot = snapshot.child("users").child(userId).child("bought_assets")
+                for (asset in snapShot.children) {
                     result.add(retrieveAsset(asset))
                 }
             }
-        } catch (e: Exception) {}
+        } catch (e: Exception) { }
         return result
     }
 
@@ -78,7 +79,7 @@ class AssetsRepositoryImpl @Inject constructor(
         dto?.child("address")?.value as String?,
     )
 
-    override suspend fun getAll() : List<ItemAsset> {
+    override suspend fun getAll(): List<ItemAsset> {
         val result = arrayListOf<ItemAsset>()
         withContext(scope.IO) {
             for (asset in assetsDatabase.getAll()) {

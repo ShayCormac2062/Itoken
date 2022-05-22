@@ -1,25 +1,47 @@
 package com.example.itoken.features.assetlibrary.data.response.collection
 
+import com.google.gson.annotations.SerializedName
+
 data class Stats(
-    val average_price: Double,
+    @SerializedName("average_price")
+    val averagePrice: Double,
     val count: Double,
-    val floor_price: Int,
-    val market_cap: Double,
-    val num_owners: Int,
-    val num_reports: Int,
-    val one_day_average_price: Double,
-    val one_day_change: Double,
-    val one_day_sales: Double,
-    val one_day_volume: Double,
-    val seven_day_average_price: Double,
-    val seven_day_change: Double,
-    val seven_day_sales: Double,
-    val seven_day_volume: Double,
-    val thirty_day_average_price: Double,
-    val thirty_day_change: Double,
-    val thirty_day_sales: Double,
-    val thirty_day_volume: Double,
-    val total_sales: Double,
-    val total_supply: Double,
-    val total_volume: Double
+    @SerializedName("floor_price")
+    val floorPrice: Int,
+    @SerializedName("market_cap")
+    val marketCap: Double,
+    @SerializedName("num_owners")
+    val numOwners: Int,
+    @SerializedName("num_reports")
+    val numReports: Int,
+    @SerializedName("one_day_average_price")
+    val oneDayAveragePrice: Double,
+    @SerializedName("one_day_change")
+    val oneDayChange: Double,
+    @SerializedName("one_day_sales")
+    val oneDaySales: Double,
+    @SerializedName("one_day_volume")
+    val oneDayVolume: Double,
+    @SerializedName("seven_day_average_price")
+    val sevenDayAveragePrice: Double,
+    @SerializedName("seven_day_change")
+    val sevenDayChange: Double,
+    @SerializedName("seven_day_sales")
+    val sevenDaySales: Double,
+    @SerializedName("seven_day_volume")
+    val sevenDayVolume: Double,
+    @SerializedName("thirty_day_average_price")
+    val thirtyDayAveragePrice: Double,
+    @SerializedName("thirty_day_change")
+    val thirtyDayChange: Double,
+    @SerializedName("thirty_day_sales")
+    val thirtyDaySales: Double,
+    @SerializedName("thirty_day_volume")
+    val thirtyDayVolume: Double,
+    @SerializedName("total_sales")
+    val totalSales: Double,
+    @SerializedName("total_supply")
+    val totalSupply: Double,
+    @SerializedName("total_volume")
+    val totalVolume: Double
 )

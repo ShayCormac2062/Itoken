@@ -1,33 +1,27 @@
-package com.example.itoken.features.addtoken.presentation.fragment
+package com.example.itoken.features.addtoken.presentation.canvas
 
-import android.os.Bundle
+import android.app.AlertDialog
+import android.content.ContentResolver
+import android.content.Context
 import android.provider.MediaStore
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentCanvasBinding
 import com.example.itoken.features.addtoken.presentation.adapter.ColorAdapter
+import com.example.itoken.utils.CommonUtils
 
-class CanvasFragment : Fragment() {
+class Linen(
+    context: Context,
+    attrs: AttributeSet? = null
+) : ConstraintLayout(context) {
 
-    private var binding: FragmentCanvasBinding? = null
+    private val binding by lazy { FragmentCanvasBinding.bind(this) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCanvasBinding.inflate(layoutInflater)
-        return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.run {
+    fun init(contentResolver: ContentResolver?, dialog: AlertDialog) {
+        binding.run {
             paintingZone.init()
             btnLittle.setOnClickListener {
                 paintingZone.sizeSmall()
@@ -39,20 +33,9 @@ class CanvasFragment : Fragment() {
                 paintingZone.sizeBig()
             }
             btnSave.setOnClickListener {
-                Toast.makeText(
-                    context,
-                    "Рисунок был сохранён в галерею. Возьмите его оттуда",
-                    Toast.LENGTH_LONG
-                ).show()
+                CommonUtils.makeToast(context, context.getString(R.string.paint_saved_confirm))
                 paintingZone.buildDrawingCache()
-                val bitmap = paintingZone.drawingCache
-                MediaStore.Images.Media.insertImage(
-                    activity?.contentResolver,
-                    bitmap,
-                    "${System.currentTimeMillis()}token.jpg",
-                    "beautiful"
-                )
-                onDestroyView()
+                loadPaint(contentResolver, dialog)
             }
             rvColors.apply {
                 layoutManager = LinearLayoutManager(context).apply {
@@ -78,13 +61,15 @@ class CanvasFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        findNavController().navigate(R.id.allTokensFragment)
-        parentFragmentManager.beginTransaction()
-            .add(AddTokenFragment(), "FUCK")
-            .commit()
-        binding = null
-        super.onDestroyView()
+    private fun loadPaint(contentResolver: ContentResolver?, dialog: AlertDialog) {
+        val bitmap = binding.paintingZone.drawingCache
+        MediaStore.Images.Media.insertImage(
+            contentResolver,
+            bitmap,
+            "${System.currentTimeMillis()}token.jpg",
+            "beautiful"
+        )
+        dialog.dismiss()
     }
 
 }

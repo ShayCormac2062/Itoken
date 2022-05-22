@@ -1,6 +1,5 @@
 package com.example.itoken.features.trades.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +26,6 @@ class TradeViewModel @Inject constructor(
             try {
                 _tradeList.value = getAllTradesUseCase()
             } catch (ex: Exception) {
-                Log.e("DAMN", ex.message.toString())
                 _tradeList.value = arrayListOf()
             }
         }

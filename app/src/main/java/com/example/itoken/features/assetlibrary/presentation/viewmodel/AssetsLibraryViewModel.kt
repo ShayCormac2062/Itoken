@@ -1,9 +1,9 @@
 package com.example.itoken.features.assetlibrary.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsBriefUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsBriefUseCase
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
-import com.example.itoken.features.assetlibrary.domain.usecase.GetAssetsCheapUseCase
+import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsCheapUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,11 +14,6 @@ class AssetsLibraryViewModel @Inject constructor(
 
     private var _assetList: MutableLiveData<List<InfoAsset>?> = MutableLiveData()
     val assetList: LiveData<List<InfoAsset>?> = _assetList
-
-    // TODO(
-    //  Сюда надо будет добавить LiveData с коллекциями. ХВАТИТ ЛЕНИТЬСЯ, ТЫ, ВОНЮЧАЯ ЗАДНИЦА!
-    //  Начни писать api для коллекций
-    //  )
 
     private var _assetListCheap: MutableLiveData<List<InfoAsset>?> = MutableLiveData()
     val assetListCheap: LiveData<List<InfoAsset>?> = _assetListCheap

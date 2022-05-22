@@ -18,14 +18,14 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideAssetsDb(context: Context): AssetsDatabase = Room
-        .databaseBuilder(context, AssetsDatabase::class.java, "zalupa_drakona")
+        .databaseBuilder(context, AssetsDatabase::class.java, "assets")
         .fallbackToDestructiveMigration()
         .build()
 
     @Singleton
     @Provides
     fun provideUsersDb(context: Context): UserDatabase = Room
-        .databaseBuilder(context, UserDatabase::class.java, "chlen_mamonta")
+        .databaseBuilder(context, UserDatabase::class.java, "users")
         .fallbackToDestructiveMigration()
         .build()
 

@@ -20,7 +20,7 @@ class TradeAdapter(private val tradeList: List<TradeModel>?) : RecyclerView.Adap
             ivCreator.load(Uri.parse(item?.token?.imageUrl.toString()))
             tvTokenName.text = item?.token?.tokenName
             tvPrice.text = item?.price?.toString()
-            tvStatus.text = "Статус: ${if (item?.isActive == true) "Активно" else "Завершено"}"
+            tvStatus.text = "Статус: ${if (item?.isActive == true) "Активно" else "Завершено"}"//TODO спросить у Артемия, можно ли так оставить
             tradeCardview.setOnClickListener {
                 onClick?.invoke(item)
             }

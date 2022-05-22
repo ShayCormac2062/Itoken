@@ -8,6 +8,7 @@ class AddAllUseCase @Inject constructor(
     private val repository: AssetsRepository
 ) {
 
-    suspend operator fun invoke(assets: List<ItemAsset>) = repository.addAll(assets)
+    suspend operator fun invoke(assets: List<ItemAsset>) =
+        repository.addAll(assets)
 
 }

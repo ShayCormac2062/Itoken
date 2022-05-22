@@ -24,6 +24,7 @@ class GenreCollectionAdapter : RecyclerView.Adapter<GenreCollectionAdapter.Genre
     inner class GenreCollectionViewHolder(
         private val binding: ViewGenreCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: Pair<String, Int>) = with(binding) {
             tvCollectionName.text = item.first
             ivGenre.load(item.second)
@@ -31,11 +32,15 @@ class GenreCollectionAdapter : RecyclerView.Adapter<GenreCollectionAdapter.Genre
                 onClick?.invoke(item.first)
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreCollectionViewHolder =
         GenreCollectionViewHolder(
-            ViewGenreCardviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewGenreCardviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false)
         )
 
     override fun onBindViewHolder(holder: GenreCollectionViewHolder, position: Int) =
