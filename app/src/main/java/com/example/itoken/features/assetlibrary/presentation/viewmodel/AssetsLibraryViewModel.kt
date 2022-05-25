@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsBriefUseCase
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsCheapUseCase
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -50,5 +51,6 @@ class AssetsLibraryViewModel @Inject constructor(
         _assetList.value = null
         _assetListCheap.value = null
     }
+
 
 }

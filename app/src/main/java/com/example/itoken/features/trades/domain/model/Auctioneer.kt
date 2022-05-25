@@ -9,6 +9,7 @@ data class Auctioneer(
     var price: Long?,
     var imageUrl: String?,
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),

@@ -18,7 +18,7 @@ class AssetRepositoryImpl @Inject constructor(
             val assets = api.getAssets().assets
             for (asset in assets) {
                 if (assets.indexOf(asset) % rand == 0 && asset.name != null) result.add(setup(asset).toInfoAsset())
-                if (result.size == 10) return result
+                if (result.size == 30) return result
             }
         } catch (e: Exception) {
             e.printStackTrace()

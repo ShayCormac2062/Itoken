@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srl_update"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.trades.presentation.fragment.TradeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tv_fragment_name"
@@ -15,43 +20,13 @@
             android:textSize="34sp"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_current_trades"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_trades"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:text="@string/current"
-            android:textColor="@color/black"
-            app:icon="@drawable/trade"
-            app:iconTint="@color/red_dark"
-            app:layout_constraintEnd_toStartOf="@+id/btn_trades_history"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_trades_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:text="@string/history"
-            android:textColor="@color/black"
-            app:icon="@drawable/history"
-            app:iconTint="@color/red_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_current_trades"
-            app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_trades"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_trades_history" />
 
         <ProgressBar
             android:id="@+id/pb_loading"
@@ -71,7 +46,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_trades_history" />
+            app:layout_constraintTop_toTopOf="@+id/rv_trades" />
 
         <TextView
             android:id="@+id/tv_no_trades"
@@ -84,3 +59,5 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_no_trades" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

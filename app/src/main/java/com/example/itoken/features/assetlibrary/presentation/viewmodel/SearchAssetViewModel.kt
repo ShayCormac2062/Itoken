@@ -70,5 +70,7 @@ class SearchAssetViewModel @Inject constructor(
 
     fun close() {
         _allAssetList.value = null
+        _categoryAssetList.value = null
+        _searchAssetList.value = null
     }
 }

@@ -10,23 +10,14 @@ class TokenAdapter(private val tokenList: List<AssetBrief>?) :
     RecyclerView.Adapter<TokenAdapter.TokenCollectionViewHolder>() {
 
     var onClick: ((AssetBrief?, Long) -> (Unit))? = null
-    var onLastCardClick: ((AssetBrief, Long) -> (Unit))? = null
 
     inner class TokenCollectionViewHolder(
         private val binding: ViewTokenCardviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: AssetBrief?, isTheLast: Boolean) {
-            if (!isTheLast) {
-                item?.let {
-                    onClick?.let { it1 ->
-                        binding.collectionCardview.init(it, it1, false)
-                    }
-                }
-            } else {
-                item?.let {
-                    onLastCardClick?.let { it1 ->
-                        binding.collectionCardview.init(it, it1, true)
-                    }
+        fun bind(item: AssetBrief?) {
+            item?.let {
+                onClick?.let { it1 ->
+                    binding.collectionCardview.init(it, it1, false)
                 }
             }
         }
@@ -38,7 +29,7 @@ class TokenAdapter(private val tokenList: List<AssetBrief>?) :
         )
 
     override fun onBindViewHolder(holder: TokenCollectionViewHolder, position: Int) =
-        holder.bind(tokenList?.get(position), position == (tokenList?.size?.minus(1)))
+        holder.bind(tokenList?.get(position))
 
     override fun getItemCount(): Int {
         tokenList?.let {

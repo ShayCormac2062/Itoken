@@ -186,10 +186,6 @@ class AppModule {
         repository: CreateTradeRepository
     ): CreateTradeUseCase = CreateTradeUseCase(repository)
 
-    @Provides
-    fun provideGetActiveTradesUseCase(
-        repository: TradeRepository
-    ): GetActiveTradesUseCase = GetActiveTradesUseCase(repository)
 
     @Provides
     fun provideGetAllTradesUseCase(

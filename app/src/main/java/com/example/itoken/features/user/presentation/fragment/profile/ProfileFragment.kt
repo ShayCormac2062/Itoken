@@ -2,7 +2,6 @@ package com.example.itoken.features.user.presentation.fragment.profile
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -59,6 +59,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
+        usersViewModel.getUser()
         binding?.run {
             ivCreatorAvatar.setOnClickListener {
                 CommonUtils.showDialog(
@@ -106,11 +107,6 @@ class ProfileFragment : BottomSheetDialogFragment() {
                 cardTraded.performClick()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        usersViewModel.getUser()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -190,8 +186,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
             }
             with(usersViewModel) {
                 currentUser.observe(viewLifecycleOwner) { user ->
-                    myUser = user
-                    setupScreen(user)
+                    if (user != null) {
+                        myUser = user
+                        setupScreen(user)
+                    } else findNavController().navigate(R.id.loginFragment)
                 }
             }
         }
@@ -199,12 +197,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     private fun setupScreen(user: UserModel?) {
         binding?.run {
-            imageView.load(
-                Uri.parse(
-                    user?.imageUrl
-                )
-            )
-            ivCreatorAvatar.load(Uri.parse(user?.imageUrl))
+            imageView.load(user?.imageUrl)
+            ivCreatorAvatar.load(user?.imageUrl)
             tvDescription.text = user?.description
             tvCreatorAddress.text = user?.stringId
             tvCreatorName.text = user?.nickname

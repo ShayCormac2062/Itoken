@@ -1,14 +1,12 @@
 package com.example.itoken.features.trades.presentation.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.itoken.App
 import com.example.itoken.R
@@ -16,9 +14,10 @@ import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentTradingBinding
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.user.domain.model.UserModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
-class TradingFragment : Fragment() {
+class TradingFragment : BottomSheetDialogFragment() {
 
     private var binding: FragmentTradingBinding? = null
     private var trade: TradeModel? = null
@@ -29,6 +28,7 @@ class TradingFragment : Fragment() {
     private val currentUserViewModel: CurrentUserViewModel by viewModels {
         factory
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +53,6 @@ class TradingFragment : Fragment() {
             btnShowMembers.setOnClickListener {
                 showBottomSheet()
             }
-            btnEnd.setOnClickListener {
-                activity?.findNavController(R.id.fragmentContainerView)
-                    ?.navigate(R.id.tradeFragment)
-            }
         }
     }
 
@@ -68,12 +64,13 @@ class TradingFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        findNavController().navigate(R.id.tradeFragment)
         binding = null
     }
 
     private fun init() {
         binding?.run {
-            ivTokenPicture.load(Uri.parse(trade?.token?.imageUrl))
+            ivTokenPicture.load(trade?.token?.imageUrl)
             tvTokenName.text = trade?.token?.tokenName
             tvCreatorName.text = trade?.author
             tvPrice.text = String.format(

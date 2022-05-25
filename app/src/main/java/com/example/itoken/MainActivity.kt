@@ -50,30 +50,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavController() {
-        initObservers()
         controller = (supportFragmentManager
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
             .navController
         binding?.run {
             usersViewModel.getUser()
             bottomMain.setupWithNavController(controller)
-            btnAddToken.setOnClickListener {
-                supportFragmentManager.beginTransaction()
-                    .add(AddTokenFragment(), "FUCK")
-                    .commit()
-            }
         }
-    }
-
-    private fun initObservers() {
-        usersViewModel.currentUser.observe(this) { t ->
-            if (t?.imageUrl == null) changeButtonVisibility(true)
-            else changeButtonVisibility(false)
-        }
-    }
-
-    fun changeButtonVisibility(b: Boolean) {
-        binding?.btnAddToken?.visibility = if (b) View.GONE else View.VISIBLE
     }
 
 }

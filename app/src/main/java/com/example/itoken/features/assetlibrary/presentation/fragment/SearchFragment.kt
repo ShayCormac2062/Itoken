@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
 import com.example.itoken.R
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentSearchBinding
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
@@ -50,7 +50,7 @@ class SearchFragment : Fragment() {
         initObservers()
         setupScreen(true)
         binding?.run {
-            search.setOnQueryTextListener(object : OnQueryTextListener {
+            search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     viewModel.close()
                     setupScreen(false)

@@ -51,7 +51,6 @@ class LoadingFragment : Fragment() {
     private fun initObservers() {
         usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             if (user != null) {
-                (requireActivity() as MainActivity).changeButtonVisibility(false)
                 findNavController().navigate(R.id.profileFragment)
             } else findNavController().navigate(R.id.loginFragment)
         }

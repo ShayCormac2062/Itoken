@@ -25,13 +25,15 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/people.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/red.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/rounded.xml" value="0.1" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/searchview_background.xml" value="0.1" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/trade.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/white.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/drawable/yellow.xml" value="0.109" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/activity_main.xml" value="0.14629629629629629" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/asjlccjn.xml" value="0.2" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/bottom_sheet.xml" value="0.2" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_add_token.xml" value="0.18" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_all_tokens.xml" value="0.2" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_all_tokens.xml" value="0.18" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_canvas.xml" value="0.22" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_clicker.xml" value="0.15925925925925927" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_collection_info.xml" value="0.2" />
@@ -45,14 +47,15 @@
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_search.xml" value="0.2" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_token_info.xml" value="0.22821576763485477" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_trade.xml" value="0.2" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_trading.xml" value="0.2" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/fragment_trading.xml" value="0.16" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_collection.xml" value="0.22" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_genre.xml" value="0.22" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_genre.xml" value="0.12" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/shimmer_token.xml" value="0.25" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_choose_mark.xml" value="0.33" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_color.xml" value="0.5" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_congratulation.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_genre_cardview.xml" value="0.5" />
+        <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_genre_cardview.xml" value="0.75" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_member_cardview.xml" value="0.17507723995880536" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_notification.xml" value="0.22" />
         <entry key="..\:/Users/Bashir/AndroidStudioProjects/IToken/app/src/main/res/layout/view_token_cardview.xml" value="0.33" />

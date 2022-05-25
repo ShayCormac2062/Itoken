@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.fragment.TokenInfoFragment
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentAllTokensBinding
+import com.example.itoken.features.addtoken.presentation.fragment.AddTokenFragment
 import com.example.itoken.features.assetlibrary.domain.model.InfoAsset
 import com.example.itoken.features.assetlibrary.domain.model.InfoCollection
 import com.example.itoken.features.assetlibrary.presentation.adapter.CollectionAdapter
@@ -38,6 +40,9 @@ class AllTokensFragment : Fragment() {
     private val collectionViewModel: CollectionViewModel by viewModels {
         factory
     }
+    private val currentUserViewModel: CurrentUserViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.appComponent.inject(this)
@@ -50,14 +55,20 @@ class AllTokensFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAllTokensBinding.inflate(layoutInflater)
+        currentUserViewModel.getUser()
+        setupScreen()
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.run {
+            btnAddToken.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .add(AddTokenFragment(), "ADD_TOKEN")
+                    .commit()
+            }
             initObservers()
             initGenreRecyclerView()
-            setupScreen()
         }
     }
 
@@ -75,6 +86,9 @@ class AllTokensFragment : Fragment() {
                 initCollectionRecyclerView(c)
             } else binding?.slCollections?.visibility = View.VISIBLE
         }
+        currentUserViewModel.currentUser.observe(viewLifecycleOwner) {
+            changeButtonVisibility(it?.nickname == null)
+        }
     }
 
     private fun initGenreRecyclerView() {
@@ -85,8 +99,11 @@ class AllTokensFragment : Fragment() {
             adapter = GenreCollectionAdapter().apply {
                 setItemViewCacheSize(10)
                 onClick = {
-                    findNavController().navigate(R.id.searchFragment).apply {
-                        SearchFragment.category = it
+                    findNavController().apply {
+                        popBackStack()
+                        navigate(R.id.searchFragment).apply {
+                            SearchFragment.category = it
+                        }
                     }
                 }
             }
@@ -139,12 +156,12 @@ class AllTokensFragment : Fragment() {
             slGenres.startShimmer()
             slTokens.startShimmer()
             slCheapTokens.startShimmer()
+            initRecycler(slGenres, rvGenres)
             with(assetViewModel) {
                 getAssetsCheap()
                 getTenAssets()
             }
             collectionViewModel.getCollections()
-            initRecycler(slGenres, rvGenres)
         }
     }
 
@@ -172,9 +189,6 @@ class AllTokensFragment : Fragment() {
                         ) as InfoAsset, likes)
                 }
                 setItemViewCacheSize(20)
-                onLastCardClick = { _, _ ->
-                    findNavController().navigate(R.id.searchFragment)
-                }
             }
             initRecycler(shimmer, rv)
         }
@@ -209,6 +223,10 @@ class AllTokensFragment : Fragment() {
                 arguments = bundle
             }, "COLLECTION")
             .commit()
+    }
+
+    private fun changeButtonVisibility(b: Boolean) {
+        binding?.btnAddToken?.visibility = if (b) View.GONE else View.VISIBLE
     }
 
     override fun onDestroyView() {

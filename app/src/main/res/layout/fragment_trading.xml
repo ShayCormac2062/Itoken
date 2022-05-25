@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottom_sheet_container"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,77 +7,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.trades.presentation.fragment.TradingFragment">
 
-    <Button
-        android:id="@+id/btn_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/AllAppButtonStyle"
-        app:cornerRadius="30dp"
-        android:layout_marginStart="12dp"
-        android:text="@string/back"
-        android:textSize="9sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_for_token"
-        android:layout_width="325dp"
-        android:layout_height="325dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="30dp"
-        app:layout_constraintVertical_bias=".25"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_token_picture"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop"
-            android:layout_height="match_parent"/>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/tv_token_name"
-        style="@style/AllTokensFragmentTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginStart="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview_for_token" />
-
-    <TextView
-        android:id="@+id/tv_creator_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TokenCardsTextStyle.CollectionTextStyle"
-        android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_token_name"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_price"
-        style="@style/AllTokensFragmentTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginStart="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_creator_name" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_for_token"
+            android:layout_width="325dp"
+            android:layout_height="325dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="30dp"
+            app:layout_constraintVertical_bias=".25"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_show_members"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/AllAppButtonStyle"
-        android:text="@string/see_members"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/iv_token_picture"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_token_name"
+            style="@style/AllTokensFragmentTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_for_token" />
+
+        <TextView
+            android:id="@+id/tv_creator_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TokenCardsTextStyle.CollectionTextStyle"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_token_name"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/AllTokensFragmentTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_creator_name" />
+
+        <Button
+            android:id="@+id/btn_show_members"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AllAppButtonStyle"
+            android:text="@string/see_members"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/tv_price"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

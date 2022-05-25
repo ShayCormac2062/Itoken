@@ -19,9 +19,11 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:saveEnabled="true"
+        android:queryHint="Введите название токена"
         android:layout_marginHorizontal="12dp"
+        app:iconifiedByDefault="false"
         android:layout_marginTop="12dp"
+        android:background="@drawable/searchview_background"
         app:layout_constraintTop_toBottomOf="@+id/tv_search" />
 
     <androidx.recyclerview.widget.RecyclerView

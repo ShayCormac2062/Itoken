@@ -2,8 +2,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/collection_cardview"
-    android:layout_width="140dp"
-    android:layout_height="140dp"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
     style="@style/TokenCardsStyle">
 
        <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,14 +18,15 @@
 
            <TextView
                android:id="@+id/tv_collection_name"
-               android:layout_width="wrap_content"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:textSize="14sp"
-               android:textColor="@color/white"
-               android:layout_marginBottom="8dp"
                android:layout_marginStart="8dp"
+               android:textColor="@color/white"
+               android:textSize="14sp"
+               android:layout_marginTop="8dp"
+               app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintBottom_toBottomOf="parent" />
+               app:layout_constraintTop_toTopOf="@+id/iv_genre" />
 
        </androidx.constraintlayout.widget.ConstraintLayout>
 

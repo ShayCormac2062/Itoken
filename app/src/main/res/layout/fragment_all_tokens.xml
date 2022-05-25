@@ -1,168 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.assetlibrary.presentation.fragment.AllTokensFragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_fragment_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="@string/main_page"
+                android:gravity="center"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toTopOf="@+id/rv_genres"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_fragment_name"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sl_genres"
+                style="@style/TokenCardsStyle"
+                android:layout_marginStart="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/main_page"
-                    android:gravity="center"
-                    android:textSize="34sp"
-                    app:layout_constraintBottom_toTopOf="@+id/rv_genres"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="horizontal">
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/sl_genres"
-                    style="@style/TokenCardsStyle"
-                    android:layout_marginStart="4dp"
+                    <include layout="@layout/shimmer_genre"/>
+                    <include layout="@layout/shimmer_genre"/>
+                    <include layout="@layout/shimmer_genre"/>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_genres"
+                style="@style/TokenCardsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name" />
+
+            <TextView
+                android:id="@+id/tv_token_menu"
+                style="@style/AllTokensFragmentTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/token_library"
+                app:layout_constraintTop_toBottomOf="@+id/rv_genres" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tokens"
+                style="@style/TokenCardsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_token_menu" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sl_tokens"
+                style="@style/TokenCardsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_token_menu">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <include layout="@layout/shimmer_token"/>
+                    <include layout="@layout/shimmer_token"/>
 
-                        <include layout="@layout/shimmer_genre"/>
-                        <include layout="@layout/shimmer_genre"/>
-                        <include layout="@layout/shimmer_genre"/>
+                </LinearLayout>
 
-                    </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-                </com.facebook.shimmer.ShimmerFrameLayout>
+            <TextView
+                android:id="@+id/tv_cheap_tokens"
+                style="@style/AllTokensFragmentTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/for_sale"
+                app:layout_constraintTop_toBottomOf="@+id/rv_tokens" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_genres"
-                    style="@style/TokenCardsStyle"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cheap_tokens"
+                style="@style/TokenCardsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sl_cheap_tokens"
+                style="@style/TokenCardsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="invisible"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_fragment_name" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_token_menu"
-                    style="@style/AllTokensFragmentTextStyle"
+                    <include layout="@layout/shimmer_token"/>
+                    <include layout="@layout/shimmer_token"/>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tv_collections"
+                style="@style/AllTokensFragmentTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cool_collections"
+                app:layout_constraintTop_toBottomOf="@+id/rv_cheap_tokens" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_collections"
+                style="@style/TokenCardsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@+id/tv_collections" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sl_collections"
+                style="@style/TokenCardsStyle"
+                android:layout_marginStart="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_collections">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/token_library"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_genres" />
+                    android:orientation="horizontal">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_tokens"
-                    style="@style/TokenCardsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="invisible"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_token_menu" />
+                    <include layout="@layout/shimmer_collection"/>
+                    <include layout="@layout/shimmer_collection"/>
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/sl_tokens"
-                    style="@style/TokenCardsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_token_menu">
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-                        <include layout="@layout/shimmer_token"/>
-                        <include layout="@layout/shimmer_token"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </LinearLayout>
+    </ScrollView>
 
-                </com.facebook.shimmer.ShimmerFrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_token"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        android:backgroundTint="@color/red"
+        android:foregroundGravity="top"
+        android:src="@drawable/plus"
+        android:layout_gravity="end|bottom"/>
 
-                <TextView
-                    android:id="@+id/tv_cheap_tokens"
-                    style="@style/AllTokensFragmentTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/for_sale"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_tokens" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_cheap_tokens"
-                    style="@style/TokenCardsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/sl_cheap_tokens"
-                    style="@style/TokenCardsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_cheap_tokens">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/shimmer_token"/>
-                        <include layout="@layout/shimmer_token"/>
-
-                    </LinearLayout>
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <TextView
-                    android:id="@+id/tv_collections"
-                    style="@style/AllTokensFragmentTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cool_collections"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_cheap_tokens" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_collections"
-                    style="@style/TokenCardsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="invisible"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_collections" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/sl_collections"
-                    style="@style/TokenCardsStyle"
-                    android:layout_marginStart="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_collections">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/shimmer_collection"/>
-                        <include layout="@layout/shimmer_collection"/>
-
-                    </LinearLayout>
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</FrameLayout>

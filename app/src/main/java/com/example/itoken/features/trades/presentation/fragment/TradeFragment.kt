@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoken.App
-import com.example.itoken.R
 import com.example.itoken.databinding.FragmentTradeBinding
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.trades.presentation.adapter.TradeAdapter
@@ -42,45 +40,32 @@ class TradeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.getActiveTrades()
         initObservers()
-        binding?.run {
-            btnCurrentTrades.setOnClickListener {
-                setupScreen()
-                viewModel.getActiveTrades()
+        viewModel.getAllTrades()
+        binding?.srlUpdate?.setOnRefreshListener {
+            viewModel.apply {
+                onCreate(arguments)
             }
-            btnTradesHistory.setOnClickListener {
-                setupScreen()
-                viewModel.getAllTrades()
-            }
-        }
-    }
-
-    private fun setupScreen() {
-        viewModel.update()
-        loading()
-    }
-
-    private fun loading() {
-        binding?.run {
-            ivNoTrades.visibility = View.INVISIBLE
-            tvNoTrades.visibility = View.INVISIBLE
-            pbLoading.visibility = View.VISIBLE
+            binding?.srlUpdate?.isRefreshing = false
         }
     }
 
     private fun initObservers() {
-        viewModel.tradeList.observe(viewLifecycleOwner) {
-            if (it?.isNotEmpty() == true || it == null) {
-                binding?.pbLoading?.visibility = View.INVISIBLE
-                initRecyclerView(it)
-            } else {
-                binding?.run {
-                    ivNoTrades.visibility = View.VISIBLE
-                    tvNoTrades.visibility = View.VISIBLE
-                    pbLoading.visibility = View.INVISIBLE
-                }
+        with(viewModel) {
+            allTradeList.observe(viewLifecycleOwner) {
+                if (it?.isNotEmpty() == true || it == null) {
+                    binding?.pbLoading?.visibility = View.INVISIBLE
+                    initRecyclerView(it)
+                } else notifyNoTrades()
             }
+        }
+    }
+
+    private fun notifyNoTrades() {
+        binding?.run {
+            ivNoTrades.visibility = View.VISIBLE
+            tvNoTrades.visibility = View.VISIBLE
+            pbLoading.visibility = View.INVISIBLE
         }
     }
 
@@ -92,21 +77,24 @@ class TradeFragment : Fragment() {
                 }
                 adapter = TradeAdapter(list).apply {
                     onClick = {
-                        val bundle = Bundle().apply {
-                            putSerializable("trade", it)
-                        }
-                        activity?.findNavController(R.id.fragmentContainerView)
-                            ?.navigate(R.id.tradingFragment, bundle)
+                        swapTradingFragment(it)
                     }
                 }
             }
             pbLoading.visibility = View.INVISIBLE
+            ivNoTrades.visibility = View.INVISIBLE
+            tvNoTrades.visibility = View.INVISIBLE
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.update()
-        binding = null
+    private fun swapTradingFragment(tradeModel: TradeModel?) {
+        val bundle = Bundle().apply {
+            putSerializable("trade", tradeModel)
+        }
+        parentFragmentManager.beginTransaction()
+            .add(TradingFragment().apply {
+                arguments = bundle
+            }, "TRADING")
+            .commit()
     }
 }
