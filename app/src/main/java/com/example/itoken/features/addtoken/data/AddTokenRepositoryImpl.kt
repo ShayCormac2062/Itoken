@@ -17,7 +17,7 @@ class AddTokenRepositoryImpl @Inject constructor(
     override suspend fun add(asset: DatabaseAsset) {
         withContext(scope.IO) {
             database.add(asset)
-            firebase.child("assets").setValue(asset)
+            firebase.child("assets").push().setValue(asset)
         }
     }
 

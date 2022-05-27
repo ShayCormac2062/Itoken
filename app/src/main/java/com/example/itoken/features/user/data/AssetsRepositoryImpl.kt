@@ -7,6 +7,10 @@ import com.example.itoken.features.user.domain.repository.AssetsRepository
 import com.example.itoken.utils.DispatcherProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -52,33 +56,6 @@ class AssetsRepositoryImpl @Inject constructor(
         return result
     }
 
-    private suspend fun retrieveTrades(userId: String?): List<ItemAsset> {
-        val result = arrayListOf<ItemAsset>()
-        val snapshot = ref.get().await()
-        try {
-            userId?.let {
-                val snapShot = snapshot.child("users").child(userId).child("bought_assets")
-                for (asset in snapShot.children) {
-                    result.add(retrieveAsset(asset))
-                }
-            }
-        } catch (e: Exception) { }
-        return result
-    }
-
-    private fun retrieveAsset(dto: DataSnapshot?) = ItemAsset(
-        dto?.child("tokenId")?.value as String?,
-        dto?.child("imagePreviewUrl")?.value as String?,
-        dto?.child("imageUrl")?.value as String?,
-        dto?.child("creatorName")?.value as String?,
-        dto?.child("ownerName")?.value as String?,
-        dto?.child("tokenName")?.value as String?,
-        dto?.child("price")?.value as Long?,
-        dto?.child("likes")?.value as Long?,
-        dto?.child("description")?.value as String?,
-        dto?.child("address")?.value as String?,
-    )
-
     override suspend fun getAll(): List<ItemAsset> {
         val result = arrayListOf<ItemAsset>()
         withContext(scope.IO) {
@@ -94,4 +71,34 @@ class AssetsRepositoryImpl @Inject constructor(
             addAssetsDatabase.add(it.toDatabaseAsset())
         }
     }
+
+    private suspend fun retrieveTrades(userId: String?): List<ItemAsset> {
+        val result = arrayListOf<ItemAsset>()
+        try {
+            val snapShot = getBoughtAssets(userId).first()
+            for (asset in snapShot.children) {
+                result.add(retrieveAsset(asset))
+            }
+        } catch (e: Exception) {
+        }
+        return result
+    }
+
+    private fun getBoughtAssets(userId: String?) = flow {
+        val snapshot = ref.get().await()
+        emit(snapshot.child("users").child(userId ?: "").child("bought_assets"))
+    }.flowOn(Dispatchers.IO)
+
+    private fun retrieveAsset(dto: DataSnapshot?) = ItemAsset(
+        dto?.child("tokenId")?.value as String?,
+        dto?.child("imagePreviewUrl")?.value as String?,
+        dto?.child("imageUrl")?.value as String?,
+        dto?.child("creatorName")?.value as String?,
+        dto?.child("ownerName")?.value as String?,
+        dto?.child("tokenName")?.value as String?,
+        dto?.child("price")?.value as Long?,
+        dto?.child("likes")?.value as Long?,
+        dto?.child("description")?.value as String?,
+        dto?.child("address")?.value as String?,
+    )
 }
