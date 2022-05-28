@@ -19,7 +19,7 @@
     <string name="bought_amount">Куплено: %1$s</string>
     <string name="created_amount">Создано: %1$s</string>
     <string name="traded_amount">Аукционы: %1$s</string>
-    <string name="owners_amount">Владельцев: %1$s</string>
+    <string name="owners_amount">Продаж: %1$s</string>
     <string name="creators_amount">Создателей: %1$s</string>
     <string name="buy_token">Вы уверены, что хотите купить токен? С вас будет списано %1$s ICrystal. Продолжить?</string>
     <string name="buy_token_confirm">Токен был успешно добавлен в библиотеку</string>
@@ -69,7 +69,7 @@
     <string name="welcome_to">Добро пожаловать в IToken</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
-    <string name="no_account">Нет аккаунта?</string>
+    <string name="no_account">Нет аккаунта?  </string>
     <string name="members">Участники</string>
     <string name="give_a_mark">Дать цену</string>
     <string name="no_connection">Нет подключения к интернету. Проверьте подключение и повторите попытку</string>
@@ -85,7 +85,7 @@
     <string name="enter_password">Введите пароль</string>
     <string name="repeat_password">Повторите пароль</string>
     <string name="enter_photo">Добавить фото профиля</string>
-    <string name="register">Зарегестрироваться</string>
+    <string name="register">Зарегистрироваться</string>
     <string name="search">Поиск</string>
     <string name="send_to_auction">Продать токен</string>
     <string name="get_token">Приобрести токен</string>

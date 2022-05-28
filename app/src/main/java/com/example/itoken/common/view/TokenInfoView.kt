@@ -20,7 +20,6 @@ class TokenInfoView<M : BaseAsset>(
 
     private val binding by lazy { FragmentTokenInfoBinding.bind(this) }
     private lateinit var currentAsset: M
-//TODO вернуть всё обратно с ctivityResultAPI на onActivityResult
     fun init(
         asset: M,
         likes: Int,
@@ -37,7 +36,7 @@ class TokenInfoView<M : BaseAsset>(
             tvFavourite.text = String.format(context.getString(R.string.favorites_amount), likes)
             tvCollected.text = String.format(context.getString(R.string.owners_amount), countOwners())
             tvCreated.text = String.format(context.getString(R.string.creators_amount), if (!asset.creatorName.isNullOrEmpty()) 1 else 0)
-            tvDescription.text = asset.description
+            tvDescription.text = "${asset.description}\n\n"
             tvContractAddressValue.text = asset.address
             tvTokenIdValue.text = asset.tokenId
             tvTokenStandardsValue.text = (100..365).random().toString()

@@ -124,6 +124,11 @@ class ProfileFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        usersViewModel.getUser()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         assetViewModel.closePage()
