@@ -74,16 +74,16 @@ class MembersFragment : BottomSheetDialogFragment() {
                             ),
                             onClickEvent = {
                                 trade?.token?.let { lot ->
-                                    with(transactionViewModel) {
-                                        sendTokenToUser(
-                                            auctioneer?.stringId,
-                                            lot
+                                    TradingFragment.auctioneer = auctioneer
+                                    TradingFragment.lot = lot
+                                    CommonUtils.makeToast(
+                                        context,
+                                        String.format(
+                                            getString(R.string.send_token_to_user_complete),
+                                            auctioneer?.name
                                         )
-                                        closeTrade(lot.address)
-                                        transferMoneyToBarker(user?.stringId, auctioneer?.price?.toDouble())
-                                        dismiss()
-                                        parentFragmentManager.popBackStack("TRADING", 0)
-                                    }
+                                    )
+                                    dismiss()
                                 }
                             }
                         )
@@ -127,8 +127,8 @@ class MembersFragment : BottomSheetDialogFragment() {
                         context,
                         getString(R.string.mark_was_given)
                     )
-                    dismiss()
                     alerts.dismiss()
+                    dismiss()
                 } else CommonUtils.makeToast(
                     context,
                     getString(R.string.bad_mark)

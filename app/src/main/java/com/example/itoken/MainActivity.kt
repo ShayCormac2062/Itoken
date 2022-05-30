@@ -3,7 +3,6 @@ package com.example.itoken
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.itoken.databinding.ActivityMainBinding
-import com.example.itoken.features.addtoken.presentation.fragment.AddTokenFragment
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import javax.inject.Inject
 
@@ -57,6 +55,10 @@ class MainActivity : AppCompatActivity() {
             usersViewModel.getUser()
             bottomMain.setupWithNavController(controller)
         }
+    }
+
+    override fun onBackPressed() {
+        //do nothing
     }
 
 }

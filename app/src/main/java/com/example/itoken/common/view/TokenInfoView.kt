@@ -37,7 +37,7 @@ class TokenInfoView<M : BaseAsset>(
             tvFavourite.text = String.format(context.getString(R.string.favorites_amount), likes)
             tvCollected.text = String.format(context.getString(R.string.owners_amount), countOwners())
             tvCreated.text = String.format(context.getString(R.string.creators_amount), if (!asset.creatorName.isNullOrEmpty()) 1 else 0)
-            tvDescription.text = "${asset.description}\n"
+            tvDescription.text = String.format(context.getString(R.string.description_value), asset.description, if (isUserAuthorized || isUserBoughtThisAsset) "" else "\n")
             tvContractAddressValue.text = asset.address
             tvTokenIdValue.text = asset.tokenId
             tvTokenStandardsValue.text = (100..365).random().toString()
@@ -89,14 +89,12 @@ class TokenInfoView<M : BaseAsset>(
         return if (
             currentAsset.creatorName.toString().isNotEmpty() &&
             (currentAsset.ownerName.toString().isNotEmpty() &&
-                    currentAsset.ownerName.toString() != "NullAddress"
-                    )
+                    currentAsset.ownerName.toString() != "NullAddress")
         ) 2
         else if (
             currentAsset.creatorName.toString().isNotEmpty() ||
             (currentAsset.ownerName.toString().isNotEmpty() &&
-                    currentAsset.ownerName.toString() != "NullAddress"
-                    )
+                    currentAsset.ownerName.toString() != "NullAddress")
         ) 1
         else 0
     }

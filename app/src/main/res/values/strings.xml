@@ -30,7 +30,7 @@
     <string name="search_ready">Результаты по запросу: %1$s</string>
     <string name="price_amount_for_collection">Общая цена: %1$s ICrystal</string>
     <string name="send_token_to_user_question">Вы точно хотите продать токен пользователю %1$s?</string>
-    <string name="send_token_to_user_complete">Ваш токен был продан пользователю %1$s</string>
+    <string name="send_token_to_user_complete">Ваш токен был продан пользователю "%1$s"</string>
     <string name="mark_was_given">Ваша ставка принята!</string>
     <string name="bad_mark">Введите сумму, которая есть на вашем счету!</string>
     <string name="current_balance">На вашем счету %1$s ICrystal</string>
@@ -105,4 +105,5 @@
     <string name="buy_for">Купит за:</string>
     <string name="profile">Профиль</string>
     <string name="sign_out">Вы уверены, что хотите выйти?</string>
+    <string name="description_value">%1$s %2$s</string>
 </resources>

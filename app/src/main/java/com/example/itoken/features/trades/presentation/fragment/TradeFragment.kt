@@ -42,11 +42,13 @@ class TradeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initObservers()
         viewModel.getAllTrades()
-        binding?.srlUpdate?.setOnRefreshListener {
-            viewModel.apply {
-                onCreate(arguments)
+        binding?.run {
+            srlUpdate.setOnRefreshListener {
+                rvTrades.adapter = null
+                pbLoading.visibility = View.VISIBLE
+                viewModel.getAllTrades()
+                srlUpdate.isRefreshing = false
             }
-            binding?.srlUpdate?.isRefreshing = false
         }
     }
 
@@ -95,7 +97,6 @@ class TradeFragment : Fragment() {
             .add(TradingFragment().apply {
                 arguments = bundle
             }, "TRADING")
-            .addToBackStack("TRADING")
             .commit()
     }
 }
