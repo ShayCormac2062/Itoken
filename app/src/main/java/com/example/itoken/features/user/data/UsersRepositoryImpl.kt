@@ -10,12 +10,6 @@ import com.example.itoken.utils.DispatcherProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -35,11 +29,15 @@ class UsersRepositoryImpl @Inject constructor(
             isUserExists(firebase.child("users"), user)
             if (currentUser == null) {
                 if (user.imageUrl?.isNotEmpty() == true) {
-                    val url = downloadUserAvatar(
-                        storage.getReference("${user.stringId}.jpg"),
-                        Uri.parse(user.imageUrl)
-                    ).first()
-                    user.imageUrl = url
+                    storage.getReference("${user.stringId}.jpg").apply {
+                        putFile(Uri.parse(user.imageUrl)).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                downloadUrl.addOnSuccessListener { url ->
+                                    user.imageUrl = url.toString()
+                                }
+                            }
+                        }.await()
+                    }
                 }
                 firebase.child("users").child("${user.stringId}").setValue(user)
                 userDatabase.add(user.toUser())
@@ -112,14 +110,6 @@ class UsersRepositoryImpl @Inject constructor(
         null,
         (dto.child("balance").value as Long).toDouble()
     )
-
-    private fun downloadUserAvatar(reference: StorageReference, parse: Uri) = flow {
-        reference.putFile(parse).await()
-        val resultTask = reference.downloadUrl.await()
-        emit(resultTask.toString())
-    }.catch {
-        emit(parse.toString())
-    }.flowOn(Dispatchers.IO)
 
     private fun emptyUser(): UserModel = UserModel(
         null,

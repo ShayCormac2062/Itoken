@@ -81,6 +81,8 @@ class MembersFragment : BottomSheetDialogFragment() {
                                         )
                                         closeTrade(lot.address)
                                         transferMoneyToBarker(user?.stringId, auctioneer?.price?.toDouble())
+                                        dismiss()
+                                        parentFragmentManager.popBackStack("TRADING", 0)
                                     }
                                 }
                             }

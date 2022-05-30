@@ -95,6 +95,7 @@ class TradeFragment : Fragment() {
             .add(TradingFragment().apply {
                 arguments = bundle
             }, "TRADING")
+            .addToBackStack("TRADING")
             .commit()
     }
 }

@@ -25,9 +25,7 @@ class TransactionRepositoryImpl @Inject constructor(
 
     override suspend fun transferMoneyToBarker(userId: String?, mark: Double?) {
         val newBalance = getUserDatabase.getUser()?.balance?.plus(mark ?: 0.0)
-        getUserDatabase.changeBalance(
-            newBalance
-        )
+        getUserDatabase.changeBalance(newBalance)
         firebase.child("users")
             .child(userId.toString())
             .child("balance")
