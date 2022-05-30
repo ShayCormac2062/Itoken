@@ -110,25 +110,29 @@ class MembersFragment : BottomSheetDialogFragment() {
             btnYes.setOnClickListener {
                 if (
                     tietMark.text.toString() != "" &&
-                    tietMark.text.toString().toDouble() <= user?.balance.toString().toDouble() &&
-                    tietMark.text.toString().toDouble() >= trade?.price.toString().toDouble()
+                    tietMark.text.toString().toDouble() <= user?.balance.toString().toDouble()
                 ) {
-                    val newAuctioneer = Auctioneer(
-                        user?.stringId,
-                        user?.nickname,
-                        tietMark.text.toString().toLong(),
-                        user?.imageUrl
-                    )
-                    transactionViewModel.changeMembersList(
-                        trade?.token?.address,
-                        newAuctioneer
-                    )
-                    CommonUtils.makeToast(
+                    if (tietMark.text.toString().toDouble() >= trade?.price.toString().toDouble()) {
+                        val newAuctioneer = Auctioneer(
+                            user?.stringId,
+                            user?.nickname,
+                            tietMark.text.toString().toLong(),
+                            user?.imageUrl
+                        )
+                        transactionViewModel.changeMembersList(
+                            trade?.token?.address,
+                            newAuctioneer
+                        )
+                        CommonUtils.makeToast(
+                            context,
+                            getString(R.string.mark_was_given)
+                        )
+                        alerts.dismiss()
+                        dismiss()
+                    } else CommonUtils.makeToast(
                         context,
-                        getString(R.string.mark_was_given)
+                        getString(R.string.little_mark)
                     )
-                    alerts.dismiss()
-                    dismiss()
                 } else CommonUtils.makeToast(
                     context,
                     getString(R.string.bad_mark)
