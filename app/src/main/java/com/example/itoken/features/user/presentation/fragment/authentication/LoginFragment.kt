@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentLoginBinding
@@ -17,6 +16,7 @@ import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.example.itoken.utils.CommonUtils
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -77,7 +77,8 @@ class LoginFragment : Fragment() {
                     currentUser?.assets?.let { it1 -> assetsViewModel.addAll(it1) }
                 }
             }
-            findNavController().navigate(R.id.loadingFragment)
+            activity?.findNavController(R.id.fragmentContainerView)
+                ?.navigate(R.id.profileFragment)
         }
         usersViewModel.currentUser.observe(viewLifecycleOwner) { um ->
             if (um?.imageUrl != null) {
@@ -93,10 +94,22 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        enableNavigationButton()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
         currentUser = null
+    }
+
+    private fun enableNavigationButton() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_main)
+            ?.menu
+            ?.getItem(3)
+            ?.isChecked = true
     }
 
     private fun enter() {

@@ -11,7 +11,6 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -75,9 +74,13 @@ class ProfileFragment : BottomSheetDialogFragment() {
                     context,
                     getString(R.string.sign_out),
                     onClickEvent = {
+                        usersViewModel.signOut()
                         activity?.findNavController(R.id.fragmentContainerView)
                             ?.navigate(R.id.loginFragment)
-                        usersViewModel.signOut()
+                        CommonUtils.makeToast(
+                            context,
+                            getString(R.string.exit_confirm)
+                        )
                     }
                 )
             }
@@ -194,7 +197,8 @@ class ProfileFragment : BottomSheetDialogFragment() {
                     if (user != null) {
                         myUser = user
                         setupScreen(user)
-                    } else findNavController().navigate(R.id.loginFragment)
+                    } else activity?.findNavController(R.id.fragmentContainerView)
+                        ?.navigate(R.id.loginFragment)
                 }
             }
         }

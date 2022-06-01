@@ -8,6 +8,7 @@ import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.AssetsLibraryViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.CollectionViewModel
 import com.example.itoken.features.assetlibrary.presentation.viewmodel.SearchAssetViewModel
+import com.example.itoken.features.trades.presentation.viewmodel.SharedViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TradeViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
 import com.example.itoken.features.user.presentation.viewmodel.AssetViewModel
@@ -90,4 +91,11 @@ interface ViewModelModule {
         viewModel: CollectionViewModel
     ): ViewModel
 
+    @Binds
+    @IntoMap
+    @Singleton
+    @ViewModelKey(SharedViewModel::class)
+    fun bindSharedViewModel(
+        viewModel: SharedViewModel
+    ): ViewModel
 }

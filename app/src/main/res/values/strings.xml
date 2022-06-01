@@ -107,4 +107,8 @@
     <string name="sign_out">Вы уверены, что хотите выйти?</string>
     <string name="description_value">%1$s %2$s</string>
     <string name="little_mark">Введите сумму больше минимальной цены!</string>
+    <string name="login">Вход</string>
+    <string name="exit_confirm">Вы вышли из системы</string>
+    <string name="sold">Данный токен был только что продан</string>
+    <string name="enter_confirn">Вы вошли в систему</string>
 </resources>

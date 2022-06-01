@@ -11,13 +11,12 @@ import javax.inject.Inject
 class AddTokenRepositoryImpl @Inject constructor(
     private val database: AddAssetDao,
     private val firebase: DatabaseReference,
-    private val scope: DispatcherProvider
+    private val scope: DispatcherProvider,
 ) : AddTokenRepository {
 
     override suspend fun add(asset: DatabaseAsset) {
         withContext(scope.IO) {
             database.add(asset)
-            firebase.child("assets").push().setValue(asset)
         }
     }
 

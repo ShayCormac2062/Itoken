@@ -14,6 +14,7 @@ import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.databinding.FragmentClickerBinding
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,10 +59,9 @@ class ClickerFragment : Fragment() {
         }
     }
 
-    private fun initObservers() {
-        usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-            binding?.tvUserCrystals?.text = user?.balance?.toString()
-        }
+    override fun onResume() {
+        super.onResume()
+        enableNavigationButton()
     }
 
     override fun onDestroyView() {
@@ -70,5 +70,18 @@ class ClickerFragment : Fragment() {
             usersViewModel.changeBalance(binding?.tvUserCrystals?.text.toString().toDouble())
         }
         binding = null
+    }
+
+    private fun initObservers() {
+        usersViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            binding?.tvUserCrystals?.text = user?.balance?.toString()
+        }
+    }
+
+    private fun enableNavigationButton() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_main)
+            ?.menu
+            ?.getItem(3)
+            ?.isChecked = true
     }
 }

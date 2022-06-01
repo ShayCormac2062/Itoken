@@ -11,20 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.ActivityMainBinding
-import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
     private lateinit var controller: NavController
-
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    private val usersViewModel: UsersViewModel by viewModels {
-        factory
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
             .navController
         binding?.run {
-            usersViewModel.getUser()
             bottomMain.setupWithNavController(controller)
         }
     }

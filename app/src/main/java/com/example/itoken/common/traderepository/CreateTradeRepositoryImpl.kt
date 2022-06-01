@@ -14,26 +14,29 @@ class CreateTradeRepositoryImpl @Inject constructor(
 
     override suspend fun createTrade(trade: Lot) {
         storage.getReference("${trade.address}.jpg").apply {
-            putFile(Uri.parse(trade.imageUrl)).addOnSuccessListener {
-                with(trade) {
-                    downloadUrl.addOnSuccessListener { url ->
-                        imageUrl = url.toString()
-                        imagePreviewUrl = url.toString()
-                        ref.child("trades")
-                            .child(trade.address.toString())
-                            .setValue(
-                                Trade(
-                                    (0..9999999).random().toLong(),
-                                    trade.toTradingAsset(),
-                                    trade.creatorName,
-                                    trade.price,
-                                    true,
-                                    arrayListOf()
+            putFile(Uri.parse(trade.imageUrl)).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    with(trade) {
+                        downloadUrl.addOnSuccessListener { url ->
+                            imageUrl = url.toString()
+                            imagePreviewUrl = url.toString()
+                            ref.child("trades")
+                                .child(trade.address.toString())
+                                .setValue(
+                                    Trade(
+                                        (0..9999999).random().toLong(),
+                                        trade.toTradingAsset(),
+                                        trade.creatorName,
+                                        trade.price,
+                                        true,
+                                        arrayListOf()
+                                    )
                                 )
-                            )
+                        }
                     }
                 }
             }
         }
     }
+
 }

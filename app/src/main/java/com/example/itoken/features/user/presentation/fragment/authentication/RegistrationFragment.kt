@@ -16,6 +16,7 @@ import com.example.itoken.databinding.FragmentRegistrationBinding
 import com.example.itoken.features.user.domain.model.UserModel
 import com.example.itoken.features.user.presentation.viewmodel.UsersViewModel
 import com.example.itoken.utils.CommonUtils
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 import javax.inject.Inject
 
@@ -79,9 +80,16 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
+    override fun onResume() {
+        super.onResume()
+        enableNavigationButton()
+    }
+
+    private fun enableNavigationButton() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_main)
+            ?.menu
+            ?.getItem(3)
+            ?.isChecked = true
     }
 
     private fun registerUser() {

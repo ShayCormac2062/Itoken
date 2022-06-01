@@ -17,4 +17,5 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile"
         android:title="@string/profile" />
+
 </menu>

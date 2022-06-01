@@ -13,8 +13,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardview_for_token"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="30dp"
             app:layout_constraintVertical_bias=".25"

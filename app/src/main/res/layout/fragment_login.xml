@@ -98,6 +98,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/no_account"
         android:textColor="@color/red_dark"
+        android:layout_marginEnd="4dp"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

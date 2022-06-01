@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import coil.load
 import com.example.itoken.App
 import com.example.itoken.R
 import com.example.itoken.common.viewmodel.CurrentUserViewModel
 import com.example.itoken.databinding.FragmentTradingBinding
-import com.example.itoken.features.trades.domain.model.Auctioneer
-import com.example.itoken.features.trades.domain.model.Lot
 import com.example.itoken.features.trades.domain.model.TradeModel
-import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
+import com.example.itoken.features.trades.presentation.viewmodel.SharedViewModel
 import com.example.itoken.features.user.domain.model.UserModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
@@ -30,9 +29,10 @@ class TradingFragment : BottomSheetDialogFragment() {
     private val currentUserViewModel: CurrentUserViewModel by viewModels {
         factory
     }
-    private val transactionViewModel: TransactionViewModel by viewModels {
+    private val sharedViewModel: SharedViewModel by viewModels {
         factory
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,29 +64,25 @@ class TradingFragment : BottomSheetDialogFragment() {
         currentUserViewModel.currentUser.observe(viewLifecycleOwner) {
             currentUser = it
         }
+        sharedViewModel.isTokenSold.observe(viewLifecycleOwner) {
+            if (it == true) {
+                tokenSold()
+            }
+        }
+    }
+
+    private fun tokenSold() {
+        binding?.run {
+            btnShowMembers.visibility = View.GONE
+            tvPrice.text = getString(R.string.sold)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (auctioneer != null) {
-            beginTransaction()
-        }
-        auctioneer = null
-        lot = null
+        activity?.findNavController(R.id.fragmentContainerView)
+            ?.navigate(R.id.tradeFragment)
         binding = null
-    }
-
-    private fun beginTransaction() {
-        with(transactionViewModel) {
-            lot?.let { lot ->
-                sendTokenToUser(
-                    auctioneer?.stringId,
-                    lot
-                )
-                closeTrade(lot.address)
-                transferMoneyToBarker(currentUser?.stringId, auctioneer?.price?.toDouble())
-            }
-        }
     }
 
     private fun init() {
@@ -116,8 +112,4 @@ class TradingFragment : BottomSheetDialogFragment() {
             .commit()
     }
 
-    companion object {
-        var auctioneer: Auctioneer? = null
-        var lot: Lot? = null
-    }
 }

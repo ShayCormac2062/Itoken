@@ -17,6 +17,7 @@ import com.example.itoken.databinding.ViewChooseMarkBinding
 import com.example.itoken.features.trades.domain.model.Auctioneer
 import com.example.itoken.features.trades.domain.model.TradeModel
 import com.example.itoken.features.trades.presentation.adapter.MembersAdapter
+import com.example.itoken.features.trades.presentation.viewmodel.SharedViewModel
 import com.example.itoken.features.trades.presentation.viewmodel.TransactionViewModel
 import com.example.itoken.utils.CommonUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -31,6 +32,9 @@ class MembersFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
     private val transactionViewModel: TransactionViewModel by viewModels {
+        factory
+    }
+    private val sharedViewModel: SharedViewModel by viewModels {
         factory
     }
 
@@ -74,15 +78,15 @@ class MembersFragment : BottomSheetDialogFragment() {
                             ),
                             onClickEvent = {
                                 trade?.token?.let { lot ->
-                                    TradingFragment.auctioneer = auctioneer
-                                    TradingFragment.lot = lot
-                                    CommonUtils.makeToast(
-                                        context,
-                                        String.format(
-                                            getString(R.string.send_token_to_user_complete),
-                                            auctioneer?.name
+                                    with(transactionViewModel) {
+                                        sendTokenToUser(
+                                            auctioneer?.stringId,
+                                            lot
                                         )
-                                    )
+                                        closeTrade(lot.address)
+                                        transferMoneyToBarker(user?.stringId, auctioneer?.price?.toDouble())
+                                    }
+                                    sharedViewModel.tokenSold(true)
                                     dismiss()
                                 }
                             }
@@ -110,29 +114,25 @@ class MembersFragment : BottomSheetDialogFragment() {
             btnYes.setOnClickListener {
                 if (
                     tietMark.text.toString() != "" &&
-                    tietMark.text.toString().toDouble() <= user?.balance.toString().toDouble()
+                    tietMark.text.toString().toDouble() <= user?.balance.toString().toDouble() &&
+                    tietMark.text.toString().toDouble() >= trade?.price.toString().toDouble()
                 ) {
-                    if (tietMark.text.toString().toDouble() >= trade?.price.toString().toDouble()) {
-                        val newAuctioneer = Auctioneer(
-                            user?.stringId,
-                            user?.nickname,
-                            tietMark.text.toString().toLong(),
-                            user?.imageUrl
-                        )
-                        transactionViewModel.changeMembersList(
-                            trade?.token?.address,
-                            newAuctioneer
-                        )
-                        CommonUtils.makeToast(
-                            context,
-                            getString(R.string.mark_was_given)
-                        )
-                        alerts.dismiss()
-                        dismiss()
-                    } else CommonUtils.makeToast(
-                        context,
-                        getString(R.string.little_mark)
+                    val newAuctioneer = Auctioneer(
+                        user?.stringId,
+                        user?.nickname,
+                        tietMark.text.toString().toLong(),
+                        user?.imageUrl
                     )
+                    transactionViewModel.changeMembersList(
+                        trade?.token?.address,
+                        newAuctioneer
+                    )
+                    CommonUtils.makeToast(
+                        context,
+                        getString(R.string.mark_was_given)
+                    )
+                    dismiss()
+                    alerts.dismiss()
                 } else CommonUtils.makeToast(
                     context,
                     getString(R.string.bad_mark)

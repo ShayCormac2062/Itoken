@@ -67,7 +67,7 @@ class UsersRepositoryImpl @Inject constructor(
         firebase.child("users")
             .child(getUser()?.stringId.toString())
             .child("balance")
-            .setValue(newBalance)
+            .setValue(newBalance).await()
     }
 
     override suspend fun changePhoto(newPhoto: String?) {
