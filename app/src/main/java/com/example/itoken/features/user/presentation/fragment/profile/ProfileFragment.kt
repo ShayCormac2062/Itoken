@@ -205,9 +205,12 @@ class ProfileFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupScreen(user: UserModel?) {
+        val isUserHasPhoto = user?.imageUrl != ""
         binding?.run {
-            imageView.load(user?.imageUrl)
-            ivCreatorAvatar.load(user?.imageUrl)
+            if (isUserHasPhoto) {
+                imageView.load(user?.imageUrl)
+                ivCreatorAvatar.load(user?.imageUrl)
+            }
             tvDescription.text = user?.description
             tvCreatorAddress.text = user?.stringId
             tvCreatorName.text = user?.nickname
