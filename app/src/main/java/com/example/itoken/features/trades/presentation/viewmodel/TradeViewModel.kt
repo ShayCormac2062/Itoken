@@ -29,14 +29,10 @@ class TradeViewModel @Inject constructor(
         }
     }
 
-
     fun createTrade(lot: Lot) {
         viewModelScope.launch {
             createTradeUseCase(lot)
         }
     }
 
-    fun update() {
-        _allTradeList.value = null
-    }
 }
