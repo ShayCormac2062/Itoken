@@ -52,14 +52,11 @@ class SearchFragment : Fragment() {
         binding?.run {
             search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    viewModel.close()
-                    setupScreen(false)
-                    viewModel.getSearchResponse(query.toString())
-                    return true
+                    return searching(query.toString())
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
+                    return searching(newText.toString())
                 }
             })
             rvGenres.apply {
@@ -74,6 +71,12 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun searching(query: String): Boolean {
+        setupScreen(false)
+        viewModel.getSearchResponse(query)
+        return true
     }
 
     private fun initObservers() {

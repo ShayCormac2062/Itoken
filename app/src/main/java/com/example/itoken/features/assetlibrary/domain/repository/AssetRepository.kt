@@ -8,6 +8,5 @@ interface AssetRepository {
     suspend fun getAssetsCheap(): List<InfoAsset>
     suspend fun getAssets(): List<InfoAsset>
     suspend fun getAssetsByCategory(category: String): List<InfoAsset>
-    suspend fun getAssetsBySearch(request: String): List<InfoAsset>
 
 }

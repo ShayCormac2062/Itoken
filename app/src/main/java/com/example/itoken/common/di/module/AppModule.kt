@@ -19,7 +19,6 @@ import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssets
 import com.example.itoken.features.assetlibrary.domain.usecase.library.GetAssetsCheapUseCase
 import com.example.itoken.features.assetlibrary.domain.usecase.library.GetCollectionsUseCase
 import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsByCategoryUseCase
-import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsBySearchUseCase
 import com.example.itoken.features.assetlibrary.domain.usecase.search.GetAssetsUseCase
 import com.example.itoken.features.trades.data.repository.TransactionRepositoryImpl
 import com.example.itoken.features.trades.domain.repository.TradeRepository
@@ -67,7 +66,8 @@ class AppModule {
         firebase: DatabaseReference,
         storage: FirebaseStorage,
         scope: DispatcherProvider
-    ): UsersRepository = UsersRepositoryImpl(usersDatabase, getUserDatabase, firebase, storage, scope)
+    ): UsersRepository =
+        UsersRepositoryImpl(usersDatabase, getUserDatabase, firebase, storage, scope)
 
     @Provides
     fun provideTransactionRepository(
@@ -130,11 +130,6 @@ class AppModule {
     fun provideGetAssetsByCategoryUseCase(
         repository: AssetRepository,
     ): GetAssetsByCategoryUseCase = GetAssetsByCategoryUseCase(repository)
-
-    @Provides
-    fun provideGetAssetsBySearchUseCase(
-        repository: AssetRepository,
-    ): GetAssetsBySearchUseCase = GetAssetsBySearchUseCase(repository)
 
     @Provides
     fun provideGetAssetsCheapUseCase(

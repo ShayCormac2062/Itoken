@@ -66,15 +66,6 @@ class AssetRepositoryImpl @Inject constructor(
         return result
     }
 
-    override suspend fun getAssetsBySearch(request: String): List<InfoAsset> {
-        val result = arrayListOf<InfoAsset>()
-        for (asset in api.getAssets().assets) {
-            val newAsset = setup(asset).toInfoAsset()
-            if (newAsset.tokenName?.contains(request) == true) result.add(newAsset)
-        }
-        return result
-    }
-
     private fun setup(asset: Asset): Asset {
         return asset.apply {
             try {
