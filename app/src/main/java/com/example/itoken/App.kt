@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.itoken.common.di.AppComponent
 import com.example.itoken.common.di.DaggerAppComponent
 
+
 class App : Application() {
 
     override fun onCreate() {
