@@ -46,7 +46,7 @@ class SearchAssetViewModel @Inject constructor(
             if (it.tokenName?.contains(request) == true)
                 assetList.add(it)
         }
-        _searchAssetList.value = assetList.ifEmpty { searchHelper }
+        _searchAssetList.value = assetList.ifEmpty { assetList }
     }
 
     fun getCategoryResponse(category: String) {
