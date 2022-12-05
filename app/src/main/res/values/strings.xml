@@ -111,4 +111,6 @@
     <string name="exit_confirm">Вы вышли из системы</string>
     <string name="sold">Данный токен был только что продан</string>
     <string name="enter_confirn">Вы вошли в систему</string>
+    <string name="token_downloaded">Токен был успешно сохранён в галерею</string>
+    <string name="token_download_confirm">Вы уверены, что хотите скачать данный NFT?</string>
 </resources>

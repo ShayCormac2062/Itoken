@@ -1,17 +1,28 @@
 package com.example.itoken.common.view
 
+import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.drawToBitmap
 import androidx.core.widget.NestedScrollView
+import coil.ImageLoader
 import coil.load
 import com.example.itoken.R
 import com.example.itoken.common.entity.BaseAsset
 import com.example.itoken.common.fragment.TokenInfoFragment
 import com.example.itoken.databinding.FragmentTokenInfoBinding
 import com.example.itoken.utils.CommonUtils
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+
 
 class TokenInfoView<M : BaseAsset>(
     context: Context,
@@ -25,12 +36,14 @@ class TokenInfoView<M : BaseAsset>(
         asset: M,
         likes: Int,
         isUserAuthorized: Boolean,
-        isUserBoughtThisAsset: Boolean
+        isUserBoughtThisAsset: Boolean,
+        contentResolver: ContentResolver? = null
     ) {
         currentAsset = asset
+        val imageLoader = ImageLoader.Builder(context).allowHardware(false).build()
         binding.run {
             imageView.load(Uri.parse(asset.imagePreviewUrl))
-            ivToken.load(Uri.parse(asset.imageUrl))
+            ivToken.load(Uri.parse(asset.imageUrl), imageLoader)
             tvCreatorName.text = if (!asset.creatorName.isNullOrEmpty()) asset.creatorName else "Автор не известен"
             tvTokenName.text = if (!asset.tokenName.isNullOrEmpty()) asset.tokenName else "Название не указано"
             tvPrice.text = String.format(context.getString(R.string.price_amount), asset.price)
@@ -63,6 +76,20 @@ class TokenInfoView<M : BaseAsset>(
                                 }
                             )
                         }
+                    }
+                }
+                with(ivDownload) {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        CommonUtils.showDialog(
+                            context,
+                            context.getString(R.string.token_download_confirm),
+                            onClickEvent = {
+                                loadPaint(contentResolver)
+                                CommonUtils.makeToast(context, context.getString(R.string.token_downloaded))
+                            }
+                        )
+
                     }
                 }
             } else if (isUserAuthorized) {
@@ -112,5 +139,15 @@ class TokenInfoView<M : BaseAsset>(
             if (isEnabled) visibility = View.GONE
             binding.ivCollectedCard.load(if (isEnabled) R.drawable.arrow_down else R.drawable.arrow_up)
         }
+    }
+
+    private fun loadPaint(contentResolver: ContentResolver?) {
+        val bitmap = binding.ivToken.drawToBitmap().copy(Bitmap.Config.ARGB_8888, false)
+        MediaStore.Images.Media.insertImage(
+            contentResolver,
+            bitmap,
+            "${System.currentTimeMillis()}token.jpg",
+            "beautiful"
+        )
     }
 }

@@ -73,7 +73,8 @@ class TokenInfoFragment : BottomSheetDialogFragment() {
                 asset,
                 asset.likes?.toInt() ?: arguments?.getInt("likes") as Int,
                 isUserAuthorized,
-                isUserBoughtThisAsset
+                isUserBoughtThisAsset,
+                activity?.contentResolver
             )
         }
     }
